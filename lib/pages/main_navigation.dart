@@ -1,3 +1,4 @@
+// lib/pages/main_navigation.dart
 import 'package:flutter/material.dart';
 import './home_page.dart';
 import './search_page.dart';
@@ -5,6 +6,7 @@ import './camera_page.dart';
 import './history_page.dart';
 import './profile_page.dart';
 import '../widgets/navigation_bar_bottom.dart';
+import '../widgets/app_drawer.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -34,6 +36,7 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       body: PageStorage(
         bucket: _pageStorageBucket,
         child: AnimatedIndexedStack(

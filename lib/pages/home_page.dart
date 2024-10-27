@@ -1,3 +1,4 @@
+// lib/pages/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -5,6 +6,8 @@ import '../widgets/blog_post_card.dart';
 import '../models/blog_post.dart';
 import './blog_post_detail_page.dart';
 import '../services/blog_service.dart';
+import '../widgets/app_drawer.dart';
+import './post_blog.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -168,6 +171,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _buildAppBar(),
+      drawer: const AppDrawer(),
       body: IndexedStack(
         index: _tabController.index,
         children: [
@@ -200,7 +204,9 @@ class _HomePageState extends State<HomePage>
       backgroundColor: Colors.white,
       leading: IconButton(
         icon: const Icon(Icons.menu, color: Color(0xFF1A1A1A)),
-        onPressed: () {},
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+        },
       ),
       centerTitle: true,
       title: _buildTabBar(),
@@ -211,7 +217,14 @@ class _HomePageState extends State<HomePage>
             color: Color(0xFF007AFF),
             size: 28,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PostBlogPage(),
+              ),
+            );
+          },
         ),
       ],
     );

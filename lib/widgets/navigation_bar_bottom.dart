@@ -107,7 +107,7 @@ class BottomNavigation extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap(2),
         child: Container(
-          width: 64, // 增加按钮尺寸
+          width: 64,
           height: 64,
           decoration: BoxDecoration(
             gradient: const LinearGradient(

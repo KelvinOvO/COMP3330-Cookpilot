@@ -1,0 +1,1176 @@
+{
+  "posts": [
+    {
+      "id": "post_1",
+      "title": "Hidden Gems: Secret Food Spots in the City",
+      "author": "The Food Explorer",
+      "likes": 8573,
+      "imageUrl": "https://picsum.photos/500/400?1",
+      "content": "Today, I'm excited to share a hidden gem tucked away in the city's narrow lanes. While the location might be off the beaten path, this restaurant has gained a massive social media following thanks to its unique flavors and artistic plating. The chef, formerly of a Michelin-starred establishment, brings years of expertise to create dishes that are both visually stunning and deeply satisfying. Their signature dish, a 48-hour braised short rib with truffle risotto, is absolutely worth the visit alone.",
+      "publishDate": "2024-10-25T14:30:00Z",
+      "comments": [
+        {
+          "id": "comment_1_1",
+          "userId": "user_1",
+          "userName": "Foodie Explorer",
+          "userAvatar": "https://i.pravatar.cc/150?u=1",
+          "content": "Love this place! Can't wait to try it out! 😋",
+          "createdAt": "2024-10-25T15:30:00Z",
+          "likes": 42,
+          "replies": [
+            {
+              "id": "reply_1_1_1",
+              "userId": "user_2",
+              "userName": "Culinary Enthusiast",
+              "userAvatar": "https://i.pravatar.cc/150?u=2",
+              "content": "Thanks for the info! 🙏",
+              "createdAt": "2024-10-25T16:00:00Z",
+              "likes": 15
+            }
+          ]
+        },
+        {
+          "id": "comment_1_2",
+          "userId": "user_1",
+          "userName": "Foodie Explorer",
+          "userAvatar": "https://i.pravatar.cc/150?u=1",
+          "content": "That dessert looks incredible! Adding this to my must-visit list! \uD83C\uDF6B",
+          "createdAt": "2024-10-25T15:30:00Z",
+          "likes": 42,
+          "replies": [
+            {
+              "id": "reply_1_2_1",
+              "userId": "user_12",
+              "userName": "Culinary Explorer",
+              "userAvatar": "https://i.pravatar.cc/150?u=12",
+              "content": "Thanks🙏",
+              "createdAt": "2024-10-25T16:00:00Z",
+              "likes": 15
+            }
+          ]
+        },
+        {
+          "id": "comment_1_3",
+          "userId": "user_13",
+          "userName": "Foodie Explorer",
+          "userAvatar": "https://i.pravatar.cc/150?u=13",
+          "content": "Love this place! Can't wait to try it out! 😋",
+          "createdAt": "2024-10-25T15:30:00Z",
+          "likes": 42
+        },
+        {
+          "id": "comment_1_4",
+          "userId": "user_3",
+          "userName": "Local Guide",
+          "userAvatar": "https://i.pravatar.cc/150?u=3",
+          "content": "The photos look amazing! Thanks for sharing 📸",
+          "createdAt": "2024-10-24T10:30:00Z",
+          "likes": 38
+        },
+        {
+          "id": "comment_1_5",
+          "userId": "user_4",
+          "userName": "Sweet Tooth",
+          "userAvatar": "https://i.pravatar.cc/150?u=4",
+          "content": "That dessert looks incredible! Adding this to my must-visit list! 🍫",
+          "createdAt": "2024-10-23T12:30:00Z",
+          "likes": 56,
+          "replies": [
+            {
+              "id": "reply_1_5_1",
+              "userId": "user_5",
+              "userName": "Dessert Queen",
+              "userAvatar": "https://i.pravatar.cc/150?u=5",
+              "content": "I've been there! The chocolate sphere is amazing! 😍",
+              "createdAt": "2024-10-23T13:15:00Z",
+              "likes": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_2",
+      "title": "Weekend Brunch: Best Cafes to Visit",
+      "author": "Culinary Chronicles",
+      "likes": 7245,
+      "imageUrl": "https://picsum.photos/500/350?2",
+      "content": "Nothing beats a peaceful Saturday morning at a quiet café, indulging in a perfectly crafted brunch. This week's discovery features a charming spot that has mastered the art of brunch. Their signature perfectly poached eggs on homemade sourdough, topped with fresh avocado spread and micro greens, paired with a single-origin pour-over coffee, truly captures life's simple pleasures. The ambient lighting and cozy atmosphere make it perfect for both solo dining and weekend gatherings.",
+      "publishDate": "2024-10-24T09:15:00Z",
+      "comments": [
+        {
+          "id": "comment_2_1",
+          "userId": "user_3",
+          "userName": "Local Guide",
+          "userAvatar": "https://i.pravatar.cc/150?u=3",
+          "content": "The photos look amazing! Thanks for sharing 📸",
+          "createdAt": "2024-10-24T10:30:00Z",
+          "likes": 38
+        }
+      ]
+    },
+    {
+      "id": "post_3",
+      "title": "Food Review: Instagram-Worthy Restaurant Finds",
+      "author": "Food Photographer",
+      "likes": 6892,
+      "imageUrl": "https://picsum.photos/500/380?3",
+      "content": "In today's world of social media-driven dining, presentation is just as important as taste. This newly opened restaurant understands this perfectly, creating dishes that are both visually spectacular and delicious. Each plate is carefully designed to be camera-ready, with vibrant colors and artistic plating. The dessert selection, in particular, features innovative presentations including a chocolate sphere that melts as warm caramel sauce is poured over it, revealing hidden treats inside.",
+      "publishDate": "2024-10-23T11:45:00Z",
+      "comments": [
+        {
+          "id": "comment_3_1",
+          "userId": "user_4",
+          "userName": "Sweet Tooth",
+          "userAvatar": "https://i.pravatar.cc/150?u=4",
+          "content": "That dessert looks incredible! Adding this to my must-visit list! 🍫",
+          "createdAt": "2024-10-23T12:30:00Z",
+          "likes": 56,
+          "replies": [
+            {
+              "id": "reply_3_1_1",
+              "userId": "user_5",
+              "userName": "Dessert Queen",
+              "userAvatar": "https://i.pravatar.cc/150?u=5",
+              "content": "I've been there! The chocolate sphere is amazing! 😍",
+              "createdAt": "2024-10-23T13:15:00Z",
+              "likes": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_4",
+      "title": "Sweet Tooth Guide: City's Best Dessert Places",
+      "author": "The Flavor Seeker",
+      "likes": 5937,
+      "imageUrl": "https://picsum.photos/500/360?4",
+      "content": "For those with a sweet tooth, this guide is your ultimate resource to the city's finest dessert destinations. From artisanal ice cream parlors to French patisseries, we've explored every corner to bring you the most delightful treats. Our top pick this week is a family-owned bakery that's been perfecting their recipes for three generations. Their signature mille-feuille, made with hand-laminated pastry and vanilla bean cream, is simply unforgettable.",
+      "publishDate": "2024-10-22T13:20:00Z",
+      "comments": [
+        {
+          "id": "comment_4_1",
+          "userId": "user_6",
+          "userName": "Pastry Lover",
+          "userAvatar": "https://i.pravatar.cc/150?u=6",
+          "content": "Their mille-feuille is to die for! Best I've had outside of Paris! 🥐",
+          "createdAt": "2024-10-22T14:30:00Z",
+          "likes": 45
+        }
+      ]
+    },
+    {
+      "id": "post_5",
+      "title": "Late Night Eats: 24-Hour Food Guide",
+      "author": "Urban Food Hunter",
+      "likes": 5438,
+      "imageUrl": "https://picsum.photos/500/370?5",
+      "content": "When hunger strikes at midnight, knowing where to find quality food becomes essential. This guide covers the best 24-hour eateries in the city, from cozy diners to modern fusion spots. Our featured location this week offers an innovative late-night menu that goes way beyond typical fast food. Their kimchi fried rice topped with a perfectly runny egg and crispy bacon is the ultimate midnight craving satisfier.",
+      "publishDate": "2024-10-21T22:00:00Z",
+      "comments": [
+        {
+          "id": "comment_5_1",
+          "userId": "user_7",
+          "userName": "Night Owl",
+          "userAvatar": "https://i.pravatar.cc/150?u=7",
+          "content": "Finally! Someone covering the late night food scene! 🌙",
+          "createdAt": "2024-10-21T23:15:00Z",
+          "likes": 67,
+          "replies": [
+            {
+              "id": "reply_5_1_1",
+              "userId": "user_8",
+              "userName": "Midnight Muncher",
+              "userAvatar": "https://i.pravatar.cc/150?u=8",
+              "content": "That kimchi fried rice is exactly what I need after a long night!",
+              "createdAt": "2024-10-21T23:45:00Z",
+              "likes": 34
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_6",
+      "title": "Vegan Paradise: Plant-Based Fine Dining",
+      "author": "Green Gourmet",
+      "likes": 9234,
+      "imageUrl": "https://picsum.photos/500/400?6",
+      "content": "Breaking the stereotype that vegan food can't be luxurious, this innovative restaurant is changing the game with its sophisticated plant-based menu. The chef's tasting menu features dishes like king oyster mushroom 'scallops' with truffle foam and their famous cauliflower steak with black garlic puree. The creativity in transforming humble vegetables into culinary masterpieces is truly remarkable.",
+      "publishDate": "2024-10-20T12:00:00Z",
+      "comments": [
+        {
+          "id": "comment_6_1",
+          "userId": "user_9",
+          "userName": "VeganFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=9",
+          "content": "Finally, a high-end vegan spot! Those mushroom scallops sound amazing! 🌱",
+          "createdAt": "2024-10-20T13:15:00Z",
+          "likes": 87,
+          "replies": [
+            {
+              "id": "reply_6_1_1",
+              "userId": "user_10",
+              "userName": "PlantPower",
+              "userAvatar": "https://i.pravatar.cc/150?u=10",
+              "content": "The cauliflower steak is life-changing! 🥑",
+              "createdAt": "2024-10-20T14:00:00Z",
+              "likes": 45
+            },
+            {
+              "id": "reply_6_1_2",
+              "userId": "user_11",
+              "userName": "GreenChef",
+              "userAvatar": "https://i.pravatar.cc/150?u=11",
+              "content": "As a chef, I'm impressed by their technique!",
+              "createdAt": "2024-10-20T15:30:00Z",
+              "likes": 38
+            }
+          ]
+        },
+        {
+          "id": "comment_6_2",
+          "userId": "user_12",
+          "userName": "HealthyEater",
+          "userAvatar": "https://i.pravatar.cc/150?u=12",
+          "content": "Made a reservation for next week! Can't wait! 🌟",
+          "createdAt": "2024-10-20T16:45:00Z",
+          "likes": 29
+        }
+      ]
+    },
+    {
+      "id": "post_7",
+      "title": "Street Food Revolution: Global Flavors on Wheels",
+      "author": "Street Feast Hunter",
+      "likes": 7856,
+      "imageUrl": "https://picsum.photos/500/400?7",
+      "content": "The city's food truck scene has exploded with creativity lately. This week's spotlight is on an incredible fusion truck combining Korean and Mexican flavors. Their kimchi quesadillas and bulgogi tacos are creating huge lines during lunch hours. The homemade gochujang aioli adds the perfect kick to their already innovative creations.",
+      "publishDate": "2024-10-19T11:30:00Z",
+      "comments": [
+        {
+          "id": "comment_7_1",
+          "userId": "user_13",
+          "userName": "TacoLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=13",
+          "content": "Those bulgogi tacos are insane! Worth every minute in line! 🌮",
+          "createdAt": "2024-10-19T12:45:00Z",
+          "likes": 92,
+          "replies": [
+            {
+              "id": "reply_7_1_1",
+              "userId": "user_14",
+              "userName": "FoodTruckFanatic",
+              "userAvatar": "https://i.pravatar.cc/150?u=14",
+              "content": "The kimchi quesadilla is my go-to lunch now! 🔥",
+              "createdAt": "2024-10-19T13:15:00Z",
+              "likes": 54
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_8",
+      "title": "Seasonal Special: Autumn Harvest Festival",
+      "author": "Seasonal Foodie",
+      "likes": 8934,
+      "imageUrl": "https://picsum.photos/500/400?8",
+      "content": "Fall is here, and with it comes an abundance of seasonal delights! The city's annual Autumn Harvest Festival brings together local farmers and chefs in a celebration of seasonal produce. Don't miss the pumpkin ravioli with sage brown butter, roasted chestnuts, and the incredible apple cider donuts that have everyone talking. This weekend-only event showcases the best of autumn flavors.",
+      "publishDate": "2024-10-18T10:00:00Z",
+      "comments": [
+        {
+          "id": "comment_8_1",
+          "userId": "user_15",
+          "userName": "AutumnLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=15",
+          "content": "Those apple cider donuts are heavenly! Bought a dozen! 🍎",
+          "createdAt": "2024-10-18T11:30:00Z",
+          "likes": 123,
+          "replies": [
+            {
+              "id": "reply_8_1_1",
+              "userId": "user_16",
+              "userName": "SeasonalChef",
+              "userAvatar": "https://i.pravatar.cc/150?u=16",
+              "content": "Try them warm with the cinnamon sugar coating! 🍩",
+              "createdAt": "2024-10-18T12:00:00Z",
+              "likes": 67
+            },
+            {
+              "id": "reply_8_1_2",
+              "userId": "user_17",
+              "userName": "DonutEnthusiast",
+              "userAvatar": "https://i.pravatar.cc/150?u=17",
+              "content": "I need the recipe! Best donuts ever!",
+              "createdAt": "2024-10-18T12:45:00Z",
+              "likes": 45
+            }
+          ]
+        },
+        {
+          "id": "comment_8_2",
+          "userId": "user_18",
+          "userName": "FallFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=18",
+          "content": "The pumpkin ravioli was incredible! Perfect autumn comfort food 🎃",
+          "createdAt": "2024-10-18T13:15:00Z",
+          "likes": 89
+        }
+      ]
+    },
+    {
+      "id": "post_9",
+      "title": "Chef's Table: Interview with Master Sushi Artist",
+      "author": "Culinary Insider",
+      "likes": 9567,
+      "imageUrl": "https://picsum.photos/500/400?9",
+      "content": "Today we sit down with Master Sushi Chef Tanaka, who has been perfecting his craft for over 40 years. His omakase experience is considered one of the city's most exclusive dining events, with only 8 seats available per night. Learn about his journey from apprentice in Tokyo to renowned sushi master, and his philosophy on selecting the perfect fish and creating harmony in every bite.",
+      "publishDate": "2024-10-17T09:00:00Z",
+      "comments": [
+        {
+          "id": "comment_9_1",
+          "userId": "user_19",
+          "userName": "SushiLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=19",
+          "content": "His toro nigiri is life-changing! Worth every penny! 🍣",
+          "createdAt": "2024-10-17T10:30:00Z",
+          "likes": 156,
+          "replies": [
+            {
+              "id": "reply_9_1_1",
+              "userId": "user_20",
+              "userName": "JapanFoodie",
+              "userAvatar": "https://i.pravatar.cc/150?u=20",
+              "content": "The way he ages the fish is pure artistry!",
+              "createdAt": "2024-10-17T11:15:00Z",
+              "likes": 78
+            }
+          ]
+        },
+        {
+          "id": "comment_9_2",
+          "userId": "user_21",
+          "userName": "CulinaryArts",
+          "userAvatar": "https://i.pravatar.cc/150?u=21",
+          "content": "Finally got a reservation after 6 months of waiting! 📅",
+          "createdAt": "2024-10-17T12:00:00Z",
+          "likes": 92,
+          "replies": [
+            {
+              "id": "reply_9_2_1",
+              "userId": "user_22",
+              "userName": "FoodCritic",
+              "userAvatar": "https://i.pravatar.cc/150?u=22",
+              "content": "You're in for a treat! The uni is spectacular!",
+              "createdAt": "2024-10-17T13:00:00Z",
+              "likes": 45
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_10",
+      "title": "Coffee Culture: Third Wave Cafes Guide",
+      "author": "Coffee Connoisseur",
+      "likes": 7845,
+      "imageUrl": "https://picsum.photos/500/400?10",
+      "content": "The third wave coffee movement has transformed our city's cafe scene. This week, we explore five new artisanal coffee shops that are revolutionizing how we experience our daily brew. From single-origin pour-overs to innovative cold brew techniques, these cafes are elevating coffee to an art form. Don't miss the featured roaster's special Ethiopian Yirgacheffe with distinct notes of jasmine and citrus.",
+      "publishDate": "2024-10-16T08:30:00Z",
+      "comments": [
+        {
+          "id": "comment_10_1",
+          "userId": "user_23",
+          "userName": "BeanLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=23",
+          "content": "That Ethiopian Yirgacheffe is incredible! The floral notes! ☕",
+          "createdAt": "2024-10-16T09:45:00Z",
+          "likes": 134,
+          "replies": [
+            {
+              "id": "reply_10_1_1",
+              "userId": "user_24",
+              "userName": "CoffeePro",
+              "userAvatar": "https://i.pravatar.cc/150?u=24",
+              "content": "Try it as a cold brew - game changer!",
+              "createdAt": "2024-10-16T10:30:00Z",
+              "likes": 67
+            },
+            {
+              "id": "reply_10_1_2",
+              "userId": "user_25",
+              "userName": "CafeHopper",
+              "userAvatar": "https://i.pravatar.cc/150?u=25",
+              "content": "Their pour-over technique is perfect!",
+              "createdAt": "2024-10-16T11:15:00Z",
+              "likes": 45
+            }
+          ]
+        },
+        {
+          "id": "comment_10_2",
+          "userId": "user_26",
+          "userName": "MorningBrew",
+          "userAvatar": "https://i.pravatar.cc/150?u=26",
+          "content": "Finally, a comprehensive guide to good coffee! 🙌",
+          "createdAt": "2024-10-16T10:00:00Z",
+          "likes": 98,
+          "replies": [
+            {
+              "id": "reply_10_2_1",
+              "userId": "user_27",
+              "userName": "CoffeeGeek",
+              "userAvatar": "https://i.pravatar.cc/150?u=27",
+              "content": "Have you tried their coffee tasting workshops?",
+              "createdAt": "2024-10-16T11:30:00Z",
+              "likes": 34
+            }
+          ]
+        },
+        {
+          "id": "comment_10_3",
+          "userId": "user_28",
+          "userName": "CafeCritic",
+          "userAvatar": "https://i.pravatar.cc/150?u=28",
+          "content": "Great breakdown of the different brewing methods! 👏",
+          "createdAt": "2024-10-16T12:15:00Z",
+          "likes": 76
+        }
+      ]
+    },
+    {
+      "id": "post_11",
+      "title": "Michelin Journey: A Night at The Star Room",
+      "author": "Fine Dining Explorer",
+      "likes": 12453,
+      "imageUrl": "https://picsum.photos/500/400?11",
+      "content": "Step into the world of culinary excellence at The Star Room, our city's newest three-Michelin-starred restaurant. Chef Maria Laurent's 12-course tasting menu is a journey through modern French cuisine with Asian influences. The standout dish? A butter-poached lobster with yuzu kosho and preserved cherry blossoms. The precision in execution and creativity in flavor combinations demonstrates why this restaurant earned its stars within just 18 months of opening.",
+      "publishDate": "2024-10-15T19:30:00Z",
+      "comments": [
+        {
+          "id": "comment_11_1",
+          "userId": "user_29",
+          "userName": "GourmetSeeker",
+          "userAvatar": "https://i.pravatar.cc/150?u=29",
+          "content": "That lobster dish was a revelation! The yuzu kosho added such an unexpected kick! 🦞✨",
+          "createdAt": "2024-10-15T20:45:00Z",
+          "likes": 234,
+          "replies": [
+            {
+              "id": "reply_11_1_1",
+              "userId": "user_30",
+              "userName": "FoodCritic",
+              "userAvatar": "https://i.pravatar.cc/150?u=30",
+              "content": "The sauce work was impeccable. Classic French techniques with modern Asian twists!",
+              "createdAt": "2024-10-15T21:15:00Z",
+              "likes": 156
+            },
+            {
+              "id": "reply_11_1_2",
+              "userId": "user_31",
+              "userName": "WineLover",
+              "userAvatar": "https://i.pravatar.cc/150?u=31",
+              "content": "The wine pairing with that course was perfect - that Chablis! 🍷",
+              "createdAt": "2024-10-15T21:30:00Z",
+              "likes": 98
+            }
+          ]
+        },
+        {
+          "id": "comment_11_2",
+          "userId": "user_32",
+          "userName": "CulinaryArts",
+          "userAvatar": "https://i.pravatar.cc/150?u=32",
+          "content": "Worth every penny! The service was just as stellar as the food. 👨‍🍳",
+          "createdAt": "2024-10-15T22:00:00Z",
+          "likes": 187,
+          "replies": [
+            {
+              "id": "reply_11_2_1",
+              "userId": "user_33",
+              "userName": "LuxuryDiner",
+              "userAvatar": "https://i.pravatar.cc/150?u=33",
+              "content": "Agreed! Did you try the optional caviar course? Mind-blowing!",
+              "createdAt": "2024-10-15T22:30:00Z",
+              "likes": 76
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_12",
+      "title": "Market Chronicles: Dawn at the Fish Market",
+      "author": "Traditional Food Hunter",
+      "likes": 8976,
+      "imageUrl": "https://picsum.photos/500/400?12",
+      "content": "Join me for a 4AM adventure at our historic fish market! This is where top chefs source their seafood and where you'll find the freshest catch in the city. Today's highlight: watching the traditional tuna cutting ceremony, learning about sustainable fishing practices, and discovering the best stalls for sashimi-grade fish. Don't miss stall #45's legendary sea urchin - it's the same supplier used by many Michelin-starred sushi restaurants.",
+      "publishDate": "2024-10-14T05:30:00Z",
+      "comments": [
+        {
+          "id": "comment_12_1",
+          "userId": "user_34",
+          "userName": "SeafoodLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=34",
+          "content": "The tuna cutting ceremony was incredible! Such skill! 🐟",
+          "createdAt": "2024-10-14T06:45:00Z",
+          "likes": 167,
+          "replies": [
+            {
+              "id": "reply_12_1_1",
+              "userId": "user_35",
+              "userName": "SushiChef",
+              "userAvatar": "https://i.pravatar.cc/150?u=35",
+              "content": "I source all my fish here. Best quality in the city!",
+              "createdAt": "2024-10-14T07:15:00Z",
+              "likes": 143
+            }
+          ]
+        },
+        {
+          "id": "comment_12_2",
+          "userId": "user_36",
+          "userName": "MarketExplorer",
+          "userAvatar": "https://i.pravatar.cc/150?u=36",
+          "content": "Thanks for the tip about stall #45! Their uni was amazing! 🌊",
+          "createdAt": "2024-10-14T08:00:00Z",
+          "likes": 156
+        }
+      ]
+    },
+    {
+      "id": "post_13",
+      "title": "Cocktail Revolution: The Art of Modern Mixology",
+      "author": "Spirit Enthusiast",
+      "likes": 9234,
+      "imageUrl": "https://picsum.photos/500/400?13",
+      "content": "Welcome to The Alchemist, where mixology meets molecular gastronomy. Head bartender James Chen is pushing the boundaries of traditional cocktail making with his innovative techniques. His signature drink, the 'Cloud Nine,' features gin infused with butterfly pea flower, changing color as citrus is added, topped with a lavender smoke bubble that bursts with aromatics. The presentation is as spectacular as the taste.",
+      "publishDate": "2024-10-13T21:00:00Z",
+      "comments": [
+        {
+          "id": "comment_13_1",
+          "userId": "user_37",
+          "userName": "CocktailConnoisseur",
+          "userAvatar": "https://i.pravatar.cc/150?u=37",
+          "content": "The Cloud Nine is pure theater! Love the color-changing effect! 🍸",
+          "createdAt": "2024-10-13T22:15:00Z",
+          "likes": 245,
+          "replies": [
+            {
+              "id": "reply_13_1_1",
+              "userId": "user_38",
+              "userName": "Mixologist",
+              "userAvatar": "https://i.pravatar.cc/150?u=38",
+              "content": "The technique with the smoke bubble is brilliant!",
+              "createdAt": "2024-10-13T22:45:00Z",
+              "likes": 167
+            },
+            {
+              "id": "reply_13_1_2",
+              "userId": "user_39",
+              "userName": "DrinkExpert",
+              "userAvatar": "https://i.pravatar.cc/150?u=39",
+              "content": "Try their 'Northern Lights' next - the aurora effect is stunning!",
+              "createdAt": "2024-10-13T23:00:00Z",
+              "likes": 134
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_14",
+      "title": "Artisan Bakery Tour: Sourdough Revolution",
+      "author": "Bread Enthusiast",
+      "likes": 8765,
+      "imageUrl": "https://picsum.photos/500/400?14",
+      "content": "Discover the city's artisanal bread scene! This week's feature is Wildflour Bakery, where baker Sarah Thompson maintains a 100-year-old sourdough starter inherited from her grandmother. Her signature country loaf, fermented for 36 hours, has a perfectly crispy crust and complex, tangy flavor. Don't miss the weekend-only rye bread with caraway seeds and the innovative charcoal-activated sourdough.",
+      "publishDate": "2024-10-12T07:00:00Z",
+      "comments": [
+        {
+          "id": "comment_14_1",
+          "userId": "user_40",
+          "userName": "BreadLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=40",
+          "content": "That 36-hour fermented loaf is worth every minute of waiting! 🍞",
+          "createdAt": "2024-10-12T08:30:00Z",
+          "likes": 198,
+          "replies": [
+            {
+              "id": "reply_14_1_1",
+              "userId": "user_41",
+              "userName": "HomeBaker",
+              "userAvatar": "https://i.pravatar.cc/150?u=41",
+              "content": "The crumb structure is perfect! Such a great rise!",
+              "createdAt": "2024-10-12T09:00:00Z",
+              "likes": 145
+            }
+          ]
+        },
+        {
+          "id": "comment_14_2",
+          "userId": "user_42",
+          "userName": "PastryChef",
+          "userAvatar": "https://i.pravatar.cc/150?u=42",
+          "content": "The charcoal sourdough makes amazing sandwiches! So unique! 🥪",
+          "createdAt": "2024-10-12T10:15:00Z",
+          "likes": 167,
+          "replies": [
+            {
+              "id": "reply_14_2_1",
+              "userId": "user_43",
+              "userName": "FoodieExplorer",
+              "userAvatar": "https://i.pravatar.cc/150?u=43",
+              "content": "Tried their breadmaking workshop - so informative!",
+              "createdAt": "2024-10-12T11:00:00Z",
+              "likes": 89
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_15",
+      "title": "Plant-Based Innovation: Future of Food Festival",
+      "author": "Sustainable Foodie",
+      "likes": 10234,
+      "imageUrl": "https://picsum.photos/500/400?15",
+      "content": "The Future of Food Festival showcased groundbreaking plant-based innovations this weekend. From lab-grown meat alternatives to dairy-free cheese that actually melts, the festival highlighted how technology is transforming our food system. The standout? A mushroom-based seafood alternative that perfectly replicates the texture of scallops, complete with the characteristic sweet umami flavor.",
+      "publishDate": "2024-10-11T13:00:00Z",
+      "comments": [
+        {
+          "id": "comment_15_1",
+          "userId": "user_44",
+          "userName": "EcoFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=44",
+          "content": "Those mushroom scallops were mind-blowing! Could hardly tell the difference! 🌱",
+          "createdAt": "2024-10-11T14:30:00Z",
+          "likes": 276,
+          "replies": [
+            {
+              "id": "reply_15_1_1",
+              "userId": "user_45",
+              "userName": "VeganChef",
+              "userAvatar": "https://i.pravatar.cc/150?u=45",
+              "content": "The texture was incredibly realistic! Game changer!",
+              "createdAt": "2024-10-11T15:00:00Z",
+              "likes": 198
+            },
+            {
+              "id": "reply_15_1_2",
+              "userId": "user_46",
+              "userName": "SustainableEats",
+              "userAvatar": "https://i.pravatar.cc/150?u=46",
+              "content": "Did you try the melting vegan cheese? Revolutionary!",
+              "createdAt": "2024-10-11T15:30:00Z",
+              "likes": 167
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_16",
+      "title": "Hidden Kitchen: Secret Supper Club Experience",
+      "author": "Underground Foodie",
+      "likes": 9876,
+      "imageUrl": "https://picsum.photos/500/400?16",
+      "content": "Step into the world of secret supper clubs! This week, we were invited to an exclusive dining experience hosted in a converted industrial loft. Chef Maya's 8-course menu showcased her interpretation of ancient recipes with modern techniques. The standout dish was her 'Lost Empire' series - featuring a recreation of Aztec chocolate with smoke-infused chili and gold leaf. Only 12 seats per event, booking through a secret Instagram account.",
+      "publishDate": "2024-10-10T19:00:00Z",
+      "comments": [
+        {
+          "id": "comment_16_1",
+          "userId": "user_47",
+          "userName": "SecretFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=47",
+          "content": "The atmosphere was magical! Loved the mystery and exclusivity! ✨",
+          "createdAt": "2024-10-10T22:30:00Z",
+          "likes": 345,
+          "replies": [
+            {
+              "id": "reply_16_1_1",
+              "userId": "user_48",
+              "userName": "GourmetExplorer",
+              "userAvatar": "https://i.pravatar.cc/150?u=48",
+              "content": "That Aztec chocolate was a religious experience! 🍫",
+              "createdAt": "2024-10-10T23:00:00Z",
+              "likes": 234
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_17",
+      "title": "Breakfast Around the World: Global Morning Feasts",
+      "author": "Morning Glory Hunter",
+      "likes": 8543,
+      "imageUrl": "https://picsum.photos/500/400?17",
+      "content": "Our global breakfast series continues with an exploration of traditional morning meals worldwide. From Japanese rice and miso soup to Turkish menemen and Egyptian ful medames, we're discovering how the world starts its day. This week's highlight: a newly opened Australian café serving incredible vegemite sourdough and perfectly executed flat whites.",
+      "publishDate": "2024-10-09T08:00:00Z",
+      "comments": [
+        {
+          "id": "comment_17_1",
+          "userId": "user_49",
+          "userName": "BreakfastClub",
+          "userAvatar": "https://i.pravatar.cc/150?u=49",
+          "content": "Their flat white is the best I've had outside Melbourne! ☕",
+          "createdAt": "2024-10-09T09:15:00Z",
+          "likes": 267,
+          "replies": [
+            {
+              "id": "reply_17_1_1",
+              "userId": "user_50",
+              "userName": "CoffeeSnob",
+              "userAvatar": "https://i.pravatar.cc/150?u=50",
+              "content": "And that avocado toast! Perfect poached eggs! 🥑",
+              "createdAt": "2024-10-09T09:45:00Z",
+              "likes": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_18",
+      "title": "Ice Cream Innovation: Molecular Dessert Lab",
+      "author": "Dessert Detective",
+      "likes": 11234,
+      "imageUrl": "https://picsum.photos/500/400?18",
+      "content": "Welcome to the future of desserts at Frost Lab! Using liquid nitrogen and molecular gastronomy techniques, they're creating ice cream experiences unlike anything you've seen before. Their signature 'Dragon's Breath' series features flash-frozen cereal puffs that make you exhale cool smoke, while their color-changing sorbet responds to temperature changes. Don't miss their latest creation: sound-paired ice cream tastings!",
+      "publishDate": "2024-10-08T14:00:00Z",
+      "comments": [
+        {
+          "id": "comment_18_1",
+          "userId": "user_51",
+          "userName": "DessertLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=51",
+          "content": "The Dragon's Breath was such a fun experience! Kids loved it! 🐉",
+          "createdAt": "2024-10-08T15:30:00Z",
+          "likes": 456,
+          "replies": [
+            {
+              "id": "reply_18_1_1",
+              "userId": "user_52",
+              "userName": "SweetTooth",
+              "userAvatar": "https://i.pravatar.cc/150?u=52",
+              "content": "The sound pairing really enhanced the flavors! Mind blown! 🎵",
+              "createdAt": "2024-10-08T16:00:00Z",
+              "likes": 234
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_19",
+      "title": "Farm to Table: A Day with Urban Farmers",
+      "author": "Sustainable Eats",
+      "likes": 7865,
+      "imageUrl": "https://picsum.photos/500/400?19",
+      "content": "Explore the city's thriving urban farming scene! We spent a day at Sky Gardens, a rooftop farm supplying fresh produce to local restaurants. Their hydroponic systems and vertical farming techniques are revolutionizing urban agriculture. The highlight? A farm-to-table dinner featuring ingredients harvested just hours before service, including their famous microgreens and heirloom tomatoes.",
+      "publishDate": "2024-10-07T12:00:00Z",
+      "comments": [
+        {
+          "id": "comment_19_1",
+          "userId": "user_53",
+          "userName": "GreenThumb",
+          "userAvatar": "https://i.pravatar.cc/150?u=53",
+          "content": "Those heirloom tomatoes were incredible! So fresh! 🍅",
+          "createdAt": "2024-10-07T13:30:00Z",
+          "likes": 289,
+          "replies": [
+            {
+              "id": "reply_19_1_1",
+              "userId": "user_54",
+              "userName": "UrbanGardener",
+              "userAvatar": "https://i.pravatar.cc/150?u=54",
+              "content": "Their farming workshops are amazing too! Learned so much!",
+              "createdAt": "2024-10-07T14:00:00Z",
+              "likes": 167
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_20",
+      "title": "Food Photography Masterclass: Shooting in Natural Light",
+      "author": "Visual Feast",
+      "likes": 9432,
+      "imageUrl": "https://picsum.photos/500/400?20",
+      "content": "Join us for a special workshop on food photography! Professional photographer Lisa Chen shares her secrets for capturing stunning food images using natural light. From styling tips to camera settings and post-processing techniques, learn how to make your food photos Instagram-worthy. Special focus on working with challenging subjects like ice cream and steam.",
+      "publishDate": "2024-10-06T10:00:00Z",
+      "comments": [
+        {
+          "id": "comment_20_1",
+          "userId": "user_55",
+          "userName": "PhotoFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=55",
+          "content": "The tips about steam photography were game-changing! 📸",
+          "createdAt": "2024-10-06T11:30:00Z",
+          "likes": 378,
+          "replies": [
+            {
+              "id": "reply_20_1_1",
+              "userId": "user_56",
+              "userName": "ContentCreator",
+              "userAvatar": "https://i.pravatar.cc/150?u=56",
+              "content": "Her ice cream shooting techniques are brilliant! No more melting disasters!",
+              "createdAt": "2024-10-06T12:00:00Z",
+              "likes": 245
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_21",
+      "title": "Wine & Canvas: A Night of Art and Wine Pairing",
+      "author": "Wine Storyteller",
+      "likes": 8934,
+      "imageUrl": "https://picsum.photos/500/400?21",
+      "content": "Experience the intersection of art and wine at Gallery Vine's unique monthly event. Each wine is paired with a specific artwork, creating a sensory journey that explores how visual aesthetics influence taste perception. The highlight was a bold Barolo paired with an abstract expressionist piece, while local artists created live paintings inspired by wine tastings. A fascinating exploration of how different senses enhance our appreciation of both art and wine.",
+      "publishDate": "2024-10-05T18:30:00Z",
+      "comments": [
+        {
+          "id": "comment_21_1",
+          "userId": "user_57",
+          "userName": "WineArtLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=57",
+          "content": "The Barolo with Rothko-inspired art was a transcendent experience! 🍷🎨",
+          "createdAt": "2024-10-05T20:15:00Z",
+          "likes": 423,
+          "replies": [
+            {
+              "id": "reply_21_1_1",
+              "userId": "user_58",
+              "userName": "Sommelier",
+              "userAvatar": "https://i.pravatar.cc/150?u=58",
+              "content": "The way they matched the wine's complexity with the artwork's layers was brilliant!",
+              "createdAt": "2024-10-05T20:45:00Z",
+              "likes": 267
+            },
+            {
+              "id": "reply_21_1_2",
+              "userId": "user_59",
+              "userName": "ArtCritic",
+              "userAvatar": "https://i.pravatar.cc/150?u=59",
+              "content": "The live painting session added such a dynamic element! Pure creativity!",
+              "createdAt": "2024-10-05T21:00:00Z",
+              "likes": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_22",
+      "title": "Heritage Cooking: Grandmother's Secret Recipes",
+      "author": "Legacy Cook",
+      "likes": 11567,
+      "imageUrl": "https://picsum.photos/500/400?22",
+      "content": "Join us for a heartwarming series where local grandmothers share their cherished family recipes. This week, 82-year-old Mrs. Chen demonstrates her famous hand-pulled noodles, a technique passed down through four generations. The secret? A special alkaline water mixture and precisely timed dough resting. These recipes aren't just about food - they're about preserving cultural heritage and family stories through the language of cooking.",
+      "publishDate": "2024-10-04T11:00:00Z",
+      "comments": [
+        {
+          "id": "comment_22_1",
+          "userId": "user_60",
+          "userName": "TraditionKeeper",
+          "userAvatar": "https://i.pravatar.cc/150?u=60",
+          "content": "Those noodles had the perfect QQ texture! Incredible technique! 🥢",
+          "createdAt": "2024-10-04T12:30:00Z",
+          "likes": 567,
+          "replies": [
+            {
+              "id": "reply_22_1_1",
+              "userId": "user_61",
+              "userName": "NoodleMaster",
+              "userAvatar": "https://i.pravatar.cc/150?u=61",
+              "content": "The way she controls the dough thickness is pure artistry!",
+              "createdAt": "2024-10-04T13:00:00Z",
+              "likes": 345
+            }
+          ]
+        },
+        {
+          "id": "comment_22_2",
+          "userId": "user_62",
+          "userName": "CulturalCook",
+          "userAvatar": "https://i.pravatar.cc/150?u=62",
+          "content": "These stories need to be preserved! Such valuable cultural heritage ❤️",
+          "createdAt": "2024-10-04T14:15:00Z",
+          "likes": 432
+        }
+      ]
+    },
+    {
+      "id": "post_23",
+      "title": "Zero-Waste Kitchen: Sustainable Cooking Workshop",
+      "author": "Eco Chef",
+      "likes": 9876,
+      "imageUrl": "https://picsum.photos/500/400?23",
+      "content": "Learn how to transform kitchen scraps into culinary gold! Chef Green's workshop demonstrates innovative ways to use every part of your ingredients. From carrot-top pesto to watermelon rind pickles, discover delicious recipes that reduce food waste. The highlight? A 'root-to-stem' tasting menu featuring dishes made entirely from ingredients usually discarded. Plus, practical tips on composting and sustainable kitchen practices.",
+      "publishDate": "2024-10-03T15:00:00Z",
+      "comments": [
+        {
+          "id": "comment_23_1",
+          "userId": "user_63",
+          "userName": "ZeroWaster",
+          "userAvatar": "https://i.pravatar.cc/150?u=63",
+          "content": "The carrot-top pesto was a revelation! Never throwing tops away again! 🥕",
+          "createdAt": "2024-10-03T16:45:00Z",
+          "likes": 678,
+          "replies": [
+            {
+              "id": "reply_23_1_1",
+              "userId": "user_64",
+              "userName": "SustainableCook",
+              "userAvatar": "https://i.pravatar.cc/150?u=64",
+              "content": "Try the watermelon rind kimchi recipe - game changer!",
+              "createdAt": "2024-10-03T17:15:00Z",
+              "likes": 345
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_24",
+      "title": "Virtual Reality Dining: Future of Restaurant Experiences",
+      "author": "Tech Foodie",
+      "likes": 12345,
+      "imageUrl": "https://picsum.photos/500/400?24",
+      "content": "Step into the future at 'Digital Bites', where VR technology meets fine dining! Each course is accompanied by an immersive virtual environment that enhances the dining experience. Imagine enjoying seafood while surrounded by an underwater coral reef, or dessert while floating through a galaxy of stars. The multi-sensory experience includes custom soundscapes and aromatherapy elements that change with each course.",
+      "publishDate": "2024-10-02T19:30:00Z",
+      "comments": [
+        {
+          "id": "comment_24_1",
+          "userId": "user_65",
+          "userName": "FutureFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=65",
+          "content": "The underwater scene with the seafood course was mind-blowing! 🌊",
+          "createdAt": "2024-10-02T21:00:00Z",
+          "likes": 789,
+          "replies": [
+            {
+              "id": "reply_24_1_1",
+              "userId": "user_66",
+              "userName": "TechEnthusiast",
+              "userAvatar": "https://i.pravatar.cc/150?u=66",
+              "content": "The sound design perfectly complemented each dish!",
+              "createdAt": "2024-10-02T21:30:00Z",
+              "likes": 456
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_25",
+      "title": "Chocolate Making: Bean to Bar Workshop",
+      "author": "Cacao Explorer",
+      "likes": 10432,
+      "imageUrl": "https://picsum.photos/500/400?25",
+      "content": "Discover the art of artisanal chocolate making at Master Chocolatier Jean's workshop. From roasting cacao beans to tempering the final product, learn every step of the bean-to-bar process. Participants get hands-on experience with single-origin beans from different regions, understanding how terroir affects flavor profiles. The session ends with a guided tasting of craft chocolates paired with specialty wines.",
+      "publishDate": "2024-10-01T14:00:00Z",
+      "comments": [
+        {
+          "id": "comment_25_1",
+          "userId": "user_67",
+          "userName": "ChocolateLover",
+          "userAvatar": "https://i.pravatar.cc/150?u=67",
+          "content": "The difference between commercial and craft chocolate is eye-opening! 🍫",
+          "createdAt": "2024-10-01T16:30:00Z",
+          "likes": 567,
+          "replies": [
+            {
+              "id": "reply_25_1_1",
+              "userId": "user_68",
+              "userName": "CocoaExpert",
+              "userAvatar": "https://i.pravatar.cc/150?u=68",
+              "content": "The Madagascar beans had such unique fruity notes!",
+              "createdAt": "2024-10-01T17:00:00Z",
+              "likes": 345
+            },
+            {
+              "id": "reply_25_1_2",
+              "userId": "user_69",
+              "userName": "WinePairing",
+              "userAvatar": "https://i.pravatar.cc/150?u=69",
+              "content": "The port and dark chocolate pairing was perfect! 🍷",
+              "createdAt": "2024-10-01T17:30:00Z",
+              "likes": 234
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_26",
+      "title": "Sound Bites: A Musical Dining Symphony",
+      "author": "Culinary Composer",
+      "likes": 9876,
+      "imageUrl": "https://picsum.photos/500/400?26",
+      "content": "Experience the groundbreaking collaboration between Chef Maria and composer John at 'Symphonic Kitchen'. Each course is perfectly synchronized with an original musical piece, performed live by a string quartet. The signature dish, a deconstructed opera cake, is served during a crescendo of Mozart-inspired modern classical music. Even the kitchen sounds are incorporated into the composition, creating a truly immersive dining soundtrack.",
+      "publishDate": "2024-09-30T19:00:00Z",
+      "comments": [
+        {
+          "id": "comment_26_1",
+          "userId": "user_70",
+          "userName": "MusicFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=70",
+          "content": "The way the music enhanced each flavor was incredible! Pure genius! 🎵🍽️",
+          "createdAt": "2024-09-30T21:30:00Z",
+          "likes": 678,
+          "replies": [
+            {
+              "id": "reply_26_1_1",
+              "userId": "user_71",
+              "userName": "ClassicalGourmet",
+              "userAvatar": "https://i.pravatar.cc/150?u=71",
+              "content": "The timing of the dessert with that crescendo... goosebumps!",
+              "createdAt": "2024-09-30T22:00:00Z",
+              "likes": 456
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_27",
+      "title": "Foraging Adventure: Urban Wild Edibles",
+      "author": "Wild Food Hunter",
+      "likes": 8765,
+      "imageUrl": "https://picsum.photos/500/400?27",
+      "content": "Join expert forager Sarah on an urban foraging expedition! Discover edible plants growing right in our city parks and green spaces. Learn to identify safe wild herbs, mushrooms, and berries while understanding sustainable foraging practices. The tour concludes with a wild-food cooking workshop where participants prepare dishes using their foraged ingredients, including wild garlic pesto and elderflower cordial.",
+      "publishDate": "2024-09-29T10:00:00Z",
+      "comments": [
+        {
+          "id": "comment_27_1",
+          "userId": "user_72",
+          "userName": "UrbanForager",
+          "userAvatar": "https://i.pravatar.cc/150?u=72",
+          "content": "Never knew so many edible plants existed in our parks! Eye-opening! 🌿",
+          "createdAt": "2024-09-29T12:30:00Z",
+          "likes": 543,
+          "replies": [
+            {
+              "id": "reply_27_1_1",
+              "userId": "user_73",
+              "userName": "WildChef",
+              "userAvatar": "https://i.pravatar.cc/150?u=73",
+              "content": "The wild garlic pesto was amazing! Nature's pantry! 🌱",
+              "createdAt": "2024-09-29T13:00:00Z",
+              "likes": 321
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_28",
+      "title": "AI Chef Challenge: Human vs Machine Creativity",
+      "author": "Future Food Critic",
+      "likes": 12543,
+      "imageUrl": "https://picsum.photos/500/400?28",
+      "content": "Witness a groundbreaking culinary showdown where top chefs compete against AI-generated recipes! The AI analyzes thousands of successful dishes to create unique flavor combinations, while human chefs rely on intuition and experience. The surprising results challenge our assumptions about creativity and cooking. Don't miss the tasting session where you can sample both AI-designed and chef-created dishes in a blind taste test.",
+      "publishDate": "2024-09-28T16:00:00Z",
+      "comments": [
+        {
+          "id": "comment_28_1",
+          "userId": "user_74",
+          "userName": "TechFoodie",
+          "userAvatar": "https://i.pravatar.cc/150?u=74",
+          "content": "The AI's chocolate-wasabi pairing was surprisingly brilliant! 🤖🍫",
+          "createdAt": "2024-09-28T18:30:00Z",
+          "likes": 876,
+          "replies": [
+            {
+              "id": "reply_28_1_1",
+              "userId": "user_75",
+              "userName": "ChefInnovator",
+              "userAvatar": "https://i.pravatar.cc/150?u=75",
+              "content": "Fascinating to see how AI approaches flavor combinations!",
+              "createdAt": "2024-09-28T19:00:00Z",
+              "likes": 654
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_29",
+      "title": "Floating Breakfast: Luxury Pool Dining Experience",
+      "author": "Luxury Lifestyle",
+      "likes": 15678,
+      "imageUrl": "https://picsum.photos/500/400?29",
+      "content": "Experience the ultimate in luxury dining with the city's first floating breakfast service! Enjoy a gourmet morning spread served on a floating tray in a private infinity pool overlooking the skyline. The menu features both local and international breakfast favorites, from eggs Benedict to congee, all presented with edible flowers and gold leaf accents. Perfect for special occasions or just treating yourself!",
+      "publishDate": "2024-09-27T08:00:00Z",
+      "comments": [
+        {
+          "id": "comment_29_1",
+          "userId": "user_76",
+          "userName": "LuxuryDiner",
+          "userAvatar": "https://i.pravatar.cc/150?u=76",
+          "content": "Most Instagram-worthy breakfast ever! The views were incredible! 🏊‍♂️🍳",
+          "createdAt": "2024-09-27T10:30:00Z",
+          "likes": 987,
+          "replies": [
+            {
+              "id": "reply_29_1_1",
+              "userId": "user_77",
+              "userName": "BreakfastLover",
+              "userAvatar": "https://i.pravatar.cc/150?u=77",
+              "content": "The truffle eggs Benedict was to die for! Worth every penny!",
+              "createdAt": "2024-09-27T11:00:00Z",
+              "likes": 765
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post_30",
+      "title": "Silent Supper: Mindful Eating Experience",
+      "author": "Mindful Foodie",
+      "likes": 7654,
+      "imageUrl": "https://picsum.photos/500/400?30",
+      "content": "Discover a new way of experiencing food at our Silent Supper series. In complete silence, guests focus entirely on their sensory experience of each dish. The 6-course menu is designed to engage all senses, with detailed tasting notes provided for silent reflection. A meditation guide leads brief mindfulness exercises between courses. The experience concludes with a guided discussion about mindful eating practices.",
+      "publishDate": "2024-09-26T18:30:00Z",
+      "comments": [
+        {
+          "id": "comment_30_1",
+          "userId": "user_78",
+          "userName": "MindfulEater",
+          "userAvatar": "https://i.pravatar.cc/150?u=78",
+          "content": "Never realized how much conversation distracts from taste! Eye-opening! 🧘‍♀️",
+          "createdAt": "2024-09-26T21:00:00Z",
+          "likes": 654,
+          "replies": [
+            {
+              "id": "reply_30_1_1",
+              "userId": "user_79",
+              "userName": "ZenFoodie",
+              "userAvatar": "https://i.pravatar.cc/150?u=79",
+              "content": "The mindfulness exercises really enhanced the flavors!",
+              "createdAt": "2024-09-26T21:30:00Z",
+              "likes": 432
+            },
+            {
+              "id": "reply_30_1_2",
+              "userId": "user_80",
+              "userName": "WellnessGuru",
+              "userAvatar": "https://i.pravatar.cc/150?u=80",
+              "content": "Beautiful way to practice presence with food! 🙏",
+              "createdAt": "2024-09-26T22:00:00Z",
+              "likes": 345
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

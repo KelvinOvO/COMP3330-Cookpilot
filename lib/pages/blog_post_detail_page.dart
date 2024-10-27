@@ -253,6 +253,8 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
   }
 
   Widget _buildCommentSection() {
+    final hasMoreComments = widget.post.comments.length > 2;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -266,19 +268,20 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
                 'Comments (${widget.post.comments.length})',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    _isCommentExpanded = !_isCommentExpanded;
-                  });
-                },
-                icon: Icon(
-                  _isCommentExpanded ? Icons.expand_less : Icons.expand_more,
+              if (hasMoreComments)
+                TextButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _isCommentExpanded = !_isCommentExpanded;
+                    });
+                  },
+                  icon: Icon(
+                    _isCommentExpanded ? Icons.expand_less : Icons.expand_more,
+                  ),
+                  label: Text(
+                    _isCommentExpanded ? 'Show Less' : 'Show All',
+                  ),
                 ),
-                label: Text(
-                  _isCommentExpanded ? 'Show Less' : 'Show All',
-                ),
-              ),
             ],
           ),
         ),
