@@ -16,13 +16,20 @@ import 'package:image_picker/image_picker.dart';
     XFile? _image;
 
     Future<void> _getImage() async {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      // final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+      setState(() {
+        _image = image;
+      });
+    }
+
+    Future<void> _takephoto() async {
       // final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       final XFile? image = await _picker.pickImage(source: ImageSource.camera);
       setState(() {
         _image = image;
       });
     }
-
       @override
       Widget build(BuildContext context) {
         return Scaffold(
@@ -34,13 +41,22 @@ import 'package:image_picker/image_picker.dart';
             mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _image == null? Text('No image selected.') : Image.file(File(_image!.path)),
-        ElevatedButton(
-        child: Text("Take a shot"),
-        onPressed: _getImage,
-        style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
-        ),
-        ),
+
+                ElevatedButton(
+                  child: Text("Upload photo"),
+                  onPressed: _getImage,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+                  ),
+                ),
+                Padding( padding: const EdgeInsets.only(bottom: 50.0),
+                  child: ElevatedButton(
+                    child: Text("Take a shot"),
+                    onPressed: _takephoto,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+                    ),
+                  ),),
         ]
         )
         )
