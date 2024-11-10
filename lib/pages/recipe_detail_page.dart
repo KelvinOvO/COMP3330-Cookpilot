@@ -1,6 +1,9 @@
+import 'package:app_controller_client/app_controller_client.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:cookpilot/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../global/app_controller.dart';
 import '../models/comment.dart';
 
 class RecipeDetailPage extends StatefulWidget {
@@ -15,24 +18,228 @@ class RecipeDetailPage extends StatefulWidget {
   State<RecipeDetailPage> createState() => _RecipeDetailPageState();
 }
 
+enum _ChatMessageRole {
+  user,
+  assistant,
+  error,
+}
+
+class _ChatMessage {
+  final String text;
+  final _ChatMessageRole role;
+
+  _ChatMessage({
+    required this.text,
+    required this.role,
+  });
+}
+
 class _RecipeDetailPageState extends State<RecipeDetailPage> {
+  static const double _kSpacing = 16.0;
+  static const double _kBorderRadius = 12.0;
+
+  final TextEditingController _chatController = TextEditingController();
+  final FocusNode _chatFocusNode = FocusNode();
   final TextEditingController _commentController = TextEditingController();
+  final FocusNode _commentFocusNode = FocusNode();
+  late final ValueNotifier<List<_ChatMessage>> _chatMessages = ValueNotifier([
+    _ChatMessage(
+      text:
+          'Hello! I am Cookpilot, your recipe assistant. How can I help you today?',
+      role: _ChatMessageRole.assistant,
+    )
+  ]);
   bool _isCommentExpanded = false;
 
   @override
   void dispose() {
+    _chatController.dispose();
+    _chatFocusNode.dispose();
     _commentController.dispose();
+    _commentFocusNode.dispose();
+    _chatMessages.dispose();
     super.dispose();
+  }
+
+  void _handleChatSend() async {
+    if (_chatController.text.trim().isEmpty) return;
+
+    _chatMessages.value = [
+      ..._chatMessages.value,
+      _ChatMessage(
+        text: _chatController.text,
+        role: _ChatMessageRole.user,
+      ),
+    ];
+
+    _chatController.clear();
+
+    try {
+      final requestMessages = _chatMessages.value
+          .where((message) => message.role != _ChatMessageRole.error)
+          .map((message) => (ChatByRecipeMessageModelBuilder()
+                ..role = switch (message.role) {
+                  _ChatMessageRole.user => ChatByRecipeRoleModel.user,
+                  _ChatMessageRole.assistant => ChatByRecipeRoleModel.assistant,
+                  _ChatMessageRole.error => throw Exception('Invalid role'),
+                }
+                ..text = message.text)
+              .build())
+          .toList();
+
+      final api = appController.getRecipeSearchApi();
+      final chatResponse = await api.recipeSearchChatByRecipePost(
+          chatByRecipePostRequestModel: (ChatByRecipePostRequestModelBuilder()
+                ..id = widget.recipe.id
+                ..messages = ListBuilder(requestMessages))
+              .build());
+
+      if (!mounted) {
+        return;
+      }
+
+      final responseMessage = chatResponse.data!.message;
+      _chatMessages.value = [
+        ..._chatMessages.value,
+        _ChatMessage(
+          text: responseMessage.text,
+          role: _ChatMessageRole.assistant,
+        ),
+      ];
+    } catch (e) {
+      print(e);
+
+      if (!mounted) {
+        return;
+      }
+
+      _chatMessages.value = [
+        ..._chatMessages.value,
+        _ChatMessage(
+          text:
+              'An error occurred, I am sincerely sorry for not being able to process your request.',
+          role: _ChatMessageRole.error,
+        ),
+      ];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          _buildSliverAppBar(context),
-          _buildContent(context),
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              _buildSliverAppBar(context),
+              _buildContent(context),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 72),
+              ),
+            ],
+          ),
+          if (MediaQuery.of(context).viewInsets.bottom > 0)
+            const SizedBox()
+          else
+            Positioned(
+              left: _kSpacing,
+              right: _kSpacing,
+              bottom: _kSpacing,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface,
+                  border: Border.all(
+                    color: theme.primaryColor,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(_kBorderRadius),
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.shadowColor.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: SizedBox(
+                  height: 56,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(_kBorderRadius),
+                      ),
+                    ),
+                    onPressed: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      showModalBottomSheet(
+                        context: context,
+                        builder: _buildChat,
+                        showDragHandle: true,
+                        isScrollControlled: true,
+                        useSafeArea: true,
+                      );
+                    },
+                    child: const Text(
+                      'Chat with Cookpilot for more...',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChat(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(_kSpacing, 0, _kSpacing, _kSpacing),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildMessageList(),
+          TextField(
+            controller: _chatController,
+            focusNode: _chatFocusNode,
+            autofocus: true,
+            maxLines: null,
+            decoration: InputDecoration(
+              hintText: 'Chat with Cookpilot for more...',
+              suffixIcon: Container(
+                margin: const EdgeInsets.all(8),
+                child: IconButton.filledTonal(
+                  icon: const Icon(Icons.send_rounded),
+                  onPressed: _handleChatSend,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_kBorderRadius),
+                borderSide: BorderSide(
+                  color: theme.primaryColor,
+                  width: 1,
+                ),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_kBorderRadius),
+                borderSide: BorderSide(
+                  color: theme.primaryColor,
+                ),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: _kSpacing,
+                vertical: _kSpacing / 2,
+              ),
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
         ],
       ),
     );
@@ -93,6 +300,93 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
           _buildCommentSection(),
         ],
       ),
+    );
+  }
+
+  Widget _buildMessageList() {
+    return ValueListenableBuilder<List<_ChatMessage>>(
+      valueListenable: _chatMessages,
+      builder: (context, messages, child) {
+        final theme = Theme.of(context);
+
+        return Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            reverse: true,
+            padding: const EdgeInsets.symmetric(vertical: _kSpacing),
+            itemCount: messages.length,
+            itemBuilder: (context, index) {
+              final message = messages.reversed.toList()[index];
+              final isUserMessage = message.role == _ChatMessageRole.user;
+              final isAssistantMessage =
+                  message.role == _ChatMessageRole.assistant;
+              final isErrorMessage = message.role == _ChatMessageRole.error;
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: isUserMessage
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: [
+                    if (!isUserMessage)
+                      CircleAvatar(
+                        radius: 16,
+                        backgroundImage:
+                            Image.asset('assets/icons/default.png').image,
+                      ),
+                    const SizedBox(width: _kSpacing / 1.2),
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: theme.shadowColor.withOpacity(0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                          color: isUserMessage
+                              ? theme.colorScheme.surface
+                              : isAssistantMessage
+                                  ? theme.primaryColor.withOpacity(0.05)
+                                  : isErrorMessage
+                                      ? theme.colorScheme.error
+                                          .withOpacity(0.05)
+                                      : Colors.grey[50],
+                          borderRadius: BorderRadius.circular(_kBorderRadius),
+                        ),
+                        child: Text(
+                          message.text,
+                          style: TextStyle(
+                            color: isUserMessage
+                                ? theme.colorScheme.onSurface
+                                : isAssistantMessage
+                                    ? theme.primaryColor
+                                    : isErrorMessage
+                                        ? theme.colorScheme.error
+                                        : Colors.grey[900],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: _kSpacing / 1.2),
+                    if (isUserMessage)
+                      const CircleAvatar(
+                        radius: 16,
+                        backgroundImage: CachedNetworkImageProvider(
+                          'https://i.pravatar.cc/100?u=current_user',
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -370,7 +664,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                 _commentController.clear();
               }
             },
-            icon: const Icon(Icons.send),
+            icon: const Icon(Icons.comment_rounded),
           ),
         ],
       ),
