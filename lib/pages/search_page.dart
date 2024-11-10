@@ -86,16 +86,14 @@ class _SearchPageState extends State<SearchPage> {
         searchRecipesByIngredientsPostRequestModel:
             (SearchRecipesByIngredientsPostRequestModelBuilder()
                   ..ingredients = ListBuilder<String>(_ingredients.value)
-                  ..limit = 20)
+                  ..limit = 20
+                  ..includeDetail = true)
                 .build(),
       );
       final searchRecipes = searchResponse.data!.recipes;
 
       final List<Recipe> recipes = [];
       for (var recipe in searchRecipes) {
-        final getResponse = await api.recipeSearchRecipeIdGet(id: recipe.id);
-        final RecipeGetResponseModel getRecipe = getResponse.data!;
-
         const authors = [
           'John Doe',
           'Jane Doe',
@@ -110,17 +108,17 @@ class _SearchPageState extends State<SearchPage> {
         ];
 
         recipes.add(Recipe(
-          id: getRecipe.id,
-          name: getRecipe.name,
-          author: authors[getRecipe.id % authors.length],
-          imageUrl: 'https://picsum.photos/500/400?${"${getRecipe.id}".hashCode % 10}',
+          id: recipe.id,
+          name: recipe.name,
+          author: authors[recipe.id % authors.length],
+          imageUrl: 'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
           publishDate: DateTime(
-            2020 + '${getRecipe.id}'.hashCode % 4,
-            1 + '${getRecipe.id}'.hashCode % 12,
-            1 + '${getRecipe.id}'.hashCode % 28,
+            2020 + '${recipe.id}'.hashCode % 4,
+            1 + '${recipe.id}'.hashCode % 12,
+            1 + '${recipe.id}'.hashCode % 28,
           ),
-          ingredients: getRecipe.ingredients.toList(),
-          instructions: getRecipe.instructions.toList(),
+          ingredients: recipe.detail!.ingredients.toList(),
+          instructions: recipe.detail!.instructions.toList(),
         ));
       }
 
