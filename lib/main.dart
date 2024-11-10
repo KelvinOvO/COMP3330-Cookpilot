@@ -1,12 +1,14 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'global/app_controller.dart' as app_controller;
 import 'splash_screen.dart';
 import 'config/app_theme.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -14,6 +16,8 @@ void main() {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+  await dotenv.load();
+  app_controller.init();
   DefaultCacheManager().emptyCache();
   runApp(const MyApp());
 }

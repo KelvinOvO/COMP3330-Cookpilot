@@ -1,8 +1,12 @@
+import 'package:app_controller_client/app_controller_client.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:cookpilot/models/recipe.dart';
+import 'package:cookpilot/pages/recipe_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../global/app_controller.dart';
 import '../models/blog_post.dart';
 import '../services/blog_service.dart';
-import './blog_post_detail_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -16,22 +20,27 @@ class _SearchPageState extends State<SearchPage> {
   static const double _kSpacing = 16.0;
   static const double _kBorderRadius = 12.0;
   static const int _kMaxRecentSearches = 4;
-  static const int _kSuggestedRecipesLimit = 5;
+  static const int _kSuggestedRecipesLimit = 8;
 
   // Controllers & Services
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   final BlogService _blogService = BlogService();
   final ValueNotifier<bool> _isLoading = ValueNotifier<bool>(false);
+  final ValueNotifier<String?> _searchError = ValueNotifier<String?>(null);
   final ValueNotifier<String?> _error = ValueNotifier<String?>(null);
 
   // State
+  late final ValueNotifier<List<String>> _ingredients;
+  late final ValueNotifier<List<Recipe>?> _foundRecipes;
   late final ValueNotifier<List<BlogPost>> _suggestedRecipes;
   late final ValueNotifier<List<String>> _recentSearches;
 
   @override
   void initState() {
     super.initState();
+    _ingredients = ValueNotifier<List<String>>([]);
+    _foundRecipes = ValueNotifier<List<Recipe>?>(null);
     _suggestedRecipes = ValueNotifier<List<BlogPost>>([]);
     _recentSearches = ValueNotifier<List<String>>([
       'Basil Pesto Sauce',
@@ -58,17 +67,121 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void _handleSearch(String query) {
-    if (query.isEmpty) return;
+  Future<void> _handleSearch(String ingredient) async {
+    _handleIngredientAdd(ingredient);
+
+    if (_ingredients.value.isEmpty) return;
+
+    _searchFocusNode.unfocus();
+
+    setState(() {
+      _isLoading.value = true;
+      _searchError.value = null;
+    });
+
+    try {
+      final api = appController.getRecipeSearchApi();
+      final searchResponse =
+          await api.recipeSearchSearchRecipesByIngredientsPost(
+        searchRecipesByIngredientsPostRequestModel:
+            (SearchRecipesByIngredientsPostRequestModelBuilder()
+                  ..ingredients = ListBuilder<String>(_ingredients.value)
+                  ..limit = 20)
+                .build(),
+      );
+      final searchRecipes = searchResponse.data!.recipes;
+
+      final List<Recipe> recipes = [];
+      for (var recipe in searchRecipes) {
+        final getResponse = await api.recipeSearchRecipeIdGet(id: recipe.id);
+        final RecipeGetResponseModel getRecipe = getResponse.data!;
+
+        const authors = [
+          'John Doe',
+          'Jane Doe',
+          'Alice Smith',
+          'Bob Johnson',
+          'Charlie Brown',
+          'David Lee',
+          'Eve Wilson',
+          'Frank White',
+          'Grace Davis',
+          'Henry Young',
+        ];
+
+        recipes.add(Recipe(
+          id: getRecipe.id,
+          name: getRecipe.name,
+          author: authors[getRecipe.id % authors.length],
+          imageUrl: 'https://picsum.photos/500/400?${"${getRecipe.id}".hashCode % 10}',
+          publishDate: DateTime(
+            2020 + '${getRecipe.id}'.hashCode % 4,
+            1 + '${getRecipe.id}'.hashCode % 12,
+            1 + '${getRecipe.id}'.hashCode % 28,
+          ),
+          ingredients: getRecipe.ingredients.toList(),
+          instructions: getRecipe.instructions.toList(),
+        ));
+      }
+
+      if (mounted) {
+        setState(() {
+          _foundRecipes.value = recipes.take(_kSuggestedRecipesLimit).toList();
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _searchError.value = 'Failed to load recipes: ${e.toString()}';
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading.value = false;
+        });
+      }
+    }
+  }
+
+  void _handleIngredientAdd(String ingredient) {
+    if (ingredient.isEmpty) return;
+
+    _searchController.clear();
+    _searchFocusNode.requestFocus();
 
     setState(() {
       _recentSearches.value = [
-        query,
-        ..._recentSearches.value.where((item) => item != query)
+        ingredient,
+        ..._recentSearches.value.where((item) => item != ingredient)
       ].take(_kMaxRecentSearches).toList();
-    });
 
-    // TODO: Implement search logic
+      _ingredients.value = [..._ingredients.value, ingredient];
+    });
+  }
+
+  void _handleIngredientEdit(int index, String ingredient) {
+    setState(() {
+      _ingredients.value = [
+        ..._ingredients.value.take(index),
+        ingredient,
+        ..._ingredients.value.skip(index + 1),
+      ];
+    });
+  }
+
+  void _handleIngredientRemove(int index) {
+    setState(() {
+      _ingredients.value = [
+        ..._ingredients.value.take(index),
+        ..._ingredients.value.skip(index + 1),
+      ];
+
+      if (_ingredients.value.isEmpty) {
+        _foundRecipes.value = null;
+        _searchError.value = null;
+      }
+    });
   }
 
   @override
@@ -93,66 +206,198 @@ class _SearchPageState extends State<SearchPage> {
               );
             }
 
-            return CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: _SearchInput(
-                    controller: _searchController,
-                    focusNode: _searchFocusNode,
-                    onSearch: _handleSearch,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: ValueListenableBuilder<List<String>>(
-                    valueListenable: _recentSearches,
-                    builder: (context, searches, _) => _RecentSearches(
-                      searches: searches,
-                      onSearchSelected: (query) {
-                        _searchController.text = query;
-                        _handleSearch(query);
-                      },
-                    ),
-                  ),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.all(_kSpacing),
-                  sliver: SliverToBoxAdapter(
-                    child: Text(
-                      'Suggested Recipes',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.hintColor,
+            return ValueListenableBuilder<List<String>>(
+              valueListenable: _ingredients,
+              builder: (context, ingredients, _) {
+                if (ingredients.isEmpty) {
+                  return CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: _SearchInput(
+                          controller: _searchController,
+                          focusNode: _searchFocusNode,
+                          onSearch: _handleSearch,
+                          onIngredientAdd: _handleIngredientAdd,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: ValueListenableBuilder<List<String>>(
+                          valueListenable: _recentSearches,
+                          builder: (context, searches, _) => _RecentSearches(
+                            searches: searches,
+                            onSearchSelected: _handleIngredientAdd,
+                          ),
+                        ),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.all(_kSpacing),
+                        sliver: SliverToBoxAdapter(
+                          child: Text(
+                            'Suggested Recipes',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: theme.hintColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: _isLoading,
+                        builder: (context, isLoading, _) {
+                          if (isLoading) {
+                            return const SliverFillRemaining(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+
+                          return ValueListenableBuilder<List<BlogPost>>(
+                            valueListenable: _suggestedRecipes,
+                            builder: (context, recipes, _) {
+                              return SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) => _RecipeCard(
+                                    recipe: Recipe(
+                                      id: recipes[index].id.hashCode,
+                                      name: recipes[index].title,
+                                      author: recipes[index].author,
+                                      imageUrl: recipes[index].imageUrl,
+                                      publishDate: DateTime.utc(
+                                        2020 + recipes[index].id.hashCode % 4,
+                                        1 + recipes[index].id.hashCode % 12,
+                                        1 + recipes[index].id.hashCode % 28,
+                                      ),
+                                      ingredients: [],
+                                      instructions: [],
+                                    ),
+                                    onTap: () => _navigateToDetail(Recipe(
+                                      id: recipes[index].id.hashCode,
+                                      name: recipes[index].title,
+                                      author: recipes[index].author,
+                                      imageUrl: recipes[index].imageUrl,
+                                      publishDate: DateTime.utc(
+                                        2020 + recipes[index].id.hashCode % 4,
+                                        1 + recipes[index].id.hashCode % 12,
+                                        1 + recipes[index].id.hashCode % 28,
+                                      ),
+                                      ingredients: [],
+                                      instructions: [],
+                                    )),
+                                  ),
+                                  childCount: recipes.length,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                }
+
+                return CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: _SearchInput(
+                        controller: _searchController,
+                        focusNode: _searchFocusNode,
+                        onSearch: _handleSearch,
+                        onIngredientAdd: _handleIngredientAdd,
                       ),
                     ),
-                  ),
-                ),
-                ValueListenableBuilder<bool>(
-                  valueListenable: _isLoading,
-                  builder: (context, isLoading, _) {
-                    if (isLoading) {
-                      return const SliverFillRemaining(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-
-                    return ValueListenableBuilder<List<BlogPost>>(
-                      valueListenable: _suggestedRecipes,
-                      builder: (context, recipes, _) {
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                                (context, index) => _RecipeCard(
-                              recipe: recipes[index],
-                              onTap: () => _navigateToDetail(recipes[index]),
-                            ),
-                            childCount: recipes.length,
+                    SliverPadding(
+                      padding: const EdgeInsets.all(_kSpacing),
+                      sliver: SliverToBoxAdapter(
+                        child: Text(
+                          'Ingredients',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.hintColor,
                           ),
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: _kSpacing),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) => _IngredientCard(
+                            ingredient: _ingredients.value[index],
+                            onEdit: (ingredient) =>
+                                _handleIngredientEdit(index, ingredient),
+                            onRemove: () => _handleIngredientRemove(index),
+                          ),
+                          childCount: _ingredients.value.length,
+                        ),
+                      ),
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.all(_kSpacing),
+                      sliver: SliverToBoxAdapter(
+                        child: Text(
+                          'Found Recipes',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.hintColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: _isLoading,
+                      builder: (context, isLoading, _) {
+                        if (isLoading) {
+                          return const SliverFillRemaining(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+
+                        return ValueListenableBuilder<String?>(
+                          valueListenable: _searchError,
+                          builder: (context, searchError, _) {
+                            if (searchError != null) {
+                              return SliverFillRemaining(
+                                child: _ErrorView(
+                                  message: searchError,
+                                  onRetry: () => _handleSearch(''),
+                                ),
+                              );
+                            }
+
+                            return ValueListenableBuilder<List<Recipe>?>(
+                              valueListenable: _foundRecipes,
+                              builder: (context, recipes, _) {
+                                if (recipes == null) {
+                                  return const SliverFillRemaining(
+                                    child: Center(
+                                      child: Text(
+                                          'Press the search button to find recipes!'),
+                                    ),
+                                  );
+                                }
+
+                                return SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      return _RecipeCard(
+                                        recipe: recipes[index],
+                                        onTap: () =>
+                                            _navigateToDetail(recipes[index]),
+                                      );
+                                    },
+                                    childCount: recipes.length,
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),
@@ -160,11 +405,13 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  void _navigateToDetail(BlogPost recipe) {
+  void _navigateToDetail(Recipe recipe) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BlogPostDetailPage(post: recipe),
+        builder: (context) => RecipeDetailPage(
+          recipe: recipe,
+        ),
       ),
     );
   }
@@ -174,7 +421,10 @@ class _SearchPageState extends State<SearchPage> {
     _searchController.dispose();
     _searchFocusNode.dispose();
     _isLoading.dispose();
+    _searchError.dispose();
     _error.dispose();
+    _ingredients.dispose();
+    _foundRecipes.dispose();
     _suggestedRecipes.dispose();
     _recentSearches.dispose();
     super.dispose();
@@ -224,11 +474,13 @@ class _SearchInput extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final ValueChanged<String> onSearch;
+  final ValueChanged<String> onIngredientAdd;
 
   const _SearchInput({
     required this.controller,
     required this.focusNode,
     required this.onSearch,
+    required this.onIngredientAdd,
   });
 
   @override
@@ -250,38 +502,42 @@ class _SearchInput extends StatelessWidget {
         child: TextField(
           controller: controller,
           focusNode: focusNode,
+          keyboardType: TextInputType.multiline,
+          textInputAction: TextInputAction.done,
           decoration: InputDecoration(
             filled: true,
             fillColor: theme.colorScheme.surface,
-            hintText: 'Find your next recipe...',
+            hintText: 'Try some ingredients...',
             hintStyle: TextStyle(
               color: theme.hintColor.withOpacity(0.6),
               fontSize: 16,
             ),
-            prefixIcon: Icon(
-              Icons.search_rounded,
-              color: theme.primaryColor,
-              size: 22,
-            ),
+            // prefixIcon: Icon(
+            //   Icons.search_rounded,
+            //   color: theme.primaryColor,
+            //   size: 22,
+            // ),
             suffixIcon: Container(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: theme.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(_SearchPageState._kBorderRadius - 4),
+                borderRadius:
+                    BorderRadius.circular(_SearchPageState._kBorderRadius - 4),
               ),
               child: IconButton(
                 icon: Icon(
-                  Icons.mic_rounded,
+                  Icons.search_rounded,
                   color: theme.primaryColor,
                   size: 20,
                 ),
                 onPressed: () {
-                  // TODO: Implement voice search
+                  onSearch(controller.text);
                 },
               ),
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(_SearchPageState._kBorderRadius),
+              borderRadius:
+                  BorderRadius.circular(_SearchPageState._kBorderRadius),
               borderSide: BorderSide.none,
             ),
             contentPadding: const EdgeInsets.symmetric(
@@ -289,7 +545,7 @@ class _SearchInput extends StatelessWidget {
               vertical: _SearchPageState._kSpacing / 1.2,
             ),
           ),
-          onSubmitted: onSearch,
+          onSubmitted: onIngredientAdd,
         ),
       ),
     );
@@ -374,8 +630,167 @@ class _RecentSearches extends StatelessWidget {
   }
 }
 
+class _IngredientCard extends StatefulWidget {
+  final String ingredient;
+  final ValueChanged<String> onEdit;
+  final VoidCallback onRemove;
+
+  const _IngredientCard({
+    required this.ingredient,
+    required this.onEdit,
+    required this.onRemove,
+  });
+
+  @override
+  State<_IngredientCard> createState() => _IngredientCardState();
+}
+
+class _IngredientCardState extends State<_IngredientCard> {
+  final TextEditingController _controller = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  final ValueNotifier<bool> _isEditing = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.ingredient;
+  }
+
+  void _handleOnConfirmEdit() {
+    widget.onEdit(_controller.text);
+    setState(() {
+      _isEditing.value = false;
+    });
+  }
+
+  void _handleOnStartEdit() {
+    _focusNode.requestFocus();
+    setState(() {
+      _isEditing.value = true;
+    });
+  }
+
+  void _handleOnRemove() {
+    widget.onRemove();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: _SearchPageState._kSpacing / 2,
+        vertical: _SearchPageState._kSpacing / 4,
+      ),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(_SearchPageState._kBorderRadius),
+        boxShadow: [
+          BoxShadow(
+            color: theme.shadowColor.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ValueListenableBuilder<bool>(
+          valueListenable: _isEditing,
+          builder: (context, isEditing, _) {
+            return TextField(
+              controller: _controller,
+              focusNode: _focusNode,
+              readOnly: !isEditing,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                isDense: true,
+                filled: true,
+                fillColor: theme.colorScheme.surface,
+                hintText: 'Try some ingredients...',
+                hintStyle: TextStyle(
+                  color: theme.hintColor.withOpacity(0.6),
+                  fontSize: 16,
+                ),
+                prefixIcon: const Icon(
+                  Icons.category_rounded,
+                  size: 22,
+                ),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    isEditing
+                        ? Container(
+                            margin: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: theme.primaryColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(
+                                  _SearchPageState._kBorderRadius - 4),
+                            ),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.check_rounded,
+                                color: theme.primaryColor,
+                                size: 20,
+                              ),
+                              onPressed: _handleOnConfirmEdit,
+                            ),
+                          )
+                        : Container(
+                            margin: const EdgeInsets.all(2),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit_rounded,
+                                color: theme.primaryColor,
+                                size: 20,
+                              ),
+                              onPressed: _handleOnStartEdit,
+                            ),
+                          ),
+                    Container(
+                      margin: const EdgeInsets.all(2),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: theme.colorScheme.error,
+                          size: 20,
+                        ),
+                        onPressed: _handleOnRemove,
+                      ),
+                    ),
+                  ],
+                ),
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(_SearchPageState._kBorderRadius),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: _SearchPageState._kSpacing,
+                  vertical: _SearchPageState._kSpacing / 1.2,
+                ),
+              ),
+              onSubmitted: (value) {
+                if (isEditing) {
+                  _handleOnConfirmEdit();
+                }
+              },
+            );
+          }),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    _isEditing.dispose();
+    super.dispose();
+  }
+}
+
 class _RecipeCard extends StatelessWidget {
-  final BlogPost recipe;
+  final Recipe recipe;
   final VoidCallback onTap;
 
   const _RecipeCard({
@@ -399,7 +814,8 @@ class _RecipeCard extends StatelessWidget {
           padding: const EdgeInsets.all(_SearchPageState._kSpacing),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(_SearchPageState._kBorderRadius),
+            borderRadius:
+                BorderRadius.circular(_SearchPageState._kBorderRadius),
             boxShadow: [
               BoxShadow(
                 color: theme.shadowColor.withOpacity(0.05),
@@ -476,7 +892,7 @@ class _RecipeImage extends StatelessWidget {
 }
 
 class _RecipeInfo extends StatelessWidget {
-  final BlogPost recipe;
+  final Recipe recipe;
 
   const _RecipeInfo({required this.recipe});
 
@@ -488,7 +904,7 @@ class _RecipeInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          recipe.title,
+          recipe.name,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
             height: 1.2,
@@ -560,14 +976,14 @@ class _RecipeInfo extends StatelessWidget {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}';
   }
 
-  String _getCookingTime(BlogPost recipe) {
-    final minTime = 45 + (recipe.id.hashCode % 15);
-    final maxTime = 60 + (recipe.id.hashCode % 30);
+  String _getCookingTime(Recipe recipe) {
+    final minTime = 45 + ('${recipe.id}'.hashCode % 15);
+    final maxTime = 60 + ('${recipe.id}'.hashCode % 30);
     return '$minTime~${maxTime}min';
   }
 
-  String _getCalories(BlogPost recipe) {
-    return '${100 + (recipe.id.hashCode % 538)}';
+  String _getCalories(Recipe recipe) {
+    return '${100 + ('${recipe.id}'.hashCode % 538)}';
   }
 }
 
