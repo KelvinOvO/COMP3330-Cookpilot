@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 
-  class CamaraPage extends StatefulWidget {
-    const CamaraPage({super.key});
+  class CameraPage extends StatefulWidget {
+    const CameraPage({super.key});
   @override
-    State<CamaraPage> createState() => _CamaraPageState();
+    State<CameraPage> createState() => _CameraPageState();
   }
 
-  class _CamaraPageState extends State<CamaraPage> {
+  class _CameraPageState extends State<CameraPage> {
     final ImagePicker _picker = ImagePicker();
     XFile? _image;
 
