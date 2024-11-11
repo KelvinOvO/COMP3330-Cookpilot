@@ -1,3 +1,4 @@
+// lib/pages/camera_page.dart
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -290,7 +291,7 @@ class _CameraPageState extends State<CameraPage> {
       children: [
         ...displayResults.map((result) {
           return Container(
-            margin: const EdgeInsets.only(bottom: 16), // 統一設置每個項目的間距
+            margin: const EdgeInsets.only(bottom: 16),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,

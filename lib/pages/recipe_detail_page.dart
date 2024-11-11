@@ -1,3 +1,4 @@
+// lib/pages/recipe_detail_page.dart
 import 'package:app_controller_client/app_controller_client.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:cookpilot/models/recipe.dart';
