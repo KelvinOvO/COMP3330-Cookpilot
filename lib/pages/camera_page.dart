@@ -1,9 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import '../services/upload_photo.dart';
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
   @override
@@ -66,6 +67,8 @@ class _CameraPageState extends State<CameraPage> {
       'suggestions': ['Can make salads', 'Keep refrigerated', 'Suitable for raw or cooked']
     }
   ];
+  // Retrieved ingredient data from photo recognition
+  late List<Map<String, dynamic>> _Ingredients ;
 
   Future<void> _getImage(ImageSource source) async {
     try {
@@ -79,11 +82,35 @@ class _CameraPageState extends State<CameraPage> {
           _image = image;
           _isLoading = true;
         });
-        await _simulateAnalysis();
+        // await _simulateAnalysis();
+        _Ingredients = await UploadPhotoService.callMainFunction(_image!.path);
+        await _AIAnalysis();
       }
     } catch (e) {
       _showErrorDialog('Failed to get image: $e');
     }
+  }
+
+  Future<void> _AIAnalysis() async {
+    // Simulate analysis delay
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Randomly select an ingredient
+    final ingredient = _Ingredients[_random.nextInt(_Ingredients.length)];
+
+    // Add some random variations
+    final result = {
+      ...ingredient,
+      'confidence': (85 + _random.nextInt(15)).toString() + '%',
+      'timestamp': DateTime.now().toString(),
+      'image': _image!.path,
+    };
+
+    setState(() {
+      _result = result;
+      _history.insert(0, result);
+      _isLoading = false;
+    });
   }
 
   Future<void> _simulateAnalysis() async {
