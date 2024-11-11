@@ -158,63 +158,56 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFF6F6F6), Colors.white],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFF6F6F6), Colors.white],
+            ),
           ),
         ),
-        child: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                expandedHeight: 120.0,
-                floating: true,
-                pinned: false,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: const Text(
-                    'Ingredient Analysis',
-                    style: TextStyle(
-                      color: Color(0xFF1A1A1A),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  collapseMode: CollapseMode.none,
-                  background: ClipRRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(
-                        color: Colors.white.withOpacity(0.6),
-                      ),
-                    ),
-                  ),
-                ),
+        title: Text(
+          'Ingredient Analysis',
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1A1A1A),
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFF6F6F6), Colors.white],
+            ),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildImagePreview(),
+                  const SizedBox(height: 16),
+                  _buildActionButtons(), // Gallery and Camera Button
+                  const SizedBox(height: 24),
+                  if (_result != null) _buildSearchButton(), // Search Button
+                  const SizedBox(height: 24),
+                  if (_result != null) _buildAnalysisResult(),
+                  const SizedBox(height: 16),
+                  _buildHistory(),
+                ],
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildImagePreview(),
-                      const SizedBox(height: 16),
-                      _buildActionButtons(), // Gallery and Camera Button
-                      const SizedBox(height: 24),
-                      if (_result != null) _buildSearchButton(), // Search Button
-                      const SizedBox(height: 24),
-                      if (_result != null) _buildAnalysisResult(),
-                      const SizedBox(height: 16),
-                      _buildHistory(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

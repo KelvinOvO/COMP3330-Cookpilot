@@ -442,13 +442,23 @@ class _SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
 
     return AppBar(
+      backgroundColor: Colors.white,
       elevation: 0,
-      backgroundColor: theme.scaffoldBackgroundColor,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFFF6F6F6), Colors.white],
+          ),
+        ),
+      ),
       centerTitle: true,
       title: Text(
         'Search',
         style: theme.textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.w600,
+          color: const Color(0xFF1A1A1A),
         ),
       ),
       actions: [
