@@ -29,69 +29,58 @@ class UploadPhotoService {
             {
               "type": "text",
               "text":
-              """You are an AI assistant that analyzes images provided by the user to identify food ingredients. For each ingredient detected in the image, return an array of objects in JSON format. Each object should include the following properties:
-name: The name of the ingredient.
-calories: The calorie content per 100g of the ingredient.
-protein: The protein content per 100g of the ingredient.
-fat: The fat content per 100g of the ingredient.
-carbs: The carbohydrate content per 100g of the ingredient.
-freshness: A description of the ingredient's freshness (e.g., 'Fresh', 'Stale').
-suggestions: An array of suggestions for using the ingredient.
+              """You are an AI assistant that analyzes images provided by the user to identify food ingredients. For each ingredient detected in the image, return an array of objects in JSON format. Each object should include the following properties: 
+              name: The name of the ingredient.
+              calories: The calorie content per 100g of the ingredient.
+              protein: The protein content per 100g of the ingredient.
+              fat: The fat content per 100g of the ingredient.
+              carbs: The carbohydrate content per 100g of the ingredient.
+              freshness: A description of the ingredient's freshness (e.g., 'Fresh', 'Stale').
+              suggestions: An array of suggestions for using the ingredient.
+              The JSON structure should look like this:
+                [
+                  {
+                   "name": "ingredient_name_1",
+                   "calories": ingredient_calories_1,
+                   "protein": ingredient_protein_1,
+                   "fat": ingredient_fat_1,
+                   "carbs": ingredient_carbs_1,
+                   "freshness": "ingredient_freshness_1",
+                   "suggestions": ["suggestion_1", "suggestion_2", "suggestion_3"]
+                  },
+                  {
+                   "name": "ingredient_name_2",
+                   "calories": ingredient_calories_2,
+                   "protein": ingredient_protein_2,
+                   "fat": ingredient_fat_2,
+                   "carbs": ingredient_carbs_2,
+                   "freshness": "ingredient_freshness_2",
+                   "suggestions": ["suggestion_1", "suggestion_2", "suggestion_3"]
+                  }
+                ]
 
-
-
-
-The JSON structure should look like this:
-
-
-
-  [
-    {
-     "name": "ingredient_name_1",
-     "calories": ingredient_calories_1,
-     "protein": ingredient_protein_1,
-     "fat": ingredient_fat_1,
-     "carbs": ingredient_carbs_1,
-     "freshness": "ingredient_freshness_1",
-     "suggestions": ["suggestion_1", "suggestion_2", "suggestion_3"]
-    },
-    {
-     "name": "ingredient_name_2",
-     "calories": ingredient_calories_2,
-     "protein": ingredient_protein_2,
-     "fat": ingredient_fat_2,
-     "carbs": ingredient_carbs_2,
-     "freshness": "ingredient_freshness_2",
-     "suggestions": ["suggestion_1", "suggestion_2", "suggestion_3"]
-    }
-  ]
-
-
-
-
-For example, if the image contains an apple and a chicken breast, the output should be:
-
-  [
-    {
-     "name": "Apple",
-     "calories": 52,
-     "protein": 0.3,
-     "fat": 0.2,
-     "carbs": 14,
-     "freshness": "Fresh",
-     "suggestions": ["Can make apple pie", "Recommend refrigeration", "Suitable for raw consumption"]
-    },
-    {
-     "name": "Chicken",
-     "calories": 165,
-     "protein": 31,
-     "fat": 3.6,
-     "carbs": 0,
-     "freshness": "Fresh",
-     "suggestions": ["Can be grilled, fried, or sautéed", "Recommend freezing", "Suitable for various cooking methods"]
-    }
-  ]
-"""
+              For example, if the image contains an apple and a chicken breast, the output should be:
+                [
+                  {
+                   "name": "Apple",
+                   "calories": 52,
+                   "protein": 0.3,
+                   "fat": 0.2,
+                   "carbs": 14,
+                   "freshness": "Fresh",
+                   "suggestions": ["Can make apple pie", "Recommend refrigeration", "Suitable for raw consumption"]
+                  },
+                  {
+                   "name": "Chicken",
+                   "calories": 165,
+                   "protein": 31,
+                   "fat": 3.6,
+                   "carbs": 0,
+                   "freshness": "Fresh",
+                   "suggestions": ["Can be grilled, fried, or sautéed", "Recommend freezing", "Suitable for various cooking methods"]
+                  }
+                ]
+              """
 
             }
           ]
@@ -121,77 +110,31 @@ For example, if the image contains an apple and a chicken breast, the output sho
         headers: headers,
         body: jsonEncode(payload),
       );
-      // log("1");
+
       if (response.statusCode != 200) {
         throw Exception("Failed to make the request. Error: ${response.reasonPhrase}");
       }
 
-
-
-      final responseData = jsonDecode(response.body)["choices"][0]["message"]["content"];
+      // Get response data
+      String responseData = jsonDecode(response.body)["choices"][0]["message"]["content"];
       log(responseData);
-      var data = responseData.replaceAll("```json", "").replaceAll("```", "");
-      log (data);
-      try {
-        List<dynamic> jsonResponse = json.decode(data);
+
+      // Extract JSON data from response using regex
+      final jsonMatch = RegExp(r'\[.*\]', dotAll: true).firstMatch(responseData);
+
+      if (jsonMatch != null) {
+        // Get json data from response and decode it
+        String jsonString = jsonMatch.group(0)!;
+        List<dynamic> jsonResponse = json.decode(jsonString);
         List<Map<String, dynamic>> message = jsonResponse.cast<Map<String, dynamic>>();
 
-        return(message);
-      } catch (e) {
-        print("Error decoding message content: $e");
+        return message;
+      } else {
+        throw FormatException("No JSON data found in response");
       }
-
-
     } catch (e) {
       log("upload photo Error: $e");
+      rethrow;
     }
-    final List<Map<String, dynamic>> mockIngredients = [
-      {
-        'name': 'Apple',
-        'calories': 52,
-        'protein': 0.3,
-        'fat': 0.2,
-        'carbs': 14,
-        'freshness': 'Fresh',
-        'suggestions': ['Can make apple pie', 'Recommend refrigeration', 'Suitable for raw consumption']
-      },
-      {
-        'name': 'Chicken',
-        'calories': 165,
-        'protein': 31,
-        'fat': 3.6,
-        'carbs': 0,
-        'freshness': 'Fresh',
-        'suggestions': ['Can be grilled, fried, or sautéed', 'Recommend freezing', 'Suitable for various cooking methods']
-      },
-      {
-        'name': 'Tomato',
-        'calories': 18,
-        'protein': 0.9,
-        'fat': 0.2,
-        'carbs': 3.9,
-        'freshness': 'Fresh',
-        'suggestions': ['Can make salads', 'Room temperature storage', 'Suitable for raw or cooked']
-      },
-      {
-        'name': 'Salmon',
-        'calories': 208,
-        'protein': 22,
-        'fat': 13,
-        'carbs': 0,
-        'freshness': 'Fresh',
-        'suggestions': ['Recommended for sashimi', 'Keep refrigerated', 'Suitable for grilling']
-      },
-      {
-        'name': 'Carrot',
-        'calories': 41,
-        'protein': 0.9,
-        'fat': 0.2,
-        'carbs': 10,
-        'freshness': 'Fresh',
-        'suggestions': ['Can make salads', 'Keep refrigerated', 'Suitable for raw or cooked']
-      }
-    ];
-    return mockIngredients;
   }
 }
