@@ -62,6 +62,13 @@ class BlogService {
     return posts.take(10).toList();
   }
 
+  // fetch posts from a specific user
+  Future<List<BlogPost>> fetchUserPosts(String userId) async {
+    await Future.delayed(const Duration(seconds: 1));
+    final posts = await _loadPosts();
+    return posts.where((post) => post.author == userId).toList();
+  }
+
   Future<List<BlogPost>> refreshPosts() async {
     await Future.delayed(const Duration(seconds: 1));
     final posts = await _loadPosts();

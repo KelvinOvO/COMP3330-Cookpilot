@@ -1171,6 +1171,47 @@
           ]
         }
       ]
-    }
+    },
+	{
+	  "id": "post_31",
+	  "title": "Homemade Pasta",
+	  "author": "Ray",
+	  "likes": 3330,
+	  "imageUrl": "https://picsum.photos/500/400?31",
+	  "content": "To make homemade pasta, you only need a few simple ingredients and some basic techniques. Here’s a comprehensive guide to get you started.\n\n## Ingredients\n\nYou will need:\n\n- **Flour**: 2 cups of all-purpose flour (or a mix of flours like “00” flour or semolina for different textures)\n- **Eggs**: 3 large eggs (room temperature preferred for better mixing)\n- **Olive Oil**: ½ tablespoon (for added richness)\n- **Salt**: ½ teaspoon (for flavor)\n\n## Equipment\n\n- Clean work surface or large bowl\n- Rolling pin or pasta maker\n- Knife or pasta cutter\n- Plastic wrap\n\n## Instructions\n\n### 1. Prepare the Dough\n- **Make a Flour Well**: On a clean surface, mound the flour and create a well in the center. \n- **Add Ingredients**: Crack the eggs into the well, add olive oil and salt.\n- **Mix**: Using a fork, gently beat the eggs while slowly incorporating the flour from the edges of the well. Be careful not to break through the walls of flour too soon.\n- **Knead the Dough**: Once the mixture starts to come together, use your hands to form it into a shaggy ball. Knead the dough for about 8–10 minutes until it becomes smooth and elastic. If it feels too dry, add a little water; if it's too sticky, dust with more flour.\n\n### 2. Rest the Dough\n- Shape the kneaded dough into a ball, wrap it in plastic wrap, and let it rest at room temperature for about 30 minutes. This helps relax the gluten, making it easier to roll out later.\n\n### 3. Roll Out the Dough\n- After resting, divide the dough into four pieces. Keep the pieces you are not using covered to prevent them from drying out.\n- Flatten one piece slightly with your hands or a rolling pin. If using a pasta maker, start with the widest setting and pass the dough through several times, folding it in half each time until smooth.\n- Gradually reduce the thickness setting on your pasta maker, rolling it through each setting until you reach your desired thickness (usually between levels 4 and 6).\n\n### 4. Cut and Shape\n- Once rolled out, you can cut your pasta into your desired shape (fettuccine, tagliatelle, etc.) using a knife or pasta cutter.\n- Dust cut pasta with flour to prevent sticking and lay it flat on a floured surface or hang it to dry slightly.\n\n### 5. Cook Your Pasta\n- Bring a large pot of salted water to a boil. Add your fresh pasta and cook for about 1–5 minutes, depending on thickness. Fresh pasta cooks much quicker than dried pasta.\n- Drain and serve immediately with your choice of sauce.\n\n## Tips for Success\n- **Experiment with Flours**: While all-purpose flour works well, trying different types like semolina or “00” flour can yield different textures.\n- **Keep Everything Floured**: To prevent sticking, always keep your work surface and pasta lightly floured.\nBy following these steps, you'll be able to create delicious homemade pasta that can elevate any meal! Enjoy your cooking!",
+	  "publishDate": "2024-11-01T05:52:00Z",
+	  "comments": [
+		{
+		  "id": "comment_31_1",
+		  "userId": "user_81",
+		  "userName": "PastaLover3330",
+		  "userAvatar": "https://i.pravatar.cc/150?u=81",
+		  "content": "Nice guide! Keep it up! 🌿",
+		  "createdAt": "2024-11-02T12:15:00Z",
+		  "likes": 333,
+		  "replies": [
+			{
+			  "id": "reply_31_1_1",
+			  "userId": "user_82",
+			  "userName": "pasuta",
+			  "userAvatar": "https://i.pravatar.cc/150?u=82",
+			  "content": "I tried this guide and it taste really well on first go!",
+			  "createdAt": "2024-11-02T13:57:00Z",
+			  "likes": 55
+			},
+			{
+			  "id": "reply_31_1_2",
+			  "userId": "user_83",
+			  "userName": "PeacefulDough",
+			  "userAvatar": "https://i.pravatar.cc/150?u=83",
+			  "content": "Highly recommend! 🙌",
+			  "createdAt": "2024-11-04T00:01:00Z",
+			  "likes": 32
+			}
+		  ]
+		}
+	  ]
+	}
+    
   ]
 }

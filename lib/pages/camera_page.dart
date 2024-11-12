@@ -1,10 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../services/upload_photo.dart';
+
+
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
   @override
@@ -12,14 +13,12 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  bool isExpanded = false;
-
   final ImagePicker _picker = ImagePicker();
   final Random _random = Random();
   XFile? _image;
   Map<String, dynamic>? _result;
   bool _isLoading = false;
-  List<Map<String, dynamic>> _history = [];
+  final List<Map<String, dynamic>> _history = [];
 
   // Simulated ingredient data
   final List<Map<String, dynamic>> _mockIngredients = [
@@ -95,26 +94,26 @@ class _CameraPageState extends State<CameraPage> {
 
   Future<void> _AIAnalysis() async {
     // Simulate analysis delay
-    //await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Randomly select an ingredient
-    List<Map<String, dynamic>> results = _Ingredients.map((ingredient) {
-      return {
-        ...ingredient,
-        'confidence': (85 + _random.nextInt(15)).toString() + '%',
-        'timestamp': DateTime.now().toString(),
-        'image': _image!.path,
-      };
-    }).toList();
+    final ingredient = _Ingredients[_random.nextInt(_Ingredients.length)];
+
+    // Add some random variations
+    final result = {
+      ...ingredient,
+      'confidence': '${85 + _random.nextInt(15)}%',
+      'timestamp': DateTime.now().toString(),
+      'image': _image!.path,
+    };
 
     setState(() {
-      _result = results.isNotEmpty ? results[0] : null;
-      _history.insertAll(0, results);
+      _result = result;
+      _history.insert(0, result);
       _isLoading = false;
     });
   }
 
-  //TODO: Delete this function
   Future<void> _simulateAnalysis() async {
     // Simulate analysis delay
     await Future.delayed(const Duration(seconds: 2));
@@ -125,7 +124,7 @@ class _CameraPageState extends State<CameraPage> {
     // Add some random variations
     final result = {
       ...ingredient,
-      'confidence': (85 + _random.nextInt(15)).toString() + '%',
+      'confidence': '${85 + _random.nextInt(15)}%',
       'timestamp': DateTime.now().toString(),
       'image': _image!.path,
     };
@@ -172,7 +171,7 @@ class _CameraPageState extends State<CameraPage> {
               SliverAppBar(
                 expandedHeight: 120.0,
                 floating: true,
-                pinned: false,
+                pinned: true,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
@@ -183,7 +182,6 @@ class _CameraPageState extends State<CameraPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  collapseMode: CollapseMode.none,
                   background: ClipRRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -201,13 +199,11 @@ class _CameraPageState extends State<CameraPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildImagePreview(),
-                      const SizedBox(height: 16),
-                      _buildActionButtons(), // Gallery and Camera Button
-                      const SizedBox(height: 24),
-                      if (_result != null) _buildSearchButton(), // Search Button
                       const SizedBox(height: 24),
                       if (_result != null) _buildAnalysisResult(),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
+                      _buildActionButtons(),
+                      const SizedBox(height: 32),
                       _buildHistory(),
                     ],
                   ),
@@ -247,9 +243,9 @@ class _CameraPageState extends State<CameraPage> {
             else
               Container(
                 color: Colors.grey[100],
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.camera_alt_outlined,
                       size: 60,
@@ -282,86 +278,58 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _buildAnalysisResult() {
-    List<Map<String, dynamic>> displayResults =
-    isExpanded ? _history : _history.take(3).toList();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ...displayResults.map((result) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 16), // 統一設置每個項目的間距
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      result['name'],
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF34C759).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        result['confidence'],
-                        style: const TextStyle(
-                          color: Color(0xFF34C759),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                _buildNutritionInfo(result),
-                const SizedBox(height: 20),
-                _buildSuggestions(result),
-              ],
-            ),
-          );
-        }).toList(),
-        if (_history.length > 3)
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                });
-              },
-              child: Text(isExpanded ? 'Show Less' : 'Show All'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _result!['name'],
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF34C759).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  _result!['confidence'],
+                  style: const TextStyle(
+                    color: Color(0xFF34C759),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
-      ],
+          const SizedBox(height: 20),
+          _buildNutritionInfo(),
+          const SizedBox(height: 20),
+          _buildSuggestions(),
+        ],
+      ),
     );
   }
 
-  Widget _buildNutritionInfo(Map<String, dynamic> result) {
+  Widget _buildNutritionInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -376,10 +344,10 @@ class _CameraPageState extends State<CameraPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNutritionItem('Calories', '${result['calories']}kcal'),
-            _buildNutritionItem('Protein', '${result['protein']}g'),
-            _buildNutritionItem('Fat', '${result['fat']}g'),
-            _buildNutritionItem('Carbs', '${result['carbs']}g'),
+            _buildNutritionItem('Calories', '${_result!['calories']}kcal'),
+            _buildNutritionItem('Protein', '${_result!['protein']}g'),
+            _buildNutritionItem('Fat', '${_result!['fat']}g'),
+            _buildNutritionItem('Carbs', '${_result!['carbs']}g'),
           ],
         ),
       ],
@@ -409,7 +377,7 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
-  Widget _buildSuggestions(Map<String, dynamic> result) {
+  Widget _buildSuggestions() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -421,7 +389,7 @@ class _CameraPageState extends State<CameraPage> {
           ),
         ),
         const SizedBox(height: 12),
-        ...(result['suggestions'] as List).map((suggestion) => Padding(
+        ...(_result!['suggestions'] as List).map((suggestion) => Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: Row(
             children: [
@@ -434,7 +402,7 @@ class _CameraPageState extends State<CameraPage> {
               Text(suggestion),
             ],
           ),
-        )).toList(),
+        )),
       ],
     );
   }
@@ -460,17 +428,6 @@ class _CameraPageState extends State<CameraPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildSearchButton() {
-    return _buildActionButton(
-      icon: Icons.search,
-      label: 'Search',
-      color: const Color(0xFFFF9500),
-      onTap: () {
-        //TODO: Implement search function
-      },
     );
   }
 
