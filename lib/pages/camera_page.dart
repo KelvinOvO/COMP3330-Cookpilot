@@ -13,63 +13,16 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
-  bool isExpanded = false;
+  bool isExpanded_result = false;
+  bool isExpanded_history = false;
 
   final ImagePicker _picker = ImagePicker();
   final Random _random = Random();
   XFile? _image;
-  Map<String, dynamic>? _result;
+  List<Map<String, dynamic>> _result = [];
   bool _isLoading = false;
   List<Map<String, dynamic>> _history = [];
 
-  // Simulated ingredient data
-  final List<Map<String, dynamic>> _mockIngredients = [
-    {
-      'name': 'Apple',
-      'calories': 52,
-      'protein': 0.3,
-      'fat': 0.2,
-      'carbs': 14,
-      'freshness': 'Fresh',
-      'suggestions': ['Can make apple pie', 'Recommend refrigeration', 'Suitable for raw consumption']
-    },
-    {
-      'name': 'Chicken',
-      'calories': 165,
-      'protein': 31,
-      'fat': 3.6,
-      'carbs': 0,
-      'freshness': 'Fresh',
-      'suggestions': ['Can be grilled, fried, or sautéed', 'Recommend freezing', 'Suitable for various cooking methods']
-    },
-    {
-      'name': 'Tomato',
-      'calories': 18,
-      'protein': 0.9,
-      'fat': 0.2,
-      'carbs': 3.9,
-      'freshness': 'Fresh',
-      'suggestions': ['Can make salads', 'Room temperature storage', 'Suitable for raw or cooked']
-    },
-    {
-      'name': 'Salmon',
-      'calories': 208,
-      'protein': 22,
-      'fat': 13,
-      'carbs': 0,
-      'freshness': 'Fresh',
-      'suggestions': ['Recommended for sashimi', 'Keep refrigerated', 'Suitable for grilling']
-    },
-    {
-      'name': 'Carrot',
-      'calories': 41,
-      'protein': 0.9,
-      'fat': 0.2,
-      'carbs': 10,
-      'freshness': 'Fresh',
-      'suggestions': ['Can make salads', 'Keep refrigerated', 'Suitable for raw or cooked']
-    }
-  ];
   // Retrieved ingredient data from photo recognition
   late List<Map<String, dynamic>> _Ingredients ;
 
@@ -95,10 +48,11 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> _AIAnalysis() async {
-    // Simulate analysis delay
-    //await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _isLoading = true;
+      _result = [];
+    });
 
-    // Randomly select an ingredient
     List<Map<String, dynamic>> results = _Ingredients.map((ingredient) {
       return {
         ...ingredient,
@@ -109,31 +63,8 @@ class _CameraPageState extends State<CameraPage> {
     }).toList();
 
     setState(() {
-      _result = results.isNotEmpty ? results[0] : null;
-      _history.insertAll(0, results);
-      _isLoading = false;
-    });
-  }
-
-  //TODO: Delete this function
-  Future<void> _simulateAnalysis() async {
-    // Simulate analysis delay
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Randomly select an ingredient
-    final ingredient = _mockIngredients[_random.nextInt(_mockIngredients.length)];
-
-    // Add some random variations
-    final result = {
-      ...ingredient,
-      'confidence': (85 + _random.nextInt(15)).toString() + '%',
-      'timestamp': DateTime.now().toString(),
-      'image': _image!.path,
-    };
-
-    setState(() {
-      _result = result;
-      _history.insert(0, result);
+      _result = results; // 将新分析的所有结果显示在界面上
+      _history.insertAll(0, results); // 将所有结果保存到历史记录中
       _isLoading = false;
     });
   }
@@ -276,8 +207,10 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _buildAnalysisResult() {
-    List<Map<String, dynamic>> displayResults =
-    isExpanded ? _history : _history.take(3).toList();
+    if (_result.isEmpty) return const SizedBox.shrink();
+
+    // 控制是否展示全部结果
+    List<Map<String, dynamic>> displayResults = isExpanded_result ? _result : _result.take(3).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,15 +267,15 @@ class _CameraPageState extends State<CameraPage> {
             ),
           );
         }).toList(),
-        if (_history.length > 3)
+        if (_result.length > 3)
           Center(
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  isExpanded = !isExpanded;
+                  isExpanded_result = !isExpanded_result;
                 });
               },
-              child: Text(isExpanded ? 'Show Less' : 'Show All'),
+              child: Text(isExpanded_result ? 'Show Less' : 'Show All'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 shape: RoundedRectangleBorder(
@@ -511,6 +444,8 @@ class _CameraPageState extends State<CameraPage> {
   Widget _buildHistory() {
     if (_history.isEmpty) return const SizedBox.shrink();
 
+    List<Map<String, dynamic>> displayHistory = isExpanded_history ? _history : _history.take(3).toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -522,62 +457,73 @@ class _CameraPageState extends State<CameraPage> {
           ),
         ),
         const SizedBox(height: 16),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: _history.length,
-          itemBuilder: (context, index) {
-            final item = _history[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
+        ...displayHistory.map((item) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: ListTile(
+                contentPadding: const EdgeInsets.all(12),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.file(
+                    File(item['image']),
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.all(12),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      File(item['image']),
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
+                title: Text(
+                  item['name'],
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
                   ),
-                  title: Text(
-                    item['name'],
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                subtitle: Text(
+                  'Calories: ${item['calories']}kcal',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 12,
                   ),
-                  subtitle: Text(
-                    'Calories: ${item['calories']}kcal',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
-                    ),
-                  ),
-                  trailing: Text(
-                    item['confidence'],
-                    style: const TextStyle(
-                      color: Color(0xFF34C759),
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                trailing: Text(
+                  item['confidence'],
+                  style: const TextStyle(
+                    color: Color(0xFF34C759),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        }).toList(),
+        if (_history.length > 3)
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isExpanded_history = !isExpanded_history;
+                });
+              },
+              child: Text(isExpanded_history ? 'Show Less' : 'Show All'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
