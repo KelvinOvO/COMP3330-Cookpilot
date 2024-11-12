@@ -1,3 +1,4 @@
+// lib/models/recipe.dart
 import 'comment.dart';
 
 class Recipe {
