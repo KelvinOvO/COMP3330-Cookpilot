@@ -1,3 +1,4 @@
+
 // lib/pages/history_page.dart
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class HistoryPage extends StatelessWidget {
           'History',
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w600,
-            color: Color(0xFF1A1A1A),
+            color: const Color(0xFF1A1A1A),
           ),
         ),
         centerTitle: true,
@@ -39,12 +40,12 @@ class HistoryPage extends StatelessWidget {
               colors: [Color(0xFFF6F6F6), Colors.white],
             ),
           ),
-          child: SafeArea(
+          child: const SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Center(
                     child: Text(
                       'History Page Content',

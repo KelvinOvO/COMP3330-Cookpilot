@@ -298,9 +298,7 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-              'https://i.pravatar.cc/100?u=current_user',
-            ),
+            backgroundImage: AssetImage('assets/profile/profile_picture.jpg'),
           ),
           const SizedBox(width: 12),
           Expanded(
