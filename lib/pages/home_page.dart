@@ -8,6 +8,9 @@ import './blog_post_detail_page.dart';
 import '../services/blog_service.dart';
 import '../widgets/app_drawer.dart';
 import './post_blog.dart';
+import '../services/history_service.dart';
+import 'package:provider/provider.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +21,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+
+  // Initialize a list to store viewed post history
+  List<BlogPost> viewedPosts = [];
+
   static const _tabCount = 3;
   static const _loadThreshold = 200.0;
 
@@ -399,6 +406,10 @@ class _HomePageState extends State<HomePage>
   }
 
   void _navigateToDetail(BlogPost post) {
+    // Record the view in the history service
+    final historyService = Provider.of<HistoryService>(context, listen: false);
+    historyService.addViewedPost(post);
+
     Navigator.push(
       context,
       MaterialPageRoute(

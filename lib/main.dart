@@ -8,6 +8,7 @@ import 'splash_screen.dart';
 import 'config/app_theme.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'providers/auth_provider.dart';
+import 'services/history_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => HistoryService()),
       ],
       child: MaterialApp(
         title: 'Cookpilot',
