@@ -17,7 +17,7 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStateMixin{
   final BlogService _blogService = BlogService();
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   final ScrollController _scrollController = ScrollController();
@@ -32,12 +32,37 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  late AnimationController _loginAnimationController;
+  late Animation<double> _fadeAnimation;
+  bool _isLoggingIn = false;
+
   @override
   void initState() {
     super.initState();
+    _loginAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _loginAnimationController,
+      curve: Curves.easeOutCubic,
+    );
+
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn) {
-      _loadUserPosts();
+      _loadUserPosts().then((_) {
+        _loginAnimationController.forward();
+      });
     }
+  }
+
+
+  @override
+  void dispose() {
+    _loginAnimationController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadUserPosts() async {
@@ -91,16 +116,47 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  void _login() {
+  void _login() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
-    if (username == 'Ray' && password == 'raywong1234') {
-      context.read<AuthProvider>().login(username);
-      _loadUserPosts();
-    } else {
+    if (username.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid username or password')),
+        const SnackBar(content: Text('Please enter username and password')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isLoggingIn = true;
+    });
+
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      if (username == 'Ray' && password == 'raywong1234') {
+        _loginAnimationController.reset();
+        context.read<AuthProvider>().login(username);
+        await _loadUserPosts();
+        await Future.microtask(() {});
+        await _loginAnimationController.forward();
+        setState(() {
+          _isLoggingIn = false;
+        });
+      } else {
+        setState(() {
+          _isLoggingIn = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid username or password')),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        _isLoggingIn = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred. Please try again.')),
       );
     }
   }
@@ -110,131 +166,238 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildLoginForm() {
-    return SingleChildScrollView(
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 400),
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 50), // Fixed margin
-        padding: const EdgeInsets.all(16),
-        child: Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.lock_outlined,
-                  size: 50,
-                  color: Color(0xFF2196F3),
-                ),
-                const SizedBox(height: 24),
-                const Text(
-                  'Welcome Back',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1F1F1F),
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeOutCubic,
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: Offset(0, 20 * (1 - value)),
+          child: Opacity(
+            opacity: value,
+            child: SingleChildScrollView(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 400),
+                margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 50),
+                padding: const EdgeInsets.all(16),
+                child: Card(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Logo Animation
+                        TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          duration: const Duration(milliseconds: 1000),
+                          curve: Curves.elasticOut,
+                          builder: (context, value, child) {
+                            return Transform.scale(
+                              scale: value,
+                              child: const Icon(
+                                Icons.lock_outlined,
+                                size: 50,
+                                color: Color(0xFF2196F3),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        // Welcome Text
+                        const Text(
+                          'Welcome Back',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1F1F1F),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Please sign in to continue',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        // Username TextField
+                        _buildAnimatedTextField(
+                          controller: _usernameController,
+                          icon: Icons.person_outline,
+                          hintText: 'Username',
+                          delay: 200,
+                        ),
+                        const SizedBox(height: 16),
+                        // Password TextField
+                        _buildAnimatedTextField(
+                          controller: _passwordController,
+                          icon: Icons.lock_outline,
+                          hintText: 'Password',
+                          isPassword: true,
+                          delay: 400,
+                        ),
+                        // Forgot Password Button
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {
+                              // Add forgot password functionality
+                            },
+                            style: TextButton.styleFrom(
+                              foregroundColor: const Color(0xFF2196F3),
+                            ),
+                            child: const Text('Forgot Password?'),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        // Login Button
+                        TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          duration: const Duration(milliseconds: 1000),
+                          curve: Curves.easeOut,
+                          builder: (context, value, child) {
+                            return Transform.scale(
+                              scale: value,
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: _isLoggingIn ? null : _login,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF2196F3),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    elevation: 3,
+                                  ),
+                                  child: _isLoggingIn
+                                      ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.white),
+                                    ),
+                                  )
+                                      : const Text(
+                                    'Sign In',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        // Register Link
+                        TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 0.0, end: 1.0),
+                          duration: const Duration(milliseconds: 1000),
+                          curve: Curves.easeOut,
+                          builder: (context, value, child) {
+                            return Opacity(
+                              opacity: value,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Don't have an account? ",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Add register functionality
+                                    },
+                                    child: const Text(
+                                      'Register',
+                                      style: TextStyle(
+                                        color: Color(0xFF2196F3),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Please sign in to continue',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                _buildTextField(
-                  controller: _usernameController,
-                  icon: Icons.person_outline,
-                  hintText: 'Username',
-                ),
-                const SizedBox(height: 16),
-                _buildTextField(
-                  controller: _passwordController,
-                  icon: Icons.lock_outline,
-                  hintText: 'Password',
-                  isPassword: true,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Forgot Password?'),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: _login,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2196F3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      elevation: 3,
-                    ),
-                    child: const Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Don't have an account? ",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Register'),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildTextField({
+  Widget _buildAnimatedTextField({
     required TextEditingController controller,
     required IconData icon,
     required String hintText,
     bool isPassword = false,
+    int delay = 0,
   }) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword,
-      decoration: InputDecoration(
-        hintText: hintText,
-        prefixIcon: Icon(icon, color: Colors.grey),
-        filled: true,
-        fillColor: Colors.grey[100],
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 16,
-        ),
-      ),
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeOutCubic,
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: Offset(50 * (1 - value), 0),
+          child: Opacity(
+            opacity: value,
+            child: TextField(
+              controller: controller,
+              obscureText: isPassword,
+              enabled: !_isLoggingIn,
+              decoration: InputDecoration(
+                hintText: hintText,
+                prefixIcon: Icon(icon, color: Colors.grey),
+                filled: true,
+                fillColor: Colors.grey[100],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                // Add error border style
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: const BorderSide(color: Colors.red, width: 1),
+                ),
+                // Add focused border style
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: const BorderSide(color: Color(0xFF2196F3), width: 1),
+                ),
+              ),
+              style: const TextStyle(
+                fontSize: 16,
+                color: Color(0xFF1F1F1F),
+              ),
+              onChanged: (value) {
+                // Add validation logic here
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -331,30 +494,121 @@ class _ProfilePageState extends State<ProfilePage> {
         ]
             : [],
       ),
-      body: authProvider.isLoggedIn
-          ? Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFF6F6F6), Colors.white],
-          ),
-        ),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              _buildProfileHeader(),
-              _buildProgressBar(),
-              const SizedBox(height: 16),
-              _buildPostsSection(),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutCubic,
+            )),
+            child: FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          );
+        },
+        layoutBuilder: (currentChild, previousChildren) {
+          return Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              ...previousChildren,
+              if (currentChild != null) currentChild,
             ],
+          );
+        },
+        child: authProvider.isLoggedIn
+            ? Container(
+          key: const ValueKey<String>('profile_content'),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFF6F6F6), Colors.white],
+            ),
           ),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                AnimatedBuilder(
+                  animation: _loginAnimationController,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(
+                        0,
+                        (1 - _loginAnimationController.value) * 20,
+                      ),
+                      child: Opacity(
+                        opacity: _loginAnimationController.value,
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      _buildProfileHeader(),
+                      const SizedBox(height: 16),
+                      _buildProgressBar(),
+                      const SizedBox(height: 16),
+                      _buildPostsSection(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+            : Stack(
+          key: const ValueKey<String>('login_content'),
+          children: [
+            _buildLoginForm(),
+            if (_isLoggingIn)
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.0, end: 1.0),
+                duration: const Duration(milliseconds: 300),
+                builder: (context, value, child) {
+                  return Opacity(
+                    opacity: value,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.1),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+          ],
         ),
-      )
-          : _buildLoginForm(),
+      ),
     );
   }
+
+  Widget _buildBottomNavItem(IconData icon, String label, bool isSelected) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          color: isSelected ? const Color(0xFF1A1A1A) : Colors.grey,
+          size: 24,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? const Color(0xFF1A1A1A) : Colors.grey,
+            fontSize: 12,
+          ),
+        ),
+      ],
+    );
+  }
+
 
   Widget _buildProfileHeader() {
     return Container(
