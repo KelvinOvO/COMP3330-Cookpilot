@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'dart:developer';
 import '../models/blog_post.dart';
 import '../pages/blog_post_detail_page.dart';
 import '../services/blog_service.dart';
@@ -34,7 +35,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _loadUserPosts();
+    if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn) {
+      _loadUserPosts();
+    }
   }
 
   Future<void> _loadUserPosts() async {
@@ -47,9 +50,9 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         posts = newPosts;
         _hasMore = newPosts.isNotEmpty;
+        log('Loaded ${posts.length} user posts');
       });
     } catch (e) {
-      // Handle error
       print('Error loading user posts: $e');
     } finally {
       setState(() {
@@ -110,102 +113,101 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildLoginForm() {
     return Center(
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 400),
-        child: Card(
-          elevation: 8,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.lock_outlined,
-                  size: 50,
-                  color: Color(0xFF2196F3),
-                ),
-                const SizedBox(height: 24),
-                const Text(
-                  'Welcome Back',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1F1F1F),
+      child: SingleChildScrollView(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 400),
+          padding: const EdgeInsets.all(16),
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.lock_outlined,
+                    size: 50,
+                    color: Color(0xFF2196F3),
                   ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Please sign in to continue',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Welcome Back',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1F1F1F),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                _buildTextField(
-                  controller: _usernameController,
-                  icon: Icons.person_outline,
-                  hintText: 'Username',
-                ),
-                const SizedBox(height: 16),
-                _buildTextField(
-                  controller: _passwordController,
-                  icon: Icons.lock_outline,
-                  hintText: 'Password',
-                  isPassword: true,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // Handle forgot password
-                    },
-                    child: const Text('Forgot Password?'),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Please sign in to continue',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: _login,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2196F3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                  const SizedBox(height: 32),
+                  _buildTextField(
+                    controller: _usernameController,
+                    icon: Icons.person_outline,
+                    hintText: 'Username',
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    controller: _passwordController,
+                    icon: Icons.lock_outline,
+                    hintText: 'Password',
+                    isPassword: true,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text('Forgot Password?'),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF2196F3),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        elevation: 3,
                       ),
-                      elevation: 3,
-                    ),
-                    child: const Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      child: const Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Don't have an account? ",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        // Handle registration
-                      },
-                      child: const Text('Register'),
-                    ),
-                  ],
-                ),
-              ],
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Don't have an account? ",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('Register'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -578,24 +580,27 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-
-
   Widget _buildPostsGrid() {
-    return MasonryGridView.count(
-      key: const PageStorageKey('posts_grid'),
-      controller: _scrollController,
-      crossAxisCount: 2,
-      itemCount: posts.length,
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: BlogPostCard(
-          key: ValueKey('post_${posts[index].id}_$index'),
-          post: posts[index],
-          onTap: () => _navigateToDetail(posts[index]),
+    return Container(
+      height: 500, // Set a specific height or any desired height constraint
+      child: MasonryGridView.count(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        key: const PageStorageKey('posts_grid'),
+        controller: _scrollController,
+        crossAxisCount: 2,
+        itemCount: posts.length,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: BlogPostCard(
+            key: ValueKey('post_${posts[index].id}_$index'),
+            post: posts[index],
+            onTap: () => _navigateToDetail(posts[index]),
+          ),
         ),
+        mainAxisSpacing: 3.0,
+        crossAxisSpacing: 3.0,
       ),
-      mainAxisSpacing: 3.0,
-      crossAxisSpacing: 3.0,
     );
   }
 
@@ -607,7 +612,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
 
   void _navigateToDetail(BlogPost post) {
     Navigator.push(
