@@ -1,5 +1,7 @@
 // lib/widgets/app_drawer.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -16,7 +18,6 @@ class AppDrawer extends StatelessWidget {
         children: [
           _buildHeader(context),
           const SizedBox(height: 8),
-          // _buildQuickActions(context),
           const SizedBox(height: 16),
           Expanded(
             child: ListView(
@@ -103,72 +104,129 @@ class AppDrawer extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
 
-    return Container(
-      padding: EdgeInsets.fromLTRB(16, topPadding + 16, 16, 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Color(0xFFF5F5F5),
-            width: 1,
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF007AFF), Color(0xFF00C6FF)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+    return Consumer<AuthProvider>(
+      builder: (context, auth, child) {
+        return Container(
+          padding: EdgeInsets.fromLTRB(16, topPadding + 16, 16, 16),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(
+                color: Color(0xFFF5F5F5),
+                width: 1,
               ),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 24,
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Welcome back!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A1A1A),
-                  ),
-                ),
-                const SizedBox(height: 2),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: const Size(0, 0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: const Text(
-                    'Sign in to your account',
-                    style: TextStyle(
-                      color: Color(0xFF007AFF),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+                child: Consumer<AuthProvider>(
+                  builder: (context, auth, child) {
+                    return auth.isLoggedIn
+                        ? const CircleAvatar(
+                      radius: 45,
+                      backgroundImage: AssetImage('assets/profile/profile_picture.jpg'),
+                    )
+                        : Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF007AFF), Color(0xFF00C6FF)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: auth.isLoggedIn
+                      ? [
+                    Text(
+                      'Hello, ${auth.userName}!',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF1A1A1A),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    TextButton(
+                      onPressed: () {
+                        // Optional: Open profile page
+                      },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(0, 0),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
+                        'View Profile',
+                        style: TextStyle(
+                          color: Color(0xFF007AFF),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ]
+                      : [
+                    const Text(
+                      'Welcome back!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF1A1A1A),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    TextButton(
+                      onPressed: () {
+                        // Implement your login function
+                      },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(0, 0),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
+                        'Sign in to your account',
+                        style: TextStyle(
+                          color: Color(0xFF007AFF),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -295,73 +353,82 @@ class AppDrawer extends StatelessWidget {
   }
 
   Widget _buildFooter(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        bottom: MediaQuery.of(context).padding.bottom + 16,
-        top: 16,
-      ),
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Color(0xFFF5F5F5),
-            width: 1,
+    return Consumer<AuthProvider>(
+      builder: (context, auth, child) {
+        return Container(
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            bottom: MediaQuery.of(context).padding.bottom + 16,
+            top: 16,
           ),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Row(
-            children: [
-              Icon(
-                Icons.info_outline,
-                size: 16,
-                color: Color(0xFF999999),
-              ),
-              SizedBox(width: 4),
-              Text(
-                'Version 1.0.0',
-                style: TextStyle(
-                  color: Color(0xFF999999),
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              minimumSize: const Size(0, 32),
-              backgroundColor: const Color(0xFFF5F5F5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Color(0xFFF5F5F5),
+                width: 1,
               ),
             ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.logout,
-                  size: 16,
-                  color: Color(0xFF1A1A1A),
-                ),
-                SizedBox(width: 4),
-                Text(
-                  'Log out',
-                  style: TextStyle(
-                    color: Color(0xFF1A1A1A),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    size: 16,
+                    color: Color(0xFF999999),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    'Version 1.0.0',
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+              auth.isLoggedIn
+                  ? TextButton(
+                onPressed: () {
+                  auth.logout();
+                  Navigator.pop(context);
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  minimumSize: const Size(0, 32),
+                  backgroundColor: const Color(0xFFF5F5F5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-              ],
-            ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.logout,
+                      size: 16,
+                      color: Color(0xFF1A1A1A),
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      'Log out',
+                      style: TextStyle(
+                        color: Color(0xFF1A1A1A),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  : const SizedBox.shrink(),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

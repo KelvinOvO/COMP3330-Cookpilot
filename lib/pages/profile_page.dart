@@ -8,6 +8,7 @@ import '../models/blog_post.dart';
 import '../pages/blog_post_detail_page.dart';
 import '../services/blog_service.dart';
 import '../widgets/blog_post_card.dart';
+import '../widgets/progress_bar.dart';
 import '../providers/auth_provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -551,9 +552,9 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                   child: Column(
                     children: [
                       _buildProfileHeader(),
-                      const SizedBox(height: 16),
-                      _buildProgressBar(),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 2),
+                      ProgressBar(progressValue: 0.75),
+                      const SizedBox(height: 4),
                       _buildPostsSection(),
                     ],
                   ),
@@ -672,7 +673,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: const Text(
-                            'MasterChef',
+                            '✵ MasterChef',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -763,90 +764,6 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
       width: 1,
       margin: const EdgeInsets.symmetric(horizontal: 12),
       color: Colors.grey.withOpacity(0.3),
-    );
-  }
-
-  Widget _buildProgressBar() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Your Progress",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1A1A1A),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  // Action for chart or more progress details
-                },
-                icon: const Icon(Icons.bar_chart),
-                color: Color(0xFF1A1A1A),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                "Progress to Next Level",
-                style: TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 14,
-                ),
-              ),
-              Text(
-                "3750 / 5000",
-                style: TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: 0.75,
-              backgroundColor: const Color(0xFFE0E0E0),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF1A1A1A)),
-              minHeight: 10,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "75% Complete",
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1A1A),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 

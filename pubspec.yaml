@@ -86,6 +86,7 @@ flutter:
     - assets/logo.png
     - assets/icons/
     - assets/data/blog_posts.json
+    - assets/data/recipes.json
     - assets/profile/profile_picture.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
