@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
         log('Loaded ${posts.length} user posts');
       });
     } catch (e) {
-      print('Error loading user posts: $e');
+      log('Error loading user posts: $e');
     } finally {
       setState(() {
         _isLoading = false;
@@ -69,8 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
         _hasMore = newPosts.isNotEmpty;
       });
     } catch (e) {
-      // Handle error
-      print('Error refreshing posts: $e');
+      log('Error refreshing posts: $e');
     } finally {
       _refreshController.refreshCompleted();
     }
@@ -86,8 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
         _hasMore = newPosts.isNotEmpty;
       });
     } catch (e) {
-      // Handle error
-      print('Error loading more posts: $e');
+      log('Error loading more posts: $e');
     } finally {
       _refreshController.loadComplete();
     }
@@ -97,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
-    if (username == 'Ray' && password == 'raywon1234') {
+    if (username == 'Ray' && password == 'raywong1234') {
       context.read<AuthProvider>().login(username);
       _loadUserPosts();
     } else {
@@ -112,102 +110,101 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildLoginForm() {
-    return Center(
-      child: SingleChildScrollView(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 400),
-          padding: const EdgeInsets.all(16),
-          child: Card(
-            elevation: 8,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.lock_outlined,
-                    size: 50,
-                    color: Color(0xFF2196F3),
+    return SingleChildScrollView(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 400),
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 50), // Fixed margin
+        padding: const EdgeInsets.all(16),
+        child: Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.lock_outlined,
+                  size: 50,
+                  color: Color(0xFF2196F3),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'Welcome Back',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1F1F1F),
                   ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    'Welcome Back',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1F1F1F),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Please sign in to continue',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                _buildTextField(
+                  controller: _usernameController,
+                  icon: Icons.person_outline,
+                  hintText: 'Username',
+                ),
+                const SizedBox(height: 16),
+                _buildTextField(
+                  controller: _passwordController,
+                  icon: Icons.lock_outline,
+                  hintText: 'Password',
+                  isPassword: true,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text('Forgot Password?'),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2196F3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      elevation: 3,
+                    ),
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Please sign in to continue',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Don't have an account? ",
+                      style: TextStyle(color: Colors.grey),
                     ),
-                  ),
-                  const SizedBox(height: 32),
-                  _buildTextField(
-                    controller: _usernameController,
-                    icon: Icons.person_outline,
-                    hintText: 'Username',
-                  ),
-                  const SizedBox(height: 16),
-                  _buildTextField(
-                    controller: _passwordController,
-                    icon: Icons.lock_outline,
-                    hintText: 'Password',
-                    isPassword: true,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
+                    TextButton(
                       onPressed: () {},
-                      child: const Text('Forgot Password?'),
+                      child: const Text('Register'),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: _login,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2196F3),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        elevation: 3,
-                      ),
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Don't have an account? ",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text('Register'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -241,7 +238,31 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Function to show the edit profile dialog
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _logout();
+              },
+              child: const Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _showEditProfileDialog() {
     TextEditingController nameController = TextEditingController(text: _name);
     TextEditingController bioController = TextEditingController(text: _bio);
@@ -271,11 +292,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
             onPressed: () {
               setState(() {
-                // Update the profile with the new values
                 _name = nameController.text;
                 _bio = bioController.text;
               });
-              Navigator.pop(context); // Close the dialog
+              Navigator.pop(context);
             },
             child: const Text('Save'),
           ),
@@ -306,7 +326,7 @@ class _ProfilePageState extends State<ProfilePage> {
           IconButton(
             icon: const Icon(Icons.logout),
             color: const Color(0xFF1A1A1A),
-            onPressed: _logout,
+            onPressed: () => _showLogoutDialog(context),
           ),
         ]
             : [],
@@ -321,6 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               _buildProfileHeader(),
@@ -337,8 +358,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProfileHeader() {
     return Container(
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -432,23 +453,26 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: _showEditProfileDialog,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF1A1A1A),
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 50,
-                vertical: 12,
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              onPressed: _showEditProfileDialog,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1A1A1A),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 4,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+              child: const Text(
+                'Edit Profile',
+                style: TextStyle(fontSize: 16),
               ),
-              elevation: 4,
-            ),
-            child: const Text(
-              'Edit Profile',
-              style: TextStyle(fontSize: 16),
             ),
           ),
         ],
@@ -490,8 +514,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProgressBar() {
     return Container(
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -510,7 +533,7 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Your progress",
+                "Your Progress",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -518,7 +541,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Action for chart or more progress details
+                },
                 icon: const Icon(Icons.bar_chart),
                 color: Color(0xFF1A1A1A),
               ),
@@ -529,14 +554,14 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               Text(
-                "25% to next level",
+                "Progress to Next Level",
                 style: TextStyle(
                   color: Color(0xFF666666),
                   fontSize: 14,
                 ),
               ),
               Text(
-                "3750/5000",
+                "3750 / 5000",
                 style: TextStyle(
                   color: Color(0xFF666666),
                   fontSize: 14,
@@ -544,14 +569,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: const LinearProgressIndicator(
+            child: LinearProgressIndicator(
               value: 0.75,
-              backgroundColor: Color(0xFFE0E0E0),
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF1A1A1A)),
-              minHeight: 8,
+              backgroundColor: const Color(0xFFE0E0E0),
+              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF1A1A1A)),
+              minHeight: 10,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "75% Complete",
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1A1A1A),
+              ),
             ),
           ),
         ],
