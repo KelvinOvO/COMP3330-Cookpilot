@@ -42,6 +42,7 @@ dependencies:
   animations: ^2.0.11
   cached_network_image: ^3.4.1
   timeago: ^3.7.0
+  animated_list_plus: ^0.5.2
 #  camera: ^0.11.0+2
   image_picker: ^1.1.2
   http: ^1.2.2

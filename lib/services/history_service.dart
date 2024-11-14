@@ -12,4 +12,19 @@ class HistoryService extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void addToHistory(BlogPost post) {
+    addViewedPost(post);
+  }
+
+
+  void removeFromHistory(BlogPost post) {
+    _viewedPosts.removeWhere((p) => p.id == post.id);
+    notifyListeners();
+  }
+
+  void clearHistory() {
+    _viewedPosts.clear();
+    notifyListeners();
+  }
 }
