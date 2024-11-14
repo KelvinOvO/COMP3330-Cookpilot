@@ -40,6 +40,8 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
   }
 
   Widget _buildSliverAppBar(BuildContext context) {
+    bool isNetworkImage = widget.post.imageUrl.startsWith('http://') || widget.post.imageUrl.startsWith('https://');
+
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
@@ -63,8 +65,29 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
       flexibleSpace: FlexibleSpaceBar(
         background: Hero(
           tag: 'post_image_${widget.post.imageUrl}',
-          child: Image(
-            image: AssetImage(widget.post.imageUrl),
+          child: isNetworkImage
+              ? CachedNetworkImage(
+            imageUrl: widget.post.imageUrl,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Container(
+              color: Colors.grey[100],
+              child: const Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
+                ),
+              ),
+            ),
+            errorWidget: (context, url, error) => Container(
+              color: Colors.grey[100],
+              child: const Icon(
+                Icons.error_outline,
+                color: Color(0xFF999999),
+              ),
+            ),
+          )
+              : Image.asset(
+            widget.post.imageUrl, // Assuming imageUrl is a valid asset path
             fit: BoxFit.cover,
             errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
               return Container(

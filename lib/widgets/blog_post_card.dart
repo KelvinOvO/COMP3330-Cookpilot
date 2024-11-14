@@ -40,10 +40,34 @@ class BlogPostCard extends StatelessWidget {
   }
 
   Widget _buildImage() {
+    // Check if the imageUrl starts with http or https
+    bool isNetworkImage = post.imageUrl.startsWith('http://') || post.imageUrl.startsWith('https://');
+
     return Hero(
       tag: 'post_image_${post.id}',
-      child: Image(
-        image: AssetImage(post.imageUrl),
+      child: isNetworkImage
+          ? CachedNetworkImage(
+        imageUrl: post.imageUrl,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Container(
+          color: Colors.grey[100],
+          child: const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
+            ),
+          ),
+        ),
+        errorWidget: (context, url, error) => Container(
+          color: Colors.grey[100],
+          child: const Icon(
+            Icons.error_outline,
+            color: Color(0xFF999999),
+          ),
+        ),
+      )
+          : Image.asset(
+        post.imageUrl, // Assuming imageUrl is a valid asset path
         fit: BoxFit.cover,
         errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
           return Container(

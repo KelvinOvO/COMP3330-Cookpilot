@@ -852,6 +852,8 @@ class _RecipeCard extends StatelessWidget {
   }
 }
 
+
+
 class _RecipeImage extends StatelessWidget {
   final String imageUrl;
 
@@ -874,8 +876,29 @@ class _RecipeImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(_SearchPageState._kBorderRadius),
-        child: Image(
-          image: AssetImage(imageUrl),
+        child: imageUrl.startsWith('http://') || imageUrl.startsWith('https://')
+            ? CachedNetworkImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Container(
+            color: Colors.grey[100],
+            child: const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => Container(
+            color: Colors.grey[100],
+            child: const Icon(
+              Icons.error_outline,
+              color: Color(0xFF999999),
+            ),
+          ),
+        )
+            : Image.asset(
+          imageUrl, // Assuming imageUrl is a valid asset path
           fit: BoxFit.cover,
           errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
             return Container(

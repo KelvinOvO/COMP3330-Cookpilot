@@ -180,11 +180,20 @@ class HistoryPage extends StatelessWidget {
                 ClipRRect(
                   borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
-                  child: CachedNetworkImage(
-                    imageUrl: post.imageUrl,  // unique post id,
+                  child: Image(
                     height: 160,
                     width: double.infinity,
+                    image: AssetImage(post.imageUrl),
                     fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                      return Container(
+                        color: Colors.grey[100],
+                        child: const Icon(
+                          Icons.error_outline,
+                          color: Color(0xFF999999),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Padding(
