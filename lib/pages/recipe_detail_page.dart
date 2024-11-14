@@ -1,7 +1,13 @@
 // lib/pages/recipe_detail_page.dart
+import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:app_controller_client/app_controller_client.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 import 'package:cookpilot/models/recipe.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../global/app_controller.dart';
@@ -50,6 +56,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       role: _ChatMessageRole.assistant,
     )
   ]);
+  late final ValueNotifier<bool> _isCookpilotTyping = ValueNotifier(false);
   bool _isCommentExpanded = false;
 
   @override
@@ -59,11 +66,14 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     _commentController.dispose();
     _commentFocusNode.dispose();
     _chatMessages.dispose();
+    _isCookpilotTyping.dispose();
     super.dispose();
   }
 
   void _handleChatSend() async {
     if (_chatController.text.trim().isEmpty) return;
+
+    _isCookpilotTyping.value = true;
 
     _chatMessages.value = [
       ..._chatMessages.value,
@@ -88,27 +98,60 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               .build())
           .toList();
 
-      final api = appController.getRecipeSearchApi();
-      final chatResponse = await api.recipeSearchChatByRecipePost(
-          chatByRecipePostRequestModel: (ChatByRecipePostRequestModelBuilder()
-                ..id = widget.recipe.id
-                ..messages = ListBuilder(requestMessages))
-              .build());
+      final api = appController.getRecipeSearchStreamApi();
 
-      if (!mounted) {
-        return;
+      final responses = await api.recipeSearchChatByRecipeStreamPost(
+        chatByRecipePostRequestModel: (ChatByRecipePostRequestModelBuilder()
+              ..id = widget.recipe.id
+              ..messages = ListBuilder(requestMessages))
+            .build(),
+      );
+
+      await for (final response in responses.data!) {
+        print(response);
+        if (!mounted) {
+          return;
+        }
+
+        if (response.oneOf.isType(ChatByRecipeStreamHeaderModel)) {
+          _chatMessages.value = [
+            ..._chatMessages.value,
+            _ChatMessage(
+              text: "",
+              role: _ChatMessageRole.assistant,
+            ),
+          ];
+          continue;
+        }
+
+        final content = response.oneOf.value as ChatByRecipeStreamContentModel;
+
+        _chatMessages.value = [
+          ..._chatMessages.value.take(_chatMessages.value.length - 1),
+          _ChatMessage(
+            text: _chatMessages.value.last.text + content.text,
+            role: _ChatMessageRole.assistant,
+          ),
+        ];
       }
-
-      final responseMessage = chatResponse.data!.message;
-      _chatMessages.value = [
-        ..._chatMessages.value,
-        _ChatMessage(
-          text: responseMessage.text,
-          role: _ChatMessageRole.assistant,
-        ),
-      ];
     } catch (e) {
       print(e);
+
+      if (e is DioException && e.response != null) {
+        print(e.requestOptions.data);
+        print(e.response!.data);
+        if (e.response!.data is ResponseBody) {
+          final content = await (e.response!.data as ResponseBody).stream
+              .transform(
+            StreamTransformer.fromHandlers(
+              handleData: (Uint8List data, EventSink<String> sink) {
+                sink.add(utf8.decode(data));
+              },
+            ),
+          ).toList();
+          print(content);
+        }
+      }
 
       if (!mounted) {
         return;
@@ -122,6 +165,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
           role: _ChatMessageRole.error,
         ),
       ];
+    } finally {
+      _isCookpilotTyping.value = false;
     }
   }
 
@@ -207,39 +252,44 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildMessageList(),
-          TextField(
-            controller: _chatController,
-            focusNode: _chatFocusNode,
-            autofocus: true,
-            maxLines: null,
-            decoration: InputDecoration(
-              hintText: 'Chat with Cookpilot for more...',
-              suffixIcon: Container(
-                margin: const EdgeInsets.all(8),
-                child: IconButton.filledTonal(
-                  icon: const Icon(Icons.send_rounded),
-                  onPressed: _handleChatSend,
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(_kBorderRadius),
-                borderSide: BorderSide(
-                  color: theme.primaryColor,
-                  width: 1,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(_kBorderRadius),
-                borderSide: BorderSide(
-                  color: theme.primaryColor,
-                ),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: _kSpacing,
-                vertical: _kSpacing / 2,
-              ),
-            ),
-          ),
+          ValueListenableBuilder(
+              valueListenable: _isCookpilotTyping,
+              builder: (context, isCookpilotTyping, _) {
+                return TextField(
+                  controller: _chatController,
+                  focusNode: _chatFocusNode,
+                  autofocus: true,
+                  maxLines: null,
+                  enabled: !isCookpilotTyping,
+                  decoration: InputDecoration(
+                    hintText: 'Chat with Cookpilot for more...',
+                    suffixIcon: Container(
+                      margin: const EdgeInsets.all(8),
+                      child: IconButton.filledTonal(
+                        icon: const Icon(Icons.send_rounded),
+                        onPressed: _handleChatSend,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(_kBorderRadius),
+                      borderSide: BorderSide(
+                        color: theme.primaryColor,
+                        width: 1,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(_kBorderRadius),
+                      borderSide: BorderSide(
+                        color: theme.primaryColor,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: _kSpacing,
+                      vertical: _kSpacing / 2,
+                    ),
+                  ),
+                );
+              }),
           SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
         ],
       ),

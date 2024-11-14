@@ -82,15 +82,13 @@ class _SearchPageState extends State<SearchPage> {
 
     try {
       final api = appController.getRecipeSearchApi();
-      final searchResponse =
-          await api.recipeSearchSearchRecipesByIngredientsPost(
-        searchRecipesByIngredientsPostRequestModel:
-            (SearchRecipesByIngredientsPostRequestModelBuilder()
-                  ..ingredients = ListBuilder<String>(_ingredients.value)
-                  ..limit = 20
-                  ..includeDetail = true)
-                .build(),
-      );
+      final searchResponse = await api.recipeSearchSearchRecipesPost(
+          searchRecipesPostRequestModel: (SearchRecipesPostRequestModelBuilder()
+                ..ingredients = ListBuilder(_ingredients.value)
+                ..perPage = 10
+                ..includeDetail = true
+                ..page = 1)
+              .build());
       final searchRecipes = searchResponse.data!.recipes;
 
       final List<Recipe> recipes = [];
@@ -112,13 +110,14 @@ class _SearchPageState extends State<SearchPage> {
           id: recipe.id,
           name: recipe.name,
           author: authors[recipe.id % authors.length],
-          imageUrl: 'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
+          imageUrl:
+              'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
           publishDate: DateTime(
             2020 + '${recipe.id}'.hashCode % 4,
             1 + '${recipe.id}'.hashCode % 12,
             1 + '${recipe.id}'.hashCode % 28,
           ),
-          ingredients: recipe.detail!.ingredients.toList(),
+          ingredients: recipe.ingredients.toList(),
           instructions: recipe.detail!.instructions.toList(),
         ));
       }
