@@ -874,25 +874,18 @@ class _RecipeImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(_SearchPageState._kBorderRadius),
-        child: CachedNetworkImage(
-          imageUrl: imageUrl,
+        child: Image(
+          image: AssetImage(imageUrl),
           fit: BoxFit.cover,
-          placeholder: (context, url) => Container(
-            color: Theme.of(context).disabledColor.withOpacity(0.1),
-            child: Icon(
-              Icons.image_rounded,
-              color: Theme.of(context).hintColor.withOpacity(0.3),
-              size: 32,
-            ),
-          ),
-          errorWidget: (context, url, error) => Container(
-            color: Theme.of(context).colorScheme.error.withOpacity(0.1),
-            child: Icon(
-              Icons.error_rounded,
-              color: Theme.of(context).colorScheme.error,
-              size: 32,
-            ),
-          ),
+          errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+            return Container(
+              color: Colors.grey[100],
+              child: const Icon(
+                Icons.error_outline,
+                color: Color(0xFF999999),
+              ),
+            );
+          },
         ),
       ),
     );

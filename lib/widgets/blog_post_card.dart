@@ -1,4 +1,5 @@
 // lib/widgets/blog_post_card.dart
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/blog_post.dart';
@@ -41,36 +42,22 @@ class BlogPostCard extends StatelessWidget {
   Widget _buildImage() {
     return Hero(
       tag: 'post_image_${post.id}',
-      child: CachedNetworkImage(
-        imageUrl: post.imageUrl,
+      child: Image(
+        image: AssetImage(post.imageUrl),
         fit: BoxFit.cover,
-        placeholder: (context, url) => Container(
-          color: Colors.grey[100],
-          child: const Center(
-            child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
-              ),
+        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+          return Container(
+            color: Colors.grey[100],
+            child: const Icon(
+              Icons.error_outline,
+              color: Color(0xFF999999),
             ),
-          ),
-        ),
-        errorWidget: (context, url, error) => Container(
-          color: Colors.grey[100],
-          child: const Icon(
-            Icons.error_outline,
-            color: Color(0xFF999999),
-          ),
-        ),
-        fadeInDuration: const Duration(milliseconds: 300),
-        fadeOutDuration: const Duration(milliseconds: 300),
-        placeholderFadeInDuration: const Duration(milliseconds: 300),
-        memCacheWidth: 800,
+          );
+        },
       ),
     );
   }
+
 
   Widget _buildContent(BuildContext context) {
     return Padding(

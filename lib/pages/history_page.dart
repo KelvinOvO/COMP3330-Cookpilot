@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../services/history_service.dart';
 import '../models/blog_post.dart';
 import './blog_post_detail_page.dart';
-import 'package:intl/intl.dart';
 
 class SizeFadeTransition extends StatelessWidget {
   final Animation<double> animation;
   final Widget child;
 
-  const SizeFadeTransition({Key? key, required this.animation, required this.child}) : super(key: key);
+  const SizeFadeTransition({super.key, required this.animation, required this.child});
 
   @override
   Widget build(BuildContext context) {

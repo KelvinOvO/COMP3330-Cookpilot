@@ -63,19 +63,18 @@ class _BlogPostDetailPageState extends State<BlogPostDetailPage> {
       flexibleSpace: FlexibleSpaceBar(
         background: Hero(
           tag: 'post_image_${widget.post.imageUrl}',
-          child: CachedNetworkImage(
-            imageUrl: widget.post.imageUrl,
+          child: Image(
+            image: AssetImage(widget.post.imageUrl),
             fit: BoxFit.cover,
-            placeholder: (context, url) => Container(
-              color: Colors.grey[200],
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-            errorWidget: (context, url, error) => Container(
-              color: Colors.grey[200],
-              child: const Icon(Icons.error_outline),
-            ),
+            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+              return Container(
+                color: Colors.grey[100],
+                child: const Icon(
+                  Icons.error_outline,
+                  color: Color(0xFF999999),
+                ),
+              );
+            },
           ),
         ),
       ),

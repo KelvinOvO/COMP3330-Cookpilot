@@ -5,7 +5,7 @@
       "title": "Hidden Gems: Secret Food Spots in the City",
       "author": "The Food Explorer",
       "likes": 8573,
-      "imageUrl": "https://picsum.photos/500/400?1",
+      "imageUrl": "assets/blog-post-photos/post_1_Hidden_Restaurant.jpg",
       "content": "Today, I'm excited to share a hidden gem tucked away in the city's narrow lanes. While the location might be off the beaten path, this restaurant has gained a massive social media following thanks to its unique flavors and artistic plating. The chef, formerly of a Michelin-starred establishment, brings years of expertise to create dishes that are both visually stunning and deeply satisfying. Their signature dish, a 48-hour braised short rib with truffle risotto, is absolutely worth the visit alone.",
       "publishDate": "2024-10-25T14:30:00Z",
       "comments": [
@@ -94,7 +94,7 @@
       "title": "Weekend Brunch: Best Cafes to Visit",
       "author": "Culinary Chronicles",
       "likes": 7245,
-      "imageUrl": "https://picsum.photos/500/350?2",
+      "imageUrl": "assets/blog-post-photos/post_2_Weekend_Brunch.jpg",
       "content": "Nothing beats a peaceful Saturday morning at a quiet café, indulging in a perfectly crafted brunch. This week's discovery features a charming spot that has mastered the art of brunch. Their signature perfectly poached eggs on homemade sourdough, topped with fresh avocado spread and micro greens, paired with a single-origin pour-over coffee, truly captures life's simple pleasures. The ambient lighting and cozy atmosphere make it perfect for both solo dining and weekend gatherings.",
       "publishDate": "2024-10-24T09:15:00Z",
       "comments": [
@@ -114,7 +114,7 @@
       "title": "Food Review: Instagram-Worthy Restaurant Finds",
       "author": "Food Photographer",
       "likes": 6892,
-      "imageUrl": "https://picsum.photos/500/380?3",
+      "imageUrl": "assets/blog-post-photos/post_3_IG_Restaurant.jpg",
       "content": "In today's world of social media-driven dining, presentation is just as important as taste. This newly opened restaurant understands this perfectly, creating dishes that are both visually spectacular and delicious. Each plate is carefully designed to be camera-ready, with vibrant colors and artistic plating. The dessert selection, in particular, features innovative presentations including a chocolate sphere that melts as warm caramel sauce is poured over it, revealing hidden treats inside.",
       "publishDate": "2024-10-23T11:45:00Z",
       "comments": [
@@ -145,7 +145,7 @@
       "title": "Sweet Tooth Guide: City's Best Dessert Places",
       "author": "The Flavor Seeker",
       "likes": 5937,
-      "imageUrl": "https://picsum.photos/500/360?4",
+      "imageUrl": "assets/blog-post-photos/post_4_Dessert_Restaurant.jpg",
       "content": "For those with a sweet tooth, this guide is your ultimate resource to the city's finest dessert destinations. From artisanal ice cream parlors to French patisseries, we've explored every corner to bring you the most delightful treats. Our top pick this week is a family-owned bakery that's been perfecting their recipes for three generations. Their signature mille-feuille, made with hand-laminated pastry and vanilla bean cream, is simply unforgettable.",
       "publishDate": "2024-10-22T13:20:00Z",
       "comments": [
@@ -165,7 +165,7 @@
       "title": "Late Night Eats: 24-Hour Food Guide",
       "author": "Urban Food Hunter",
       "likes": 5438,
-      "imageUrl": "https://picsum.photos/500/370?5",
+      "imageUrl": "assets/blog-post-photos/post_5_Night_Restaurant.jpg",
       "content": "When hunger strikes at midnight, knowing where to find quality food becomes essential. This guide covers the best 24-hour eateries in the city, from cozy diners to modern fusion spots. Our featured location this week offers an innovative late-night menu that goes way beyond typical fast food. Their kimchi fried rice topped with a perfectly runny egg and crispy bacon is the ultimate midnight craving satisfier.",
       "publishDate": "2024-10-21T22:00:00Z",
       "comments": [
@@ -196,7 +196,7 @@
       "title": "Vegan Paradise: Plant-Based Fine Dining",
       "author": "Green Gourmet",
       "likes": 9234,
-      "imageUrl": "https://picsum.photos/500/400?6",
+      "imageUrl": "assets/blog-post-photos/post_6_Vegan_Fine_Dining.jpg",
       "content": "Breaking the stereotype that vegan food can't be luxurious, this innovative restaurant is changing the game with its sophisticated plant-based menu. The chef's tasting menu features dishes like king oyster mushroom 'scallops' with truffle foam and their famous cauliflower steak with black garlic puree. The creativity in transforming humble vegetables into culinary masterpieces is truly remarkable.",
       "publishDate": "2024-10-20T12:00:00Z",
       "comments": [
@@ -245,7 +245,7 @@
       "title": "Street Food Revolution: Global Flavors on Wheels",
       "author": "Street Feast Hunter",
       "likes": 7856,
-      "imageUrl": "https://picsum.photos/500/400?7",
+      "imageUrl": "assets/blog-post-photos/post_7_Korean_Food_Truck.jpg",
       "content": "The city's food truck scene has exploded with creativity lately. This week's spotlight is on an incredible fusion truck combining Korean and Mexican flavors. Their kimchi quesadillas and bulgogi tacos are creating huge lines during lunch hours. The homemade gochujang aioli adds the perfect kick to their already innovative creations.",
       "publishDate": "2024-10-19T11:30:00Z",
       "comments": [
@@ -276,7 +276,7 @@
       "title": "Seasonal Special: Autumn Harvest Festival",
       "author": "Seasonal Foodie",
       "likes": 8934,
-      "imageUrl": "https://picsum.photos/500/400?8",
+      "imageUrl": "assets/blog-post-photos/post_8_autumn_fest.jpg",
       "content": "Fall is here, and with it comes an abundance of seasonal delights! The city's annual Autumn Harvest Festival brings together local farmers and chefs in a celebration of seasonal produce. Don't miss the pumpkin ravioli with sage brown butter, roasted chestnuts, and the incredible apple cider donuts that have everyone talking. This weekend-only event showcases the best of autumn flavors.",
       "publishDate": "2024-10-18T10:00:00Z",
       "comments": [
@@ -325,7 +325,7 @@
       "title": "Chef's Table: Interview with Master Sushi Artist",
       "author": "Culinary Insider",
       "likes": 9567,
-      "imageUrl": "https://picsum.photos/500/400?9",
+      "imageUrl": "assets/blog-post-photos/post_9_Sushi_Chef.jpg",
       "content": "Today we sit down with Master Sushi Chef Tanaka, who has been perfecting his craft for over 40 years. His omakase experience is considered one of the city's most exclusive dining events, with only 8 seats available per night. Learn about his journey from apprentice in Tokyo to renowned sushi master, and his philosophy on selecting the perfect fish and creating harmony in every bite.",
       "publishDate": "2024-10-17T09:00:00Z",
       "comments": [
@@ -376,7 +376,7 @@
       "title": "Coffee Culture: Third Wave Cafes Guide",
       "author": "Coffee Connoisseur",
       "likes": 7845,
-      "imageUrl": "https://picsum.photos/500/400?10",
+      "imageUrl": "assets/blog-post-photos/post_10_coffee.jpg",
       "content": "The third wave coffee movement has transformed our city's cafe scene. This week, we explore five new artisanal coffee shops that are revolutionizing how we experience our daily brew. From single-origin pour-overs to innovative cold brew techniques, these cafes are elevating coffee to an art form. Don't miss the featured roaster's special Ethiopian Yirgacheffe with distinct notes of jasmine and citrus.",
       "publishDate": "2024-10-16T08:30:00Z",
       "comments": [
@@ -445,7 +445,7 @@
       "title": "Michelin Journey: A Night at The Star Room",
       "author": "Fine Dining Explorer",
       "likes": 12453,
-      "imageUrl": "https://picsum.photos/500/400?11",
+      "imageUrl": "assets/blog-post-photos/post_11_fine_dining.jpg",
       "content": "Step into the world of culinary excellence at The Star Room, our city's newest three-Michelin-starred restaurant. Chef Maria Laurent's 12-course tasting menu is a journey through modern French cuisine with Asian influences. The standout dish? A butter-poached lobster with yuzu kosho and preserved cherry blossoms. The precision in execution and creativity in flavor combinations demonstrates why this restaurant earned its stars within just 18 months of opening.",
       "publishDate": "2024-10-15T19:30:00Z",
       "comments": [
@@ -505,7 +505,7 @@
       "title": "Market Chronicles: Dawn at the Fish Market",
       "author": "Traditional Food Hunter",
       "likes": 8976,
-      "imageUrl": "https://picsum.photos/500/400?12",
+      "imageUrl": "assets/blog-post-photos/post_12_tuna_market.jpg",
       "content": "Join me for a 4AM adventure at our historic fish market! This is where top chefs source their seafood and where you'll find the freshest catch in the city. Today's highlight: watching the traditional tuna cutting ceremony, learning about sustainable fishing practices, and discovering the best stalls for sashimi-grade fish. Don't miss stall #45's legendary sea urchin - it's the same supplier used by many Michelin-starred sushi restaurants.",
       "publishDate": "2024-10-14T05:30:00Z",
       "comments": [
@@ -545,7 +545,7 @@
       "title": "Cocktail Revolution: The Art of Modern Mixology",
       "author": "Spirit Enthusiast",
       "likes": 9234,
-      "imageUrl": "https://picsum.photos/500/400?13",
+      "imageUrl": "assets/blog-post-photos/post_13_cloud_nine.jpg",
       "content": "Welcome to The Alchemist, where mixology meets molecular gastronomy. Head bartender James Chen is pushing the boundaries of traditional cocktail making with his innovative techniques. His signature drink, the 'Cloud Nine,' features gin infused with butterfly pea flower, changing color as citrus is added, topped with a lavender smoke bubble that bursts with aromatics. The presentation is as spectacular as the taste.",
       "publishDate": "2024-10-13T21:00:00Z",
       "comments": [
@@ -585,7 +585,7 @@
       "title": "Artisan Bakery Tour: Sourdough Revolution",
       "author": "Bread Enthusiast",
       "likes": 8765,
-      "imageUrl": "https://picsum.photos/500/400?14",
+      "imageUrl": "assets/blog-post-photos/post_14_bakery_tour.jpg",
       "content": "Discover the city's artisanal bread scene! This week's feature is Wildflour Bakery, where baker Sarah Thompson maintains a 100-year-old sourdough starter inherited from her grandmother. Her signature country loaf, fermented for 36 hours, has a perfectly crispy crust and complex, tangy flavor. Don't miss the weekend-only rye bread with caraway seeds and the innovative charcoal-activated sourdough.",
       "publishDate": "2024-10-12T07:00:00Z",
       "comments": [
@@ -636,7 +636,7 @@
       "title": "Plant-Based Innovation: Future of Food Festival",
       "author": "Sustainable Foodie",
       "likes": 10234,
-      "imageUrl": "https://picsum.photos/500/400?15",
+      "imageUrl": "assets/blog-post-photos/post_15_mushroom_scallop.jpg",
       "content": "The Future of Food Festival showcased groundbreaking plant-based innovations this weekend. From lab-grown meat alternatives to dairy-free cheese that actually melts, the festival highlighted how technology is transforming our food system. The standout? A mushroom-based seafood alternative that perfectly replicates the texture of scallops, complete with the characteristic sweet umami flavor.",
       "publishDate": "2024-10-11T13:00:00Z",
       "comments": [
@@ -676,7 +676,7 @@
       "title": "Hidden Kitchen: Secret Supper Club Experience",
       "author": "Underground Foodie",
       "likes": 9876,
-      "imageUrl": "https://picsum.photos/500/400?16",
+      "imageUrl": "assets/blog-post-photos/post_16_secret_supper.jpg",
       "content": "Step into the world of secret supper clubs! This week, we were invited to an exclusive dining experience hosted in a converted industrial loft. Chef Maya's 8-course menu showcased her interpretation of ancient recipes with modern techniques. The standout dish was her 'Lost Empire' series - featuring a recreation of Aztec chocolate with smoke-infused chili and gold leaf. Only 12 seats per event, booking through a secret Instagram account.",
       "publishDate": "2024-10-10T19:00:00Z",
       "comments": [
@@ -707,7 +707,7 @@
       "title": "Breakfast Around the World: Global Morning Feasts",
       "author": "Morning Glory Hunter",
       "likes": 8543,
-      "imageUrl": "https://picsum.photos/500/400?17",
+      "imageUrl": "assets/blog-post-photos/post_17_vegemite_bread.jpg",
       "content": "Our global breakfast series continues with an exploration of traditional morning meals worldwide. From Japanese rice and miso soup to Turkish menemen and Egyptian ful medames, we're discovering how the world starts its day. This week's highlight: a newly opened Australian café serving incredible vegemite sourdough and perfectly executed flat whites.",
       "publishDate": "2024-10-09T08:00:00Z",
       "comments": [
@@ -738,7 +738,7 @@
       "title": "Ice Cream Innovation: Molecular Dessert Lab",
       "author": "Dessert Detective",
       "likes": 11234,
-      "imageUrl": "https://picsum.photos/500/400?18",
+      "imageUrl": "assets/blog-post-photos/post_18_molecular_ice_cream.jpg",
       "content": "Welcome to the future of desserts at Frost Lab! Using liquid nitrogen and molecular gastronomy techniques, they're creating ice cream experiences unlike anything you've seen before. Their signature 'Dragon's Breath' series features flash-frozen cereal puffs that make you exhale cool smoke, while their color-changing sorbet responds to temperature changes. Don't miss their latest creation: sound-paired ice cream tastings!",
       "publishDate": "2024-10-08T14:00:00Z",
       "comments": [
@@ -769,7 +769,7 @@
       "title": "Farm to Table: A Day with Urban Farmers",
       "author": "Sustainable Eats",
       "likes": 7865,
-      "imageUrl": "https://picsum.photos/500/400?19",
+      "imageUrl": "assets/blog-post-photos/post_19_rooftop_farms.jpg",
       "content": "Explore the city's thriving urban farming scene! We spent a day at Sky Gardens, a rooftop farm supplying fresh produce to local restaurants. Their hydroponic systems and vertical farming techniques are revolutionizing urban agriculture. The highlight? A farm-to-table dinner featuring ingredients harvested just hours before service, including their famous microgreens and heirloom tomatoes.",
       "publishDate": "2024-10-07T12:00:00Z",
       "comments": [
@@ -800,7 +800,7 @@
       "title": "Food Photography Masterclass: Shooting in Natural Light",
       "author": "Visual Feast",
       "likes": 9432,
-      "imageUrl": "https://picsum.photos/500/400?20",
+      "imageUrl": "assets/blog-post-photos/post_20_food_photography.jpg",
       "content": "Join us for a special workshop on food photography! Professional photographer Lisa Chen shares her secrets for capturing stunning food images using natural light. From styling tips to camera settings and post-processing techniques, learn how to make your food photos Instagram-worthy. Special focus on working with challenging subjects like ice cream and steam.",
       "publishDate": "2024-10-06T10:00:00Z",
       "comments": [
@@ -831,7 +831,7 @@
       "title": "Wine & Canvas: A Night of Art and Wine Pairing",
       "author": "Wine Storyteller",
       "likes": 8934,
-      "imageUrl": "https://picsum.photos/500/400?21",
+      "imageUrl": "assets/blog-post-photos/post_21_wine_canvas.jpg",
       "content": "Experience the intersection of art and wine at Gallery Vine's unique monthly event. Each wine is paired with a specific artwork, creating a sensory journey that explores how visual aesthetics influence taste perception. The highlight was a bold Barolo paired with an abstract expressionist piece, while local artists created live paintings inspired by wine tastings. A fascinating exploration of how different senses enhance our appreciation of both art and wine.",
       "publishDate": "2024-10-05T18:30:00Z",
       "comments": [
@@ -871,7 +871,7 @@
       "title": "Heritage Cooking: Grandmother's Secret Recipes",
       "author": "Legacy Cook",
       "likes": 11567,
-      "imageUrl": "https://picsum.photos/500/400?22",
+      "imageUrl": "assets/blog-post-photos/post_22_grandma_recipe.jpg",
       "content": "Join us for a heartwarming series where local grandmothers share their cherished family recipes. This week, 82-year-old Mrs. Chen demonstrates her famous hand-pulled noodles, a technique passed down through four generations. The secret? A special alkaline water mixture and precisely timed dough resting. These recipes aren't just about food - they're about preserving cultural heritage and family stories through the language of cooking.",
       "publishDate": "2024-10-04T11:00:00Z",
       "comments": [
@@ -911,7 +911,7 @@
       "title": "Zero-Waste Kitchen: Sustainable Cooking Workshop",
       "author": "Eco Chef",
       "likes": 9876,
-      "imageUrl": "https://picsum.photos/500/400?23",
+      "imageUrl": "assets/blog-post-photos/post_23_sustainable_cooking.jpg",
       "content": "Learn how to transform kitchen scraps into culinary gold! Chef Green's workshop demonstrates innovative ways to use every part of your ingredients. From carrot-top pesto to watermelon rind pickles, discover delicious recipes that reduce food waste. The highlight? A 'root-to-stem' tasting menu featuring dishes made entirely from ingredients usually discarded. Plus, practical tips on composting and sustainable kitchen practices.",
       "publishDate": "2024-10-03T15:00:00Z",
       "comments": [
@@ -942,7 +942,7 @@
       "title": "Virtual Reality Dining: Future of Restaurant Experiences",
       "author": "Tech Foodie",
       "likes": 12345,
-      "imageUrl": "https://picsum.photos/500/400?24",
+      "imageUrl": "assets/blog-post-photos/post_24_VR_dining.jpg",
       "content": "Step into the future at 'Digital Bites', where VR technology meets fine dining! Each course is accompanied by an immersive virtual environment that enhances the dining experience. Imagine enjoying seafood while surrounded by an underwater coral reef, or dessert while floating through a galaxy of stars. The multi-sensory experience includes custom soundscapes and aromatherapy elements that change with each course.",
       "publishDate": "2024-10-02T19:30:00Z",
       "comments": [
@@ -973,7 +973,7 @@
       "title": "Chocolate Making: Bean to Bar Workshop",
       "author": "Cacao Explorer",
       "likes": 10432,
-      "imageUrl": "https://picsum.photos/500/400?25",
+      "imageUrl": "assets/blog-post-photos/post_25_chocolate.jpg",
       "content": "Discover the art of artisanal chocolate making at Master Chocolatier Jean's workshop. From roasting cacao beans to tempering the final product, learn every step of the bean-to-bar process. Participants get hands-on experience with single-origin beans from different regions, understanding how terroir affects flavor profiles. The session ends with a guided tasting of craft chocolates paired with specialty wines.",
       "publishDate": "2024-10-01T14:00:00Z",
       "comments": [
@@ -1013,7 +1013,7 @@
       "title": "Sound Bites: A Musical Dining Symphony",
       "author": "Culinary Composer",
       "likes": 9876,
-      "imageUrl": "https://picsum.photos/500/400?26",
+      "imageUrl": "assets/blog-post-photos/post_26_musical_dining.jpg",
       "content": "Experience the groundbreaking collaboration between Chef Maria and composer John at 'Symphonic Kitchen'. Each course is perfectly synchronized with an original musical piece, performed live by a string quartet. The signature dish, a deconstructed opera cake, is served during a crescendo of Mozart-inspired modern classical music. Even the kitchen sounds are incorporated into the composition, creating a truly immersive dining soundtrack.",
       "publishDate": "2024-09-30T19:00:00Z",
       "comments": [
@@ -1044,7 +1044,7 @@
       "title": "Foraging Adventure: Urban Wild Edibles",
       "author": "Wild Food Hunter",
       "likes": 8765,
-      "imageUrl": "https://picsum.photos/500/400?27",
+      "imageUrl": "assets/blog-post-photos/post_27_wild_food.jpg",
       "content": "Join expert forager Sarah on an urban foraging expedition! Discover edible plants growing right in our city parks and green spaces. Learn to identify safe wild herbs, mushrooms, and berries while understanding sustainable foraging practices. The tour concludes with a wild-food cooking workshop where participants prepare dishes using their foraged ingredients, including wild garlic pesto and elderflower cordial.",
       "publishDate": "2024-09-29T10:00:00Z",
       "comments": [
@@ -1075,7 +1075,7 @@
       "title": "AI Chef Challenge: Human vs Machine Creativity",
       "author": "Future Food Critic",
       "likes": 12543,
-      "imageUrl": "https://picsum.photos/500/400?28",
+      "imageUrl": "assets/blog-post-photos/post_28_machine_cook.jpg",
       "content": "Witness a groundbreaking culinary showdown where top chefs compete against AI-generated recipes! The AI analyzes thousands of successful dishes to create unique flavor combinations, while human chefs rely on intuition and experience. The surprising results challenge our assumptions about creativity and cooking. Don't miss the tasting session where you can sample both AI-designed and chef-created dishes in a blind taste test.",
       "publishDate": "2024-09-28T16:00:00Z",
       "comments": [
@@ -1106,7 +1106,7 @@
       "title": "Floating Breakfast: Luxury Pool Dining Experience",
       "author": "Luxury Lifestyle",
       "likes": 15678,
-      "imageUrl": "https://picsum.photos/500/400?29",
+      "imageUrl": "assets/blog-post-photos/post_29_floating_breakfast.jpg",
       "content": "Experience the ultimate in luxury dining with the city's first floating breakfast service! Enjoy a gourmet morning spread served on a floating tray in a private infinity pool overlooking the skyline. The menu features both local and international breakfast favorites, from eggs Benedict to congee, all presented with edible flowers and gold leaf accents. Perfect for special occasions or just treating yourself!",
       "publishDate": "2024-09-27T08:00:00Z",
       "comments": [
@@ -1137,7 +1137,7 @@
       "title": "Silent Supper: Mindful Eating Experience",
       "author": "Mindful Foodie",
       "likes": 7654,
-      "imageUrl": "https://picsum.photos/500/400?30",
+      "imageUrl": "assets/blog-post-photos/post_30_silent_supper.jpg",
       "content": "Discover a new way of experiencing food at our Silent Supper series. In complete silence, guests focus entirely on their sensory experience of each dish. The 6-course menu is designed to engage all senses, with detailed tasting notes provided for silent reflection. A meditation guide leads brief mindfulness exercises between courses. The experience concludes with a guided discussion about mindful eating practices.",
       "publishDate": "2024-09-26T18:30:00Z",
       "comments": [
@@ -1177,7 +1177,7 @@
 	  "title": "Homemade Pasta",
 	  "author": "Ray",
 	  "likes": 3330,
-	  "imageUrl": "https://picsum.photos/500/400?31",
+	  "imageUrl": "assets/blog-post-photos/post_31_homemade_pasta.jpg",
 	  "content": "To make homemade pasta, you only need a few simple ingredients and some basic techniques. Here’s a comprehensive guide to get you started.\n\n## Ingredients\n\nYou will need:\n\n- **Flour**: 2 cups of all-purpose flour (or a mix of flours like “00” flour or semolina for different textures)\n- **Eggs**: 3 large eggs (room temperature preferred for better mixing)\n- **Olive Oil**: ½ tablespoon (for added richness)\n- **Salt**: ½ teaspoon (for flavor)\n\n## Equipment\n\n- Clean work surface or large bowl\n- Rolling pin or pasta maker\n- Knife or pasta cutter\n- Plastic wrap\n\n## Instructions\n\n### 1. Prepare the Dough\n- **Make a Flour Well**: On a clean surface, mound the flour and create a well in the center. \n- **Add Ingredients**: Crack the eggs into the well, add olive oil and salt.\n- **Mix**: Using a fork, gently beat the eggs while slowly incorporating the flour from the edges of the well. Be careful not to break through the walls of flour too soon.\n- **Knead the Dough**: Once the mixture starts to come together, use your hands to form it into a shaggy ball. Knead the dough for about 8–10 minutes until it becomes smooth and elastic. If it feels too dry, add a little water; if it's too sticky, dust with more flour.\n\n### 2. Rest the Dough\n- Shape the kneaded dough into a ball, wrap it in plastic wrap, and let it rest at room temperature for about 30 minutes. This helps relax the gluten, making it easier to roll out later.\n\n### 3. Roll Out the Dough\n- After resting, divide the dough into four pieces. Keep the pieces you are not using covered to prevent them from drying out.\n- Flatten one piece slightly with your hands or a rolling pin. If using a pasta maker, start with the widest setting and pass the dough through several times, folding it in half each time until smooth.\n- Gradually reduce the thickness setting on your pasta maker, rolling it through each setting until you reach your desired thickness (usually between levels 4 and 6).\n\n### 4. Cut and Shape\n- Once rolled out, you can cut your pasta into your desired shape (fettuccine, tagliatelle, etc.) using a knife or pasta cutter.\n- Dust cut pasta with flour to prevent sticking and lay it flat on a floured surface or hang it to dry slightly.\n\n### 5. Cook Your Pasta\n- Bring a large pot of salted water to a boil. Add your fresh pasta and cook for about 1–5 minutes, depending on thickness. Fresh pasta cooks much quicker than dried pasta.\n- Drain and serve immediately with your choice of sauce.\n\n## Tips for Success\n- **Experiment with Flours**: While all-purpose flour works well, trying different types like semolina or “00” flour can yield different textures.\n- **Keep Everything Floured**: To prevent sticking, always keep your work surface and pasta lightly floured.\nBy following these steps, you'll be able to create delicious homemade pasta that can elevate any meal! Enjoy your cooking!",
 	  "publishDate": "2024-11-01T05:52:00Z",
 	  "comments": [

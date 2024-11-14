@@ -4,7 +4,7 @@
       "id": "1",
       "name": "Classic Spaghetti Carbonara",
       "author": "Chef John",
-      "imageUrl": "https://picsum.photos/500/400?111",
+      "imageUrl": "assets/recipe-photos/recipe_1_Classic_Spaghetti_Carbonara.jpg",
       "publishDate": "2024-01-15T10:30:00Z",
       "ingredients": [
         "200g spaghetti",
@@ -40,7 +40,7 @@
       "id": 2,
       "name": "Vegetable Stir-Fry",
       "author": "Chef Emily",
-      "imageUrl": "https://picsum.photos/500/400?112",
+      "imageUrl": "assets/recipe-photos/recipe_2_Vegetable_Stir-Fry.jpg",
       "publishDate": "2024-01-20T11:00:00Z",
       "ingredients": [
         "1 red bell pepper, sliced",
@@ -76,7 +76,7 @@
       "id": 3,
       "name": "Chicken Alfredo",
       "author": "Chef Sarah",
-      "imageUrl": "https://picsum.photos/500/400?113",
+      "imageUrl": "assets/recipe-photos/recipe_3_Chicken_Alfredo.jpg",
       "publishDate": "2024-02-05T10:30:00Z",
       "ingredients": [
         "200g fettuccine",
@@ -100,7 +100,7 @@
       "id": 4,
       "name": "Beef Tacos",
       "author": "Chef Maria",
-      "imageUrl": "https://picsum.photos/500/400?114",
+      "imageUrl": "assets/recipe-photos/recipe_4_Beef_Tacos.jpg",
       "publishDate": "2024-02-10T12:00:00Z",
       "ingredients": [
         "200g ground beef",
@@ -124,7 +124,7 @@
       "id": 5,
       "name": "Margherita Pizza",
       "author": "Chef Luigi",
-      "imageUrl": "https://picsum.photos/500/400?115",
+      "imageUrl": "assets/recipe-photos/recipe_5_Margherita_Pizza.jpg",
       "publishDate": "2024-02-15T15:30:00Z",
       "ingredients": [
         "Pizza dough",
@@ -146,7 +146,7 @@
       "id": 6,
       "name": "Grilled Salmon",
       "author": "Chef Emma",
-      "imageUrl": "https://picsum.photos/500/400?116",
+      "imageUrl": "assets/recipe-photos/recipe_6_grilled_salmon.jpg",
       "publishDate": "2024-02-20T17:00:00Z",
       "ingredients": [
         "2 salmon fillets",
@@ -167,7 +167,7 @@
       "id": 7,
       "name": "Chocolate Brownies",
       "author": "Chef Ben",
-      "imageUrl": "https://picsum.photos/500/400?117",
+      "imageUrl": "assets/recipe-photos/recipe_7_chocolate_brownies.jpg",
       "publishDate": "2024-03-01T14:00:00Z",
       "ingredients": [
         "100g dark chocolate",
@@ -191,7 +191,7 @@
       "id": 8,
       "name": "Caesar Salad",
       "author": "Chef Lauren",
-      "imageUrl": "https://picsum.photos/500/400?118",
+      "imageUrl": "assets/recipe-photos/recipe_8_caesar_salad.jpg",
       "publishDate": "2024-03-05T09:00:00Z",
       "ingredients": [
         "1 romaine lettuce",
@@ -211,7 +211,7 @@
       "id": 9,
       "name": "French Onion Soup",
       "author": "Chef Pierre",
-      "imageUrl": "https://picsum.photos/500/400?119",
+      "imageUrl": "assets/recipe-photos/recipe_9_french_onion_soup.jpg",
       "publishDate": "2024-03-10T18:00:00Z",
       "ingredients": [
         "500g onions, sliced",
@@ -232,7 +232,7 @@
       "id": 10,
       "name": "Pad Thai",
       "author": "Chef Aroon",
-      "imageUrl": "https://picsum.photos/500/400?120",
+      "imageUrl": "assets/recipe-photos/recipe_10_pad_thai.jpg",
       "publishDate": "2024-03-15T12:30:00Z",
       "ingredients": [
         "200g rice noodles",
@@ -256,7 +256,7 @@
       "id": 11,
       "name": "Garlic Butter Shrimp",
       "author": "Chef Angela",
-      "imageUrl": "https://picsum.photos/500/400?121",
+      "imageUrl": "assets/recipe-photos/recipe_11_garlic_butter_shrimp.jpg",
       "publishDate": "2024-03-20T14:00:00Z",
       "ingredients": [
         "200g shrimp",
@@ -277,7 +277,7 @@
       "id": 12,
       "name": "Avocado Toast",
       "author": "Chef Bella",
-      "imageUrl": "https://picsum.photos/500/400?122",
+      "imageUrl": "assets/recipe-photos/recipe_12_avocado_bread.jpg",
       "publishDate": "2024-03-25T08:00:00Z",
       "ingredients": [
         "2 slices bread",

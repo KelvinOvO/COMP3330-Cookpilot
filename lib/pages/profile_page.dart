@@ -789,7 +789,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   }
 
   Widget _buildPostsGrid() {
-    return Container(
+    return SizedBox(
       height: 500, // Set a specific height or any desired height constraint
       child: MasonryGridView.count(
         shrinkWrap: true,

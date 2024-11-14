@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:app_controller_client/app_controller_client.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:built_value/serializer.dart';
 import 'package:cookpilot/models/recipe.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -320,19 +319,18 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       flexibleSpace: FlexibleSpaceBar(
         background: Hero(
           tag: 'post_image_${widget.recipe.imageUrl}',
-          child: CachedNetworkImage(
-            imageUrl: widget.recipe.imageUrl,
+          child: Image(
+            image: AssetImage(widget.recipe.imageUrl),
             fit: BoxFit.cover,
-            placeholder: (context, url) => Container(
-              color: Colors.grey[200],
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-            errorWidget: (context, url, error) => Container(
-              color: Colors.grey[200],
-              child: const Icon(Icons.error_outline),
-            ),
+            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+              return Container(
+                color: Colors.grey[100],
+                child: const Icon(
+                  Icons.error_outline,
+                  color: Color(0xFF999999),
+                ),
+              );
+            },
           ),
         ),
       ),

@@ -4,9 +4,9 @@ class ProgressBar extends StatefulWidget {
   final double progressValue;
 
   const ProgressBar({
-    Key? key,
+    super.key,
     this.progressValue = 0.75, // 75 by default
-  }) : super(key: key);
+  });
 
   @override
   _ProgressBarState createState() => _ProgressBarState();
