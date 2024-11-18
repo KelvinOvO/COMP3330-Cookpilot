@@ -16,7 +16,7 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  int _currentIndex = 0;
+  int _currentIndex = 4;
   final _pageStorageBucket = PageStorageBucket();
 
   final List<Widget> _pages = [
