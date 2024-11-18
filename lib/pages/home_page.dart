@@ -4,12 +4,16 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../widgets/blog_post_card.dart';
 import '../models/blog_post.dart';
+import '../models/recipe.dart';
 import './blog_post_detail_page.dart';
 import '../services/blog_service.dart';
+import '../services/recipe_service.dart';
+import '../widgets/recipe_card.dart';
 import '../widgets/app_drawer.dart';
 import './post_blog.dart';
 import '../services/history_service.dart';
 import 'package:provider/provider.dart';
+import '../pages/recipe_detail_page.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -182,11 +186,9 @@ class _HomePageState extends State<HomePage>
       body: IndexedStack(
         index: _tabController.index,
         children: [
-          for (int i = 0; i < _tabCount; i++)
-            KeyedSubtree(
-              key: _tabKeys[i],
-              child: i == 1 ? _buildMainContent() : _buildEmptyTab(_getTabTitle(i)),
-            ),
+          _buildEmptyTab('Following'),
+          _buildMainContent(), // Discover tab
+          _buildRecipesContent(), // Recipes tab
         ],
       ),
     );
@@ -296,6 +298,69 @@ class _HomePageState extends State<HomePage>
       child: posts.isEmpty && _isLoading
           ? _buildLoadingView()
           : _buildPostsGrid(),
+    );
+  }
+
+  Widget _buildRecipesContent() {
+    return FutureBuilder<List<Recipe>>(
+      future: RecipeService().fetchInitialRecipes(), // Load recipes
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF007AFF)),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.error_outline,
+                  size: 48,
+                  color: Color(0xFF999999),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Error: ${snapshot.error}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xFF999999),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(
+            child: Text(
+              'No Recipes Available',
+              style: TextStyle(
+                fontSize: 16,
+                color: Color(0xFF999999),
+              ),
+            ),
+          );
+        }
+
+        final recipes = snapshot.data!;
+        return MasonryGridView.count(
+          key: const PageStorageKey('recipes_grid'),
+          crossAxisCount: 2,
+          itemCount: recipes.length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: RecipeCard(
+              recipe: recipes[index],
+              onTap: () => _navigateToRecipeDetail(recipes[index]),
+            ),
+          ),
+          mainAxisSpacing: 3.0,
+          crossAxisSpacing: 3.0,
+        );
+      },
     );
   }
 
@@ -414,6 +479,15 @@ class _HomePageState extends State<HomePage>
       context,
       MaterialPageRoute(
         builder: (context) => BlogPostDetailPage(post: post),
+      ),
+    );
+  }
+
+  void _navigateToRecipeDetail(Recipe recipe) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecipeDetailPage(recipe: recipe), // Placeholder for RecipeDetailPage
       ),
     );
   }

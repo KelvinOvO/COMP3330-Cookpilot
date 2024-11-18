@@ -1,7 +1,7 @@
 {
   "recipes": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Classic Spaghetti Carbonara",
       "author": "Chef John",
       "imageUrl": "assets/recipe-photos/recipe_1_Classic_Spaghetti_Carbonara.jpg",

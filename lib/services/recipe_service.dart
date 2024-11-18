@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import '../models/recipe.dart';
+import 'dart:developer';
 import '../models/comment.dart';
 
 class RecipeService {
@@ -16,25 +17,31 @@ class RecipeService {
       final jsonString = await rootBundle.loadString('assets/data/recipes.json');
       final jsonData = json.decode(jsonString);
 
+      // Ensure 'recipes' key exists and is a list
+      if (jsonData['recipes'] is! List) {
+        throw Exception('Invalid data format: "recipes" is not a list');
+      }
+
       _cachedRecipes = (jsonData['recipes'] as List).map((recipeJson) {
         return Recipe(
-          id: recipeJson['id'],
-          name: recipeJson['name'],
-          author: recipeJson['author'],
-          imageUrl: recipeJson['imageUrl'],
-          publishDate: DateTime.parse(recipeJson['publishDate']),
-          ingredients: List<String>.from(recipeJson['ingredients']),
-          instructions: List<String>.from(recipeJson['instructions']),
-          likes: recipeJson['likes'],
-          comments: (recipeJson['comments'] as List)
+          id: int.parse(recipeJson['id'].toString()),
+          name: recipeJson['name'] ?? 'Unknown Recipe', // 提供默認值
+          author: recipeJson['author'] ?? 'Unknown Author',
+          imageUrl: recipeJson['imageUrl'] ?? '',
+          publishDate: DateTime.tryParse(recipeJson['publishDate'] ?? '') ?? DateTime.now(),
+          ingredients: List<String>.from(recipeJson['ingredients'] ?? []),
+          instructions: List<String>.from(recipeJson['instructions'] ?? []),
+          likes: int.tryParse(recipeJson['likes']?.toString() ?? '0') ?? 0, // 確保 likes 是 int
+          comments: (recipeJson['comments'] as List? ?? [])
               .map((commentJson) => _parseComment(commentJson))
               .toList(),
         );
       }).toList();
 
+      log('Loaded recipes: ${_cachedRecipes!.length}');
       return _cachedRecipes!;
-    } catch (e) {
-      print('Error loading recipes: $e');
+    } catch (e, stacktrace) {
+      print('Error loading recipes: $e\n$stacktrace');
       throw Exception('Failed to load recipes');
     }
   }

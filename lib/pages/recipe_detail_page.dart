@@ -431,6 +431,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                         child: Text(
                           message.text,
                           style: TextStyle(
+                            fontSize: 20,
                             color: isUserMessage
                                 ? theme.colorScheme.onSurface
                                 : isAssistantMessage
@@ -446,9 +447,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                     if (isUserMessage)
                       const CircleAvatar(
                         radius: 16,
-                        backgroundImage: CachedNetworkImageProvider(
-                          'https://i.pravatar.cc/100?u=current_user',
-                        ),
+                        backgroundImage: AssetImage('assets/profile/profile_picture.jpg'),
                       ),
                   ],
                 ),
@@ -702,9 +701,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(
-              'https://i.pravatar.cc/100?u=current_user',
-            ),
+            backgroundImage: AssetImage('assets/profile/profile_picture.jpg'),
           ),
           const SizedBox(width: 12),
           Expanded(

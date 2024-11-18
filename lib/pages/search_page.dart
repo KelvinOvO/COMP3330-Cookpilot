@@ -118,7 +118,9 @@ class _SearchPageState extends State<SearchPage> {
           name: recipe.name,
           author: authors[recipe.id % authors.length],
           imageUrl:
-              'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
+          recipe.name == 'Shrimp And Sweet Potato Gumbo'
+              ? 'https://www.closetcooking.com/wp-content/uploads/2012/02/BlackenedShrimponKaleandMashedSweetPotatoeswithAndouilleCream5000002-1.jpg'
+              : 'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
           publishDate: DateTime(
             2020 + '${recipe.id}'.hashCode % 4,
             1 + '${recipe.id}'.hashCode % 12,
