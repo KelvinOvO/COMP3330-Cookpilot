@@ -130,7 +130,12 @@ class BlogPostCard extends StatelessWidget {
       child: SizedBox(
         width: 28,
         height: 28,
-        child: CachedNetworkImage(
+        child: post.author == 'Ray' // Assuming Ray is the current user
+            ? Image.file(
+              File('assets/profile/profile_picture.jpg'),
+              fit: BoxFit.cover,
+            )
+            : CachedNetworkImage(
           imageUrl: 'https://i.pravatar.cc/100?u=${post.id}',  // unique post id
           fit: BoxFit.cover,
           placeholder: (context, url) => Container(

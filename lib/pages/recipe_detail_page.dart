@@ -9,6 +9,8 @@ import 'package:cookpilot/models/recipe.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import '../global/app_controller.dart';
 import '../models/comment.dart';
 
@@ -282,6 +284,50 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     );
   }
 
+  Future<String> _fetchImageLink(String query) async {
+    // Replace 'YOUR_API_KEY' with your actual Bing Image Search API key
+    final String subscriptionKey = "6e6704a4d39d4947ae29ec04b31691cd";
+    final String searchUrl = "https://api.bing.microsoft.com/v7.0/images/search";
+
+    // Set up headers and parameters for the request
+    final headers = {
+      "Ocp-Apim-Subscription-Key": subscriptionKey,
+    };
+
+    final params = {
+      "q": query,
+      "license": "public", // Optional: filter by license type
+      "imageType": "photo", // Optional: filter by image type
+      "count": "1", // Number of results to return
+      "mkt": "en-US", // Market (optional)
+      "safeSearch": "Moderate" // Safe search level (optional)
+    };
+
+    // Make the GET request
+    final response = await http.get(
+      Uri.parse('$searchUrl?${Uri(queryParameters: params).query}'),
+      headers: headers,
+    );
+
+    print("Got response with status code: ${response.statusCode}");
+
+    // Check if the request was successful
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+
+      // Extract thumbnail URLs from the response
+      if (jsonResponse['value'] != null && jsonResponse['value'].isNotEmpty) {
+        String thumbnailUrl = jsonResponse['value'][0]['thumbnailUrl']; // Get thumbnail URL
+        print(thumbnailUrl); // Debugging output
+        return thumbnailUrl;
+      } else {
+        throw Exception('No images found');
+      }
+    } else {
+      throw Exception('Failed to load images: ${response.statusCode}');
+    }
+  }
+
   Widget _buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
       expandedHeight: 300,
@@ -304,46 +350,49 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         onPressed: () => Navigator.pop(context),
       ),
       flexibleSpace: FlexibleSpaceBar(
-        background: Hero(
-          tag: 'post_image_${widget.recipe.imageUrl}',
-          child: widget.recipe.imageUrl.startsWith('http://') || widget.recipe.imageUrl.startsWith('https://')
-              ? CachedNetworkImage(
-            imageUrl: widget.recipe.imageUrl,
-            fit: BoxFit.cover,
-            placeholder: (context, url) => Container(
-              color: Colors.grey[100],
-              child: const Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF999999)),
-                ),
-              ),
-            ),
-            errorWidget: (context, url, error) => Container(
-              color: Colors.grey[100],
-              child: const Icon(
-                Icons.error_outline,
-                color: Color(0xFF999999),
-              ),
-            ),
-          )
-              : Image.asset(
-            widget.recipe.imageUrl, // Assuming imageUrl is a valid asset path
-            fit: BoxFit.cover,
-            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+        background: FutureBuilder<String>(
+          future: _fetchImageLink(widget.recipe.name),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
                 color: Colors.grey[100],
-                child: const Icon(
-                  Icons.error_outline,
-                  color: Color(0xFF999999),
+                child: const Center(child: CircularProgressIndicator()),
+              );
+            } else if (snapshot.hasError) {
+              return Container(
+                color: Colors.grey[100],
+                child: const Icon(Icons.error_outline, color: Color(0xFF999999)),
+              );
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              // Handle the case where there is no data
+              return Container(
+                color: Colors.grey[100],
+                child: const Center(child: Text("No image found")),
+              );
+            } else {
+              // When the data is fetched successfully
+              return Hero(
+                tag: 'post_image_${widget.recipe.imageUrl}',
+                child: CachedNetworkImage(
+                  imageUrl: snapshot.data!,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(
+                    color: Colors.grey[100],
+                    child: const Center(child: CircularProgressIndicator()),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    color: Colors.grey[100],
+                    child: const Icon(Icons.error_outline, color: Color(0xFF999999)),
+                  ),
                 ),
               );
-            },
-          ),
+            }
+          },
         ),
       ),
     );
   }
+
 
   Widget _buildContent(BuildContext context) {
     return SliverToBoxAdapter(
