@@ -97,42 +97,29 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               .build())
           .toList();
 
-      final api = appController.getRecipeSearchStreamApi();
+      final api = appController.getRecipeSearchApi();
 
-      final responses = await api.recipeSearchChatByRecipeStreamPost(
+      final response = await api.recipeSearchChatByRecipePost(
         chatByRecipePostRequestModel: (ChatByRecipePostRequestModelBuilder()
               ..id = widget.recipe.id
               ..messages = ListBuilder(requestMessages))
             .build(),
       );
 
-      await for (final response in responses.data!) {
-        print(response);
-        if (!mounted) {
-          return;
-        }
-
-        if (response.oneOf.isType(ChatByRecipeStreamHeaderModel)) {
-          _chatMessages.value = [
-            ..._chatMessages.value,
-            _ChatMessage(
-              text: "",
-              role: _ChatMessageRole.assistant,
-            ),
-          ];
-          continue;
-        }
-
-        final content = response.oneOf.value as ChatByRecipeStreamContentModel;
-
-        _chatMessages.value = [
-          ..._chatMessages.value.take(_chatMessages.value.length - 1),
-          _ChatMessage(
-            text: _chatMessages.value.last.text + content.text,
-            role: _ChatMessageRole.assistant,
-          ),
-        ];
+      print(response);
+      if (!mounted) {
+        return;
       }
+
+      final model = response.data!;
+
+      _chatMessages.value = [
+        ..._chatMessages.value,
+        _ChatMessage(
+          text: model.message.text,
+          role: _ChatMessageRole.assistant,
+        ),
+      ];
     } catch (e) {
       print(e);
 

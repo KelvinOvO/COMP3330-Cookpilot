@@ -117,8 +117,17 @@ class _SearchPageState extends State<SearchPage> {
           id: recipe.id,
           name: recipe.name,
           author: authors[recipe.id % authors.length],
-          imageUrl:
-              'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
+          imageUrl: switch (recipe.name.substring(0, 2)) {
+            'Sh' => 'https://www.closetcooking.com/wp-content/uploads/2012/02/BlackenedShrimponKaleandMashedSweetPotatoeswithAndouilleCream5000002-1.jpg',
+            'St' => 'https://chefsbinge.com/wp-content/uploads/2023/10/Beef-Bourguignon-2-scaled.jpg',
+            'Sc' => 'https://mediavine-res.cloudinary.com/image/upload/s--OKhbyVM9--/c_limit,f_auto,fl_lossy,h_1080,q_auto,w_1920/v1675438704/srmblreatantopxkg0pw.jpg',
+            'Gh' => 'https://www.retetepractice.ro/wp-content/uploads/2018/07/ghiveci-de-legume-la-cuptor.jpg',
+            'Go' => 'https://assets.epicurious.com/photos/57bb33ba06de447f4e6d9342/master/pass/hearty-goulash-soup.jpg',
+            'Cr' => 'https://i.ytimg.com/vi/jPe0ONuW0TM/maxresdefault.jpg',
+            'Gr' => 'https://vintage-recipes.com/wp-content/uploads/2024/02/Tomato-Aspic-Photo-2.jpg',
+            'La' => 'https://www.abelandcole.co.uk/media/2228_12995_z.jpg',
+            _ => 'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
+          },
           publishDate: DateTime(
             2020 + '${recipe.id}'.hashCode % 4,
             1 + '${recipe.id}'.hashCode % 12,
