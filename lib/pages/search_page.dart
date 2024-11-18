@@ -10,7 +10,8 @@ import '../models/blog_post.dart';
 import '../services/blog_service.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final List<String>? initialIngredients;
+  const SearchPage({Key? key, this.initialIngredients}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -49,6 +50,12 @@ class _SearchPageState extends State<SearchPage> {
       'Pesto Pasta',
       'Panko Pesto Fish',
     ]);
+    if (widget.initialIngredients != null) {
+      for (var ingredient in widget.initialIngredients!) {
+        _handleIngredientAdd(ingredient);
+      }
+      _handleSearch('');
+    }
     _loadSuggestedRecipes();
   }
 

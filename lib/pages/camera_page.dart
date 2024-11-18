@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../services/upload_photo.dart';
+import '../pages/search_page.dart';
+
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
   @override
@@ -394,7 +396,25 @@ class _CameraPageState extends State<CameraPage> {
       label: 'Search',
       color: const Color(0xFFFF9500),
       onTap: () {
-        //TODO: Implement search function
+        if (_result.isEmpty) {
+          _showErrorDialog('No ingredients detected.');
+          return;
+        }
+
+        // 提取结果中的名字作为 ingredients
+        final List<String> ingredients = _result
+            .map((ingredient) => ingredient['name'].toString())
+            .toList();
+
+        // 导航到 SearchPage
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SearchPage(
+              initialIngredients: ingredients,
+            ),
+          ),
+        );
       },
     );
   }
