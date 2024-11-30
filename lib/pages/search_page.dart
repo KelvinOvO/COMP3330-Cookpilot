@@ -1,6 +1,4 @@
 // lib/pages/search_page.dart
-import 'dart:convert';
-
 import 'package:app_controller_client/app_controller_client.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:cookpilot/models/recipe.dart';
@@ -11,6 +9,7 @@ import '../global/app_controller.dart';
 import '../models/blog_post.dart';
 import '../services/blog_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' as parser;
 
 class SearchPage extends StatefulWidget {
   final List<String>? initialIngredients;
@@ -80,46 +79,32 @@ class _SearchPageState extends State<SearchPage> {
 
 
   Future<String> _fetchImageLink(String query) async {
-    // Replace 'YOUR_API_KEY' with your actual Bing Image Search API key
-    final String subscriptionKey = "6e6704a4d39d4947ae29ec04b31691cd";
-    final String searchUrl = "https://api.bing.microsoft.com/v7.0/images/search";
-
-    // Set up headers and parameters for the request
-    final headers = {
-      "Ocp-Apim-Subscription-Key": subscriptionKey,
-    };
-
-    final params = {
-      "q": query,
-      "license": "public", // Optional: filter by license type
-      "imageType": "photo", // Optional: filter by image type
-      "count": "1", // Number of results to return
-      "mkt": "en-US", // Market (optional)
-      "safeSearch": "Moderate" // Safe search level (optional)
-    };
-
-    // Make the GET request
     final response = await http.get(
-      Uri.parse('$searchUrl?${Uri(queryParameters: params).query}'),
-      headers: headers,
+      Uri.parse('https://www.google.com/search?q=$query&tbm=isch'),
     );
 
-    print("Got response with status code: ${response.statusCode}");
-
-    // Check if the request was successful
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      var document = parser.parse(response.body);
+      List<String> imageLinks = [];
 
-      // Extract thumbnail URLs from the response
-      if (jsonResponse['value'] != null && jsonResponse['value'].isNotEmpty) {
-        String thumbnailUrl = jsonResponse['value'][0]['thumbnailUrl']; // Get thumbnail URL
-        print(thumbnailUrl); // Debugging output
-        return thumbnailUrl;
-      } else {
-        throw Exception('No images found');
+      // Extract image URLs
+      var elements = document.getElementsByTagName('img');
+      for (var element in elements) {
+        var src = element.attributes['src'];
+        if (src != null && !src.startsWith('data:image')) {
+          imageLinks.add(src);
+        }
       }
+
+      // Check if any images were found
+      if (imageLinks.isEmpty) {
+        return 'No images found';
+      }
+
+      // Generate a random index and return the corresponding image link
+      return imageLinks[2];
     } else {
-      throw Exception('Failed to load images: ${response.statusCode}');
+      throw Exception('Failed to load images');
     }
   }
 
@@ -162,23 +147,23 @@ class _SearchPageState extends State<SearchPage> {
           'Grace Davis',
           'Henry Young',
         ];
-        String recipeImageUrl = await _fetchImageLink(recipe.name);
 
         recipes.add(Recipe(
           id: recipe.id,
           name: recipe.name,
           author: authors[recipe.id % authors.length],
-          imageUrl: switch (recipe.name.substring(0, 2)) {
-            'Sh' => 'https://www.closetcooking.com/wp-content/uploads/2012/02/BlackenedShrimponKaleandMashedSweetPotatoeswithAndouilleCream5000002-1.jpg',
-            'St' => 'https://chefsbinge.com/wp-content/uploads/2023/10/Beef-Bourguignon-2-scaled.jpg',
-            'Sc' => 'https://mediavine-res.cloudinary.com/image/upload/s--OKhbyVM9--/c_limit,f_auto,fl_lossy,h_1080,q_auto,w_1920/v1675438704/srmblreatantopxkg0pw.jpg',
-            'Gh' => 'https://www.retetepractice.ro/wp-content/uploads/2018/07/ghiveci-de-legume-la-cuptor.jpg',
-            'Go' => 'https://assets.epicurious.com/photos/57bb33ba06de447f4e6d9342/master/pass/hearty-goulash-soup.jpg',
-            'Cr' => 'https://i.ytimg.com/vi/jPe0ONuW0TM/maxresdefault.jpg',
-            'Gr' => 'https://vintage-recipes.com/wp-content/uploads/2024/02/Tomato-Aspic-Photo-2.jpg',
-            'La' => 'https://www.abelandcole.co.uk/media/2228_12995_z.jpg',
-            _ => 'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
-          },
+          // imageUrl: switch (recipe.name.substring(0, 2)) {
+          //   'Sh' => 'https://www.closetcooking.com/wp-content/uploads/2012/02/BlackenedShrimponKaleandMashedSweetPotatoeswithAndouilleCream5000002-1.jpg',
+          //   'St' => 'https://chefsbinge.com/wp-content/uploads/2023/10/Beef-Bourguignon-2-scaled.jpg',
+          //   'Sc' => 'https://mediavine-res.cloudinary.com/image/upload/s--OKhbyVM9--/c_limit,f_auto,fl_lossy,h_1080,q_auto,w_1920/v1675438704/srmblreatantopxkg0pw.jpg',
+          //   'Gh' => 'https://www.retetepractice.ro/wp-content/uploads/2018/07/ghiveci-de-legume-la-cuptor.jpg',
+          //   'Go' => 'https://assets.epicurious.com/photos/57bb33ba06de447f4e6d9342/master/pass/hearty-goulash-soup.jpg',
+          //   'Cr' => 'https://i.ytimg.com/vi/jPe0ONuW0TM/maxresdefault.jpg',
+          //   'Gr' => 'https://vintage-recipes.com/wp-content/uploads/2024/02/Tomato-Aspic-Photo-2.jpg',
+          //   'La' => 'https://www.abelandcole.co.uk/media/2228_12995_z.jpg',
+          //   _ => 'https://picsum.photos/500/400?${"${recipe.id}".hashCode % 10}',
+          // },
+          imageUrl: await _fetchImageLink(recipe.name),
           publishDate: DateTime(
             2020 + '${recipe.id}'.hashCode % 4,
             1 + '${recipe.id}'.hashCode % 12,

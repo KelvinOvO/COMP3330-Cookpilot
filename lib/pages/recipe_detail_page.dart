@@ -9,7 +9,7 @@ import 'package:cookpilot/models/recipe.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 import '../global/app_controller.dart';
 import '../models/comment.dart';
@@ -284,47 +284,34 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
     );
   }
 
+
   Future<String> _fetchImageLink(String query) async {
-    // Replace 'YOUR_API_KEY' with your actual Bing Image Search API key
-    final String subscriptionKey = "6e6704a4d39d4947ae29ec04b31691cd";
-    final String searchUrl = "https://api.bing.microsoft.com/v7.0/images/search";
-
-    // Set up headers and parameters for the request
-    final headers = {
-      "Ocp-Apim-Subscription-Key": subscriptionKey,
-    };
-
-    final params = {
-      "q": query,
-      "license": "public", // Optional: filter by license type
-      "imageType": "photo", // Optional: filter by image type
-      "count": "1", // Number of results to return
-      "mkt": "en-US", // Market (optional)
-      "safeSearch": "Moderate" // Safe search level (optional)
-    };
-
-    // Make the GET request
     final response = await http.get(
-      Uri.parse('$searchUrl?${Uri(queryParameters: params).query}'),
-      headers: headers,
+      Uri.parse('https://www.google.com/search?q=$query&tbm=isch'),
     );
 
-    print("Got response with status code: ${response.statusCode}");
-
-    // Check if the request was successful
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      var document = parser.parse(response.body);
+      List<String> imageLinks = [];
 
-      // Extract thumbnail URLs from the response
-      if (jsonResponse['value'] != null && jsonResponse['value'].isNotEmpty) {
-        String thumbnailUrl = jsonResponse['value'][0]['thumbnailUrl']; // Get thumbnail URL
-        print(thumbnailUrl); // Debugging output
-        return thumbnailUrl;
-      } else {
-        throw Exception('No images found');
+      // Extract image URLs
+      var elements = document.getElementsByTagName('img');
+      for (var element in elements) {
+        var src = element.attributes['src'];
+        if (src != null && !src.startsWith('data:image')) {
+          imageLinks.add(src);
+        }
       }
+
+      // Check if any images were found
+      if (imageLinks.isEmpty) {
+        return 'No images found';
+      }
+
+      // Generate a random index and return the corresponding image link
+      return imageLinks[2];
     } else {
-      throw Exception('Failed to load images: ${response.statusCode}');
+      throw Exception('Failed to load images');
     }
   }
 
