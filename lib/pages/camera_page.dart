@@ -63,8 +63,8 @@ class _CameraPageState extends State<CameraPage> {
     }).toList();
 
     setState(() {
-      _result = results; // 将新分析的所有结果显示在界面上
-      _history.insertAll(0, results); // 将所有结果保存到历史记录中
+      _result = results;
+      _history.insertAll(0, results);
       _isLoading = false;
     });
   }
